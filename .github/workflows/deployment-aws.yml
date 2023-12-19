@@ -36,7 +36,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Create passwords file
-        working-directory: demopod_server
+        working-directory: demo_server
         shell: bash
         env:
           SERVERPOD_PASSWORDS: ${{ secrets.SERVERPOD_PASSWORDS }}
@@ -46,19 +46,19 @@ jobs:
           ls config/
 
       - name: Get Dart packages
-        working-directory: demopod_server
+        working-directory: demo_server
         run: dart pub get
 
       - name: Compile server
-        working-directory: demopod_server
+        working-directory: demo_server
         run: dart compile kernel bin/main.dart
 
       - name: Create CodeDeploy Deployment
         id: deploy
         env:
-          PROJECT_NAME: demopod
-          AWS_NAME: demopod
-          DEPLOYMENT_BUCKET: demopod-deployment-8512476
+          PROJECT_NAME: demo
+          AWS_NAME: demo
+          DEPLOYMENT_BUCKET: demo-deployment-6337228
           TARGET: ${{ github.event.inputs.target }}
         run: |
           # Deploy server to AWS
