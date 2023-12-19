@@ -1,12 +1,8 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-// Sets up a singleton client object that can be used to talk to the server from
-// anywhere in our app. The client is generated from your server code.
-// The client is set up to connect to a Serverpod running on a local server on
-// the default port. You will need to modify this to connect to staging or
-// production servers.
 var client = Client('http://localhost:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
 
@@ -20,35 +16,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Serverpod Demo',
+      title: 'Login Screen',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Serverpod Example'),
+      home: const LoginScreen(title: 'Login Screen'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  MyHomePageState createState() => MyHomePageState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
-  // These fields hold the last result or error message that we've received from
-  // the server or null if no result exists yet.
+class LoginScreenState extends State<LoginScreen> {
   String? _resultMessage;
   String? _errorMessage;
 
   final _textEditingController = TextEditingController();
 
-  // Calls the `hello` method of the `example` endpoint. Will set either the
-  // `_resultMessage` or `_errorMessage` field, depending on if the call
-  // is successful.
+
   void _callHello() async {
     try {
       final result = await client.example.hello(_textEditingController.text);
@@ -64,43 +56,68 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    late TextEditingController phoneN = TextEditingController();
+    late TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+      body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
               child: TextField(
-                controller: _textEditingController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your name',
+                controller: phoneN,
+                decoration: InputDecoration(
+                  hintText: 'Enter your phone number',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Enter your password',
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: ElevatedButton(
-                onPressed: _callHello,
-                child: const Text('Send to Server'),
+                onPressed: (){
+                  //Login Butonu
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePAge()));
+                  //Backend Part
+
+              },
+                child: const Text('Login'),
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                 //Sign Up Butonu
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+                //Navigator
+
+                //Backend Part
+              },
+              child: const Text('Sign Up'),
             ),
             _ResultDisplay(
               resultMessage: _resultMessage,
               errorMessage: _errorMessage,
             ),
           ],
-        ),
       ),
     );
   }
 }
 
-// _ResultDisplays shows the result of the call. Either the returned result from
-// the `example.hello` endpoint method or an error message.
+
+
 class _ResultDisplay extends StatelessWidget {
   final String? resultMessage;
   final String? errorMessage;
