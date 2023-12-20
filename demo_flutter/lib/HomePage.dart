@@ -40,7 +40,7 @@ class _MyHomePAgeState extends State<MyHomePAge> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15, top: 15),
-                      child: Text("Name-Surname"),
+                      child: Text("Name"),
                     ),
                     TextField(
                       controller: templateName,
@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> {
         title: Text('Home Page'),
         backgroundColor: Colors.blue,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 30,left: 25,right: 45),
           child: Column(

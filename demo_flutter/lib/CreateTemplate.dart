@@ -33,7 +33,7 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
               Text("Create Field"),
               Padding(
                 padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("Name-Surname",),
+                child: Text("Name",),
               ),
               TextField(
                   controller: nameController
@@ -41,7 +41,7 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("e-mail",),
+                child: Text("Type",),
               ),
               TextField(
                 controller: typelController,
