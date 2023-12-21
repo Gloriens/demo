@@ -51,7 +51,7 @@ jobs:
 
       - name: Compile server
         working-directory: demo_server
-        run: dart compile kernel bin/main.dart
+        run: dart compile kernel bin/LoginScreen.dart
 
       - name: Create CodeDeploy Deployment
         id: deploy

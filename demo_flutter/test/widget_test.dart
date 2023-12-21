@@ -8,7 +8,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_test/flutter_test.dart';
 //
-// import 'package:PROJECTNAME_flutter/main.dart';
+// import 'package:PROJECTNAME_flutter/LoginScreen.dart';
 
 void main() {
   // Add your app tests here
