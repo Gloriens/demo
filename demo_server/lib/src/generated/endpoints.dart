@@ -8,6 +8,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
+import '../endpoints/template_endpoint.dart' as _i3;
+import 'package:demo_server/src/generated/template.dart' as _i4;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -18,7 +20,13 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'example',
           null,
-        )
+        ),
+      'template': _i3.TemplateEndpoint()
+        ..initialize(
+          server,
+          'template',
+          null,
+        ),
     };
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
@@ -42,6 +50,40 @@ class Endpoints extends _i1.EndpointDispatch {
             params['name'],
           ),
         )
+      },
+    );
+    connectors['template'] = _i1.EndpointConnector(
+      name: 'template',
+      endpoint: endpoints['template']!,
+      methodConnectors: {
+        'createTemplate': _i1.MethodConnector(
+          name: 'createTemplate',
+          params: {
+            'template': _i1.ParameterDescription(
+              name: 'template',
+              type: _i1.getType<_i4.Template>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['template'] as _i3.TemplateEndpoint).createTemplate(
+            session,
+            params['template'],
+          ),
+        ),
+        'getTemplate': _i1.MethodConnector(
+          name: 'getTemplate',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['template'] as _i3.TemplateEndpoint)
+                  .getTemplate(session),
+        ),
       },
     );
   }
