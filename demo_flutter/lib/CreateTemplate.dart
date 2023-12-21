@@ -5,8 +5,6 @@ import 'package:demo_client/demo_client.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-
-
 class CreateTemplatePage extends StatefulWidget {
   const CreateTemplatePage({super.key});
 
@@ -25,45 +23,40 @@ class _CreateTemplatePageState extends State<CreateTemplatePage> {
       ),
       body: Container(
         child: Padding(
-          padding: EdgeInsets.only(top: 30,left: 25,right: 45),
+          padding: const EdgeInsets.only(top: 30, left: 25, right: 45),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Field Creating
-              Text("Create Field"),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("Name",),
+              const Text("Create Field"),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, top: 30),
+                child: Text(
+                  "Name",
+                ),
               ),
-              TextField(
-                  controller: nameController
-                      //Backend Part
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("Type",),
+              TextField(controller: nameController
+                  //Backend Part
+                  ),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, top: 30),
+                child: Text(
+                  "Type",
+                ),
               ),
               TextField(
                 controller: typelController,
                 //Backend Part
               ),
-
-
-
-
             ],
-
           ),
         ),
       ),
-
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         height: 40.0,
         color: Colors.blue,
         shape: CircularNotchedRectangle(),
-
       ),
     );
-
   }
 }

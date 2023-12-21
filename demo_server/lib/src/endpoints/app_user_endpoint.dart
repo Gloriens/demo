@@ -10,4 +10,15 @@ class UserEndPoint extends Endpoint {
   Future<bool> deleteUser(Session session, AppUser user) async {
     return await AppUser.deleteRow(session, user);
   }
+
+  Future<AppUser?> checkIfUserExists(
+      Session session, AppUser existingUser) async {
+    AppUser? appUser = await AppUser.findSingleRow(
+      session,
+      where: (au) =>
+          au.phone.equals(existingUser.phone) &
+          au.password.equals(existingUser.password),
+    );
+    return appUser;
+  }
 }

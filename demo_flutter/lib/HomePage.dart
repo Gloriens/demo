@@ -1,31 +1,32 @@
 import 'package:demo_flutter/CreateTemplate.dart';
 import 'package:demo_flutter/LoginScreen.dart';
+import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-class MyHomePAge extends StatefulWidget {
+class MyHomePAge extends ConsumerStatefulWidget {
   const MyHomePAge({super.key});
 
   @override
-  State<MyHomePAge> createState() => _MyHomePAgeState();
+  ConsumerState<MyHomePAge> createState() => _MyHomePAgeState();
 }
 
-class _MyHomePAgeState extends State<MyHomePAge> {
+class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
   TextEditingController templateName = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
         backgroundColor: Colors.blue,
       ),
-      body: Center(
+      body: const Center(
         child: Padding(
           padding: EdgeInsets.only(top: 180.0),
-
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -38,8 +39,8 @@ class _MyHomePAgeState extends State<MyHomePAge> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 15),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, top: 15),
                       child: Text("Name"),
                     ),
                     TextField(
@@ -51,9 +52,16 @@ class _MyHomePAgeState extends State<MyHomePAge> {
                         onPressed: () {
                           // Template ismi aldığımız yer
                           // Backend Part
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateTemplatePage()));
+                          ref
+                              .read(serviceProvider)
+                              .createTemplate(context, name: templateName.text);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CreateTemplatePage()));
                         },
-                        child: Text("Ok"),
+                        child: const Text("Ok"),
                       ),
                     ),
                   ],
@@ -62,107 +70,140 @@ class _MyHomePAgeState extends State<MyHomePAge> {
             },
           );
         },
-
-        child: Icon(Icons.add),
-
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         height: 40.0,
         color: Colors.blue,
         shape: CircularNotchedRectangle(),
-
       ),
     );
-
   }
 }
 
-class SignUp extends StatefulWidget {
+bool validateSignUp() {
+  if (emailController.text.isNotEmpty &&
+      passwordController.text.isNotEmpty &&
+      nameController.text.isNotEmpty &&
+      phoneNController.text.isNotEmpty &&
+      passwordConfimController.text == passwordController.text) {
+    return true;
+  }
+  return false;
+}
+
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+TextEditingController nameController = TextEditingController();
+TextEditingController emailController = TextEditingController();
+TextEditingController phoneNController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController passwordConfimController = TextEditingController();
+
+class _SignUpState extends ConsumerState<SignUp> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController phoneNController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController passwordConfimController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 30,left: 25,right: 45),
+          padding: const EdgeInsets.only(top: 30, left: 25, right: 45),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 15),
-                child: Text("Name-Surname",),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, top: 15),
+                child: Text(
+                  "Name-Surname",
+                ),
               ),
-              TextField(
-                controller: nameController
-
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("e-mail",),
+              TextField(controller: nameController),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, top: 30),
+                child: Text(
+                  "e-mail",
+                ),
               ),
               TextField(
                 controller: emailController,
-
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 30),
-                child: Text("Phone Number",),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, top: 30),
+                child: Text(
+                  "Phone Number",
+                ),
               ),
               TextField(
                 controller: phoneNController,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 40,),
-                child: Text("Password",),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  top: 40,
+                ),
+                child: Text(
+                  "Password",
+                ),
               ),
               TextField(
                 controller: passwordController,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 40,),
-                child: Text("Confirm your Password",),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  top: 40,
+                ),
+                child: Text(
+                  "Confirm your Password",
+                ),
               ),
               TextField(
-                  controller: passwordConfimController,
+                controller: passwordConfimController,
               ),
-              
               Padding(
-                  padding: EdgeInsets.only(),
-                  child: ElevatedButton(onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(title: "Login Screen")));
-                  }, child: Text("Ok"),
-                    
-                  ),
+                padding: const EdgeInsets.only(),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (validateSignUp()) {
+                      var createdUser = AppUser(
+                        name: nameController.text,
+                        email: emailController.text,
+                        phone: phoneNController.text,
+                        password: ref
+                            .read(serviceProvider)
+                            .encryptPassword(passwordController.text),
+                      );
+                      ref
+                          .read(serviceProvider)
+                          .createNewUser(createdUser, context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoginScreen(title: "Login Screen")));
+                    }
+                  },
+                  child: const Text("Ok"),
+                ),
               ),
             ],
-
           ),
         ),
       ),
-
-
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         height: 40.0,
         color: Colors.blue,
         shape: CircularNotchedRectangle(),
-
       ),
     );
   }
