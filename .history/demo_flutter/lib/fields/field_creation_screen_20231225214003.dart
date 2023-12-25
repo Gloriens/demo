@@ -32,7 +32,7 @@ class _FieldCreationScreenState extends ConsumerState<FieldCreationScreen> {
             ),
           ),
           TextField(controller: nameController
-              //There is an issue here. If we enter the name first, after that when we choose the type,
+              //There is an issue here. If we enter the name first, when we choose the type,
               //it deletes what we wrote on the name Textfield.
               ),
           const Padding(

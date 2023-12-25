@@ -47,7 +47,6 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            //This is the part that the data comes from the server through service.
                             FutureBuilder<List<Field>>(
                               future:
                                   service.getListOfFieldsByTemplate(context),
