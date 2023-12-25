@@ -34,6 +34,27 @@ ALTER TABLE ONLY "template"
         ON DELETE CASCADE;
 
 --
+-- Class Role as table role
+--
+
+CREATE TABLE "role" (
+  "id" serial,
+  "templateId" integer NOT NULL,
+  "name" text NOT NULL,
+  "display" boolean NOT NULL,
+  "edit" boolean NOT NULL
+);
+
+ALTER TABLE ONLY "role"
+  ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY "role"
+  ADD CONSTRAINT role_fk_0
+    FOREIGN KEY("templateId")
+      REFERENCES template(id)
+        ON DELETE CASCADE;
+
+--
 -- Class Field as table field
 --
 

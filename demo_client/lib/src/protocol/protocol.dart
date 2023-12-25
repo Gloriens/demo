@@ -11,11 +11,15 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'app_user.dart' as _i2;
 import 'example.dart' as _i3;
 import 'field.dart' as _i4;
-import 'template.dart' as _i5;
-import 'package:demo_client/src/protocol/template.dart' as _i6;
+import 'role.dart' as _i5;
+import 'template.dart' as _i6;
+import 'package:demo_client/src/protocol/field.dart' as _i7;
+import 'package:demo_client/src/protocol/role.dart' as _i8;
+import 'package:demo_client/src/protocol/template.dart' as _i9;
 export 'app_user.dart';
 export 'example.dart';
 export 'field.dart';
+export 'role.dart';
 export 'template.dart';
 export 'client.dart';
 
@@ -46,8 +50,11 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i4.Field) {
       return _i4.Field.fromJson(data, this) as T;
     }
-    if (t == _i5.Template) {
-      return _i5.Template.fromJson(data, this) as T;
+    if (t == _i5.Role) {
+      return _i5.Role.fromJson(data, this) as T;
+    }
+    if (t == _i6.Template) {
+      return _i6.Template.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i2.AppUser?>()) {
       return (data != null ? _i2.AppUser.fromJson(data, this) : null) as T;
@@ -58,11 +65,22 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i4.Field?>()) {
       return (data != null ? _i4.Field.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i5.Template?>()) {
-      return (data != null ? _i5.Template.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i5.Role?>()) {
+      return (data != null ? _i5.Role.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i6.Template>) {
-      return (data as List).map((e) => deserialize<_i6.Template>(e)).toList()
+    if (t == _i1.getType<_i6.Template?>()) {
+      return (data != null ? _i6.Template.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i7.Field>) {
+      return (data as List).map((e) => deserialize<_i7.Field>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i8.Role>) {
+      return (data as List).map((e) => deserialize<_i8.Role>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i9.Template>) {
+      return (data as List).map((e) => deserialize<_i9.Template>(e)).toList()
           as dynamic;
     }
     return super.deserialize<T>(data, t);
@@ -79,7 +97,10 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i4.Field) {
       return 'Field';
     }
-    if (data is _i5.Template) {
+    if (data is _i5.Role) {
+      return 'Role';
+    }
+    if (data is _i6.Template) {
       return 'Template';
     }
     return super.getClassNameForObject(data);
@@ -96,8 +117,11 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Field') {
       return deserialize<_i4.Field>(data['data']);
     }
+    if (data['className'] == 'Role') {
+      return deserialize<_i5.Role>(data['data']);
+    }
     if (data['className'] == 'Template') {
-      return deserialize<_i5.Template>(data['data']);
+      return deserialize<_i6.Template>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
