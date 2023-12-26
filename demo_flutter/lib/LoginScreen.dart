@@ -1,13 +1,19 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-var client = Client('http://localhost:8080/')
+var client = Client('http://10.0.2.2:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,21 +31,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  ConsumerState<LoginScreen> createState() => LoginScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends ConsumerState<LoginScreen> {
   String? _resultMessage;
   String? _errorMessage;
 
   final _textEditingController = TextEditingController();
-
 
   void _callHello() async {
     try {
@@ -56,67 +61,76 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    late TextEditingController phoneN = TextEditingController();
-    late TextEditingController password = TextEditingController();
+    TextEditingController phoneN = TextEditingController();
+    TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
       ),
       body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
-              child: TextField(
-                controller: phoneN,
-                decoration: InputDecoration(
-                  hintText: 'Enter your phone number',
-                ),
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
+            child: TextField(
+              controller: phoneN,
+              decoration: const InputDecoration(
+                hintText: 'Enter your phone number',
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Enter your password',
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
+            child: TextField(
+              controller: password,
+              obscureText: true,
+              decoration: const InputDecoration(
+                hintText: 'Enter your password',
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: (){
-                  //Login Butonu
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePAge()));
-                  //Backend Part
-
-              },
-                child: const Text('Login'),
-              ),
-            ),
-            ElevatedButton(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: ElevatedButton(
               onPressed: () {
-                 //Sign Up Butonu
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
-                //Navigator
-
+                //Login Butonu
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePAge()));
                 //Backend Part
+                var service = ref.read(serviceProvider);
+                var logInUser = AppUser(
+                    name: "",
+                    phone: phoneN.text,
+                    email: "",
+                    password: service.encryptPassword(password.text));
+                service.logIn(logInUser, context);
               },
-              child: const Text('Sign Up'),
+              child: const Text('Login'),
             ),
-            _ResultDisplay(
-              resultMessage: _resultMessage,
-              errorMessage: _errorMessage,
-            ),
-          ],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              //Sign Up Butonu
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SignUp()));
+              //Navigator
+
+              //Backend Part
+            },
+            child: const Text('Sign Up'),
+          ),
+          _ResultDisplay(
+            resultMessage: _resultMessage,
+            errorMessage: _errorMessage,
+          ),
+        ],
       ),
     );
   }
 }
-
-
 
 class _ResultDisplay extends StatelessWidget {
   final String? resultMessage;
