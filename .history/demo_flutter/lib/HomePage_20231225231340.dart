@@ -1,7 +1,6 @@
 import 'package:demo_flutter/LoginScreen.dart';
 import 'package:demo_flutter/after_template_screen.dart';
 import 'package:demo_flutter/services/service.dart';
-import 'package:demo_flutter/templates/template_cards_list.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,45 +16,17 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
   TextEditingController templateName = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final service = ref.watch(serviceProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
         backgroundColor: Colors.blue,
       ),
-      body: Center(
-          child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Templates",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-            FutureBuilder<List<Template>>(
-              future: service.getListOfTemplatesByUser(context),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Template> snapshotList = snapshot.data!;
-                  return TemplateCardsList(templates: snapshotList);
-                } else {
-                  const Text("No data");
-                }
-                return const Text(
-                  "No Template",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                );
-              },
-            ),
-          ],
+      body: const Center(
+          child: SizedBox(
+        child: Expanded(
+          child: Column(
+            children: [],
+          ),
         ),
       ) //Padding(
           //padding: EdgeInsets.only(top: 180.0),

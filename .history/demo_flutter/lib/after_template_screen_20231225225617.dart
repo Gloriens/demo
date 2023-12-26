@@ -1,5 +1,4 @@
 import 'package:demo_client/demo_client.dart';
-import 'package:demo_flutter/HomePage.dart';
 import 'package:demo_flutter/fields/field_cards_list.dart';
 import 'package:demo_flutter/fields/field_creation_screen.dart';
 import 'package:demo_flutter/roles/role_cards_list.dart';
@@ -156,7 +155,7 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const MyHomePAge()));
+                                            const AfterTemplateScreen()));
                               },
                               child: const Text("Save All"))),
                     ),

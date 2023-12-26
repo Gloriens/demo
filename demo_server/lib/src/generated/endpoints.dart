@@ -242,15 +242,23 @@ class Endpoints extends _i1.EndpointDispatch {
             params['template'],
           ),
         ),
-        'getTemplate': _i1.MethodConnector(
-          name: 'getTemplate',
-          params: {},
+        'getTemplates': _i1.MethodConnector(
+          name: 'getTemplates',
+          params: {
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i6.TemplateEndpoint)
-                  .getTemplate(session),
+              (endpoints['template'] as _i6.TemplateEndpoint).getTemplates(
+            session,
+            userId: params['userId'],
+          ),
         ),
       },
     );

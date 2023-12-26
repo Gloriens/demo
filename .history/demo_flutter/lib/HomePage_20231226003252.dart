@@ -30,12 +30,9 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
           children: [
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Templates",
-                  style: TextStyle(fontSize: 20),
-                ),
+              child: Text(
+                "Templates",
+                style: TextStyle(fontSize: 20),
               ),
             ),
             FutureBuilder<List<Template>>(

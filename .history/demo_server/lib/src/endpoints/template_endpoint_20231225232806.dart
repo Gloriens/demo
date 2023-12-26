@@ -7,7 +7,7 @@ class TemplateEndpoint extends Endpoint {
     return template;
   }
 
-  Future<List<Template>> getTemplates(Session session,
+  Future<List<Template>> getTemplate(Session session,
       {required int userId}) async {
     List<Template> templates = await Template.find(
       session,

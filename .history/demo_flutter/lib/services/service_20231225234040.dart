@@ -104,7 +104,6 @@ class Service {
   Future<List<Field>> getListOfFieldsByTemplate(BuildContext context) async {
     final templateProvider = ProviderScope.containerOf(context)
         .read(templateStateNotifierProvider.notifier);
-
     final List<Field> listOfFields = await client.field
         .getFieldsByTemplate(templateId: templateProvider.template.id ?? 0);
     return listOfFields;
@@ -113,7 +112,6 @@ class Service {
   Future<List<Role>> getListOfRolesByTemplate(BuildContext context) async {
     final templateProvider = ProviderScope.containerOf(context)
         .read(templateStateNotifierProvider.notifier);
-
     final List<Role> listOfRoles = await client.role
         .getRolesByTemplate(templateId: templateProvider.template.id ?? 0);
     return listOfRoles;
@@ -122,9 +120,7 @@ class Service {
   Future<List<Template>> getListOfTemplatesByUser(BuildContext context) async {
     final userProvider = ProviderScope.containerOf(context)
         .read(userStateNotifierProvider.notifier);
-
     final List<Template> listOfTemplates =
         await client.template.getTemplates(userId: userProvider.user.id ?? 0);
-    return listOfTemplates;
   }
 }

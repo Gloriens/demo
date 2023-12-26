@@ -110,11 +110,11 @@ class _EndpointTemplate extends _i1.EndpointRef {
         {'template': template},
       );
 
-  _i2.Future<List<_i6.Template>> getTemplate() =>
+  _i2.Future<List<_i6.Template>> getTemplates({required int userId}) =>
       caller.callServerEndpoint<List<_i6.Template>>(
         'template',
-        'getTemplate',
-        {},
+        'getTemplates',
+        {'userId': userId},
       );
 }
 

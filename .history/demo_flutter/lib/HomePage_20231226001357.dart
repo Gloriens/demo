@@ -24,38 +24,30 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
         backgroundColor: Colors.blue,
       ),
       body: Center(
-          child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Templates",
-                  style: TextStyle(fontSize: 20),
-                ),
+          child: Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FutureBuilder<List<Template>>(
+                future: service.getListOfTemplatesByUser(context),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Template> snapshotList = snapshot.data!;
+                    return TemplateCardsList(templates: snapshotList);
+                  } else {
+                    const Text("No data");
+                  }
+                  return const Text(
+                    "No Template",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  );
+                },
               ),
-            ),
-            FutureBuilder<List<Template>>(
-              future: service.getListOfTemplatesByUser(context),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Template> snapshotList = snapshot.data!;
-                  return TemplateCardsList(templates: snapshotList);
-                } else {
-                  const Text("No data");
-                }
-                return const Text(
-                  "No Template",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                );
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ) //Padding(
           //padding: EdgeInsets.only(top: 180.0),

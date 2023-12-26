@@ -125,6 +125,7 @@ class Service {
 
     final List<Template> listOfTemplates =
         await client.template.getTemplates(userId: userProvider.user.id ?? 0);
+
     return listOfTemplates;
   }
 }
