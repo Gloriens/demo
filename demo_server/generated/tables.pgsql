@@ -55,6 +55,26 @@ ALTER TABLE ONLY "role"
         ON DELETE CASCADE;
 
 --
+-- Class Record as table record
+--
+
+CREATE TABLE "record" (
+  "id" serial,
+  "templateId" integer NOT NULL,
+  "name" text NOT NULL,
+  "date" timestamp without time zone NOT NULL
+);
+
+ALTER TABLE ONLY "record"
+  ADD CONSTRAINT record_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY "record"
+  ADD CONSTRAINT record_fk_0
+    FOREIGN KEY("templateId")
+      REFERENCES template(id)
+        ON DELETE CASCADE;
+
+--
 -- Class Field as table field
 --
 
