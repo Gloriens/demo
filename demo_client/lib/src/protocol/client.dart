@@ -4,6 +4,8 @@
 // ignore_for_file: library_private_types_in_public_api
 // ignore_for_file: public_member_api_docs
 // ignore_for_file: implementation_imports
+// ignore_for_file: use_super_parameters
+// ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
@@ -13,11 +15,11 @@ import 'package:demo_client/src/protocol/field.dart' as _i4;
 import 'package:demo_client/src/protocol/record.dart' as _i5;
 import 'package:demo_client/src/protocol/role.dart' as _i6;
 import 'package:demo_client/src/protocol/template.dart' as _i7;
-import 'dart:io' as _i8;
-import 'protocol.dart' as _i9;
+import 'protocol.dart' as _i8;
 
-class _EndpointUserEndPoint extends _i1.EndpointRef {
-  _EndpointUserEndPoint(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointUserEndPoint extends _i1.EndpointRef {
+  EndpointUserEndPoint(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'userEndPoint';
@@ -44,8 +46,9 @@ class _EndpointUserEndPoint extends _i1.EndpointRef {
       );
 }
 
-class _EndpointExample extends _i1.EndpointRef {
-  _EndpointExample(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointExample extends _i1.EndpointRef {
+  EndpointExample(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'example';
@@ -57,8 +60,9 @@ class _EndpointExample extends _i1.EndpointRef {
       );
 }
 
-class _EndpointField extends _i1.EndpointRef {
-  _EndpointField(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointField extends _i1.EndpointRef {
+  EndpointField(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'field';
@@ -78,8 +82,9 @@ class _EndpointField extends _i1.EndpointRef {
       );
 }
 
-class _EndpointRecord extends _i1.EndpointRef {
-  _EndpointRecord(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointRecord extends _i1.EndpointRef {
+  EndpointRecord(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'record';
@@ -99,8 +104,9 @@ class _EndpointRecord extends _i1.EndpointRef {
       );
 }
 
-class _EndpointRole extends _i1.EndpointRef {
-  _EndpointRole(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointRole extends _i1.EndpointRef {
+  EndpointRole(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'role';
@@ -119,8 +125,9 @@ class _EndpointRole extends _i1.EndpointRef {
       );
 }
 
-class _EndpointTemplate extends _i1.EndpointRef {
-  _EndpointTemplate(_i1.EndpointCaller caller) : super(caller);
+/// {@category Endpoint}
+class EndpointTemplate extends _i1.EndpointRef {
+  EndpointTemplate(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'template';
@@ -143,33 +150,37 @@ class _EndpointTemplate extends _i1.EndpointRef {
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
-    _i8.SecurityContext? context,
+    dynamic securityContext,
     _i1.AuthenticationKeyManager? authenticationKeyManager,
+    Duration? streamingConnectionTimeout,
+    Duration? connectionTimeout,
   }) : super(
           host,
-          _i9.Protocol(),
-          context: context,
+          _i8.Protocol(),
+          securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
+          streamingConnectionTimeout: streamingConnectionTimeout,
+          connectionTimeout: connectionTimeout,
         ) {
-    userEndPoint = _EndpointUserEndPoint(this);
-    example = _EndpointExample(this);
-    field = _EndpointField(this);
-    record = _EndpointRecord(this);
-    role = _EndpointRole(this);
-    template = _EndpointTemplate(this);
+    userEndPoint = EndpointUserEndPoint(this);
+    example = EndpointExample(this);
+    field = EndpointField(this);
+    record = EndpointRecord(this);
+    role = EndpointRole(this);
+    template = EndpointTemplate(this);
   }
 
-  late final _EndpointUserEndPoint userEndPoint;
+  late final EndpointUserEndPoint userEndPoint;
 
-  late final _EndpointExample example;
+  late final EndpointExample example;
 
-  late final _EndpointField field;
+  late final EndpointField field;
 
-  late final _EndpointRecord record;
+  late final EndpointRecord record;
 
-  late final _EndpointRole role;
+  late final EndpointRole role;
 
-  late final _EndpointTemplate template;
+  late final EndpointTemplate template;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
