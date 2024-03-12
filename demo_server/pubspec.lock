@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: buffer
-      sha256: "94f60815065a8f0fd4f05be51faf86cf86519327e039d5c2aac72e1d1cc1dad4"
+      sha256: "389da2ec2c16283c8787e0adaede82b1842102f8c8aae2f49003a766c5c6b3d1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.2.3"
   charcode:
     dependency: transitive
     description:
@@ -181,42 +181,42 @@ packages:
     dependency: "direct main"
     description:
       name: serverpod
-      sha256: ce56fcd13fcf5fa0d736ec05603e8aba38f65d40f9fbabfc02c18e3889785dae
+      sha256: "6f4437ce09217fea78a3aa8b6c2148ecb4711e9b38a27a3d48f014af0a7b0026"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_client:
     dependency: transitive
     description:
       name: serverpod_client
-      sha256: "6e76c50d8aa5c7f796dd0af8307355740db01291931ab1fca5971505497e9547"
+      sha256: fab1200137b18bc1f8a7cae79491245fe9391a931a0db13a56cab1a9116b56a1
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_serialization:
     dependency: transitive
     description:
       name: serverpod_serialization
-      sha256: "295695cfcf5641bd38bd5c56dd322a9e1f6e2462bc2a539913e7e2d9ef6a6c0c"
+      sha256: b6a607a1431187b1d4e6f0f1f091d88e861c7c4ec28dc46e121dbe2757339f6e
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_service_client:
     dependency: transitive
     description:
       name: serverpod_service_client
-      sha256: c73bf40a203727346213b563473cca77cd4256594725c4f67c93b73a05f82048
+      sha256: "45c49c6ef1157b001752c6945dfd90ffae21dc4c08535426de51bc4e5ed26d26"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_shared:
     dependency: transitive
     description:
       name: serverpod_shared
-      sha256: "43ef6abd4c14fec5d7180b305c4b9b81c1f75bb05407ed72d65b3335bb160d4c"
+      sha256: "878ebfd26ab9070406a7fe4324b68b676a84bccd3f79dcb536c81429ba6c3c85"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   source_span:
     dependency: transitive
     description:

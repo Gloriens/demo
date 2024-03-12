@@ -237,10 +237,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "40ae61a5d43feea6d24bd22c0537a6629db858963b99b4bc1c3db80676f32368"
+      sha256: "99e066ce75c89d6b29903d788a7bb9369cf754f7b24bf70bf4b6d6d6b26853b9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.6"
   dbus:
     dependency: transitive
     description:
@@ -571,26 +571,26 @@ packages:
     dependency: transitive
     description:
       name: serverpod_client
-      sha256: "6e76c50d8aa5c7f796dd0af8307355740db01291931ab1fca5971505497e9547"
+      sha256: fab1200137b18bc1f8a7cae79491245fe9391a931a0db13a56cab1a9116b56a1
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_flutter:
     dependency: "direct main"
     description:
       name: serverpod_flutter
-      sha256: fed5a2421c71c99afdafa4d2b9386667041fd29661b76c5f385a5d19654a0e00
+      sha256: "5e117b028c669f159966c436483bd12670668d86e2bf0a5c8f4b4b0a84b1963d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   serverpod_serialization:
     dependency: transitive
     description:
       name: serverpod_serialization
-      sha256: "295695cfcf5641bd38bd5c56dd322a9e1f6e2462bc2a539913e7e2d9ef6a6c0c"
+      sha256: b6a607a1431187b1d4e6f0f1f091d88e861c7c4ec28dc46e121dbe2757339f6e
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.5"
   shelf:
     dependency: transitive
     description:
