@@ -1,6 +1,0 @@
-class: Field
-table: field
-fields:
-  templateId: int, relation(parent=template)
-  type: String
-  name: String

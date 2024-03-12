@@ -19,7 +19,8 @@ class AfterTemplateScreen extends ConsumerStatefulWidget {
 class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
   @override
   Widget build(BuildContext context) {
-    final service = ref.watch(serviceProvider);
+    final fields = ref.watch(listOfFieldsProvider);
+    final roles = ref.watch(listOfRolesProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -48,25 +49,26 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            //This is the part that the data comes from the server through service.
-                            FutureBuilder<List<Field>>(
-                              future:
-                                  service.getListOfFieldsByTemplate(context),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  List<Field> snapshotList = snapshot.data!;
-                                  return FieldCardsList(fields: snapshotList);
-                                } else {
-                                  const Text("No data");
-                                }
-                                return const Text(
-                                  "No Data",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                );
-                              },
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        ref.refresh(listOfFieldsProvider);
+                                        ref.refresh(listOfRolesProvider);
+                                      },
+                                      child: const Text("Refresh"))),
                             ),
+                            //This is the part that the data comes from the server through service.
+                            fields.when(
+                                data: (data) {
+                                  return FieldCardsList(fields: data);
+                                },
+                                error: ((error, stackTrace) =>
+                                    Text(error.toString())),
+                                loading: () => const Center(
+                                    child: CircularProgressIndicator())),
                           ],
                         ),
                       ),
@@ -111,23 +113,14 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             //This is the part that the data comes from the server through service.
-                            FutureBuilder<List<Role>>(
-                              future: service.getListOfRolesByTemplate(context),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  List<Role> snapshotList = snapshot.data!;
-                                  return RoleCardsList(roles: snapshotList);
-                                } else {
-                                  const Text("No data");
-                                }
-                                return const Text(
-                                  "No Data",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                );
-                              },
-                            ),
+                            roles.when(
+                                data: (data) {
+                                  return RoleCardsList(roles: data);
+                                },
+                                error: ((error, stackTrace) =>
+                                    Text(error.toString())),
+                                loading: () => const Center(
+                                    child: CircularProgressIndicator())),
                           ],
                         ),
                       ),

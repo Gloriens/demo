@@ -1,5 +1,6 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/main_menu.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,10 +96,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             child: ElevatedButton(
               onPressed: () {
                 //Login Butonu
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MyHomePAge()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MainMenu()));
                 //Backend Part
                 var service = ref.read(serviceProvider);
                 var logInUser = AppUser(

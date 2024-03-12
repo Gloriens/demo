@@ -17,7 +17,8 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
   TextEditingController templateName = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final service = ref.watch(serviceProvider);
+    final templates = ref.watch(listOfTemplatesProvider);
+    // Ekran düzeltilemeli
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -28,6 +29,16 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        ref.refresh(listOfTemplatesProvider);
+                      },
+                      child: const Text("Refresh")),
+                )),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Align(
@@ -38,23 +49,13 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                 ),
               ),
             ),
-            FutureBuilder<List<Template>>(
-              future: service.getListOfTemplatesByUser(context),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Template> snapshotList = snapshot.data!;
-                  return TemplateCardsList(templates: snapshotList);
-                } else {
-                  const Text("No data");
-                }
-                return const Text(
-                  "No Template",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                );
-              },
-            ),
+            templates.when(
+                data: (data) {
+                  return TemplateCardsList(templates: data);
+                },
+                error: ((error, stackTrace) => Text(error.toString())),
+                loading: () =>
+                    const Center(child: CircularProgressIndicator())),
           ],
         ),
       ) //Padding(

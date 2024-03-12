@@ -1,10 +1,5 @@
-import 'package:demo_flutter/LoginScreen.dart';
 import 'package:demo_flutter/after_template_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:demo_client/demo_client.dart';
-import 'package:flutter/material.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
 
 class CreateTemplatePage extends StatefulWidget {
   const CreateTemplatePage({super.key});
