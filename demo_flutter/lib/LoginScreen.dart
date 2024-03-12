@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-var client = Client('http://10.0.2.2:8080/')
+// for android studio users, type 10.0.2.2 instead of localhost
+// localhost for chrome/edge users, 10.0.2.2 for android studio users
+var client = Client('http://localhost:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() {
