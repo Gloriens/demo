@@ -1,0 +1,6 @@
+class: RecordText
+table: record_text
+fields:
+  recordId: int, relation(parent=record)
+  fieldId: int, relation(parent=field)
+  contentText: String
