@@ -18,10 +18,10 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
   @override
   Widget build(BuildContext context) {
     final templates = ref.watch(listOfTemplatesProvider);
-    // Ekran düzeltilemeli
+    // Ekran düzeltilmeli
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Display Templates'),
         backgroundColor: Colors.blue,
       ),
       body: Center(
