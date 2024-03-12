@@ -1,0 +1,15 @@
+userEndPoint:
+  - createUser:
+  - deleteUser:
+  - checkIfUserExists:
+example:
+  - hello:
+field:
+  - createField:
+  - getFieldsByTemplate:
+role:
+  - createRole:
+  - getRolesByTemplate:
+template:
+  - createTemplate:
+  - getTemplates:

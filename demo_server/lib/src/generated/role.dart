@@ -4,18 +4,28 @@
 // ignore_for_file: library_private_types_in_public_api
 // ignore_for_file: public_member_api_docs
 // ignore_for_file: implementation_imports
+// ignore_for_file: use_super_parameters
+// ignore_for_file: type_literal_in_constant_pattern
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-class Role extends _i1.TableRow {
-  Role({
+abstract class Role extends _i1.TableRow {
+  Role._({
     int? id,
     required this.templateId,
     required this.name,
     required this.display,
     required this.edit,
   }) : super(id);
+
+  factory Role({
+    int? id,
+    required int templateId,
+    required String name,
+    required bool display,
+    required bool edit,
+  }) = _RoleImpl;
 
   factory Role.fromJson(
     Map<String, dynamic> jsonSerialization,
@@ -34,6 +44,8 @@ class Role extends _i1.TableRow {
 
   static final t = RoleTable();
 
+  static const db = RoleRepository._();
+
   int templateId;
 
   String name;
@@ -43,12 +55,19 @@ class Role extends _i1.TableRow {
   bool edit;
 
   @override
-  String get tableName => 'role';
+  _i1.Table get table => t;
 
+  Role copyWith({
+    int? id,
+    int? templateId,
+    String? name,
+    bool? display,
+    bool? edit,
+  });
   @override
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      if (id != null) 'id': id,
       'templateId': templateId,
       'name': name,
       'display': display,
@@ -57,6 +76,7 @@ class Role extends _i1.TableRow {
   }
 
   @override
+  @Deprecated('Will be removed in 2.0.0')
   Map<String, dynamic> toJsonForDatabase() {
     return {
       'id': id,
@@ -70,7 +90,7 @@ class Role extends _i1.TableRow {
   @override
   Map<String, dynamic> allToJson() {
     return {
-      'id': id,
+      if (id != null) 'id': id,
       'templateId': templateId,
       'name': name,
       'display': display,
@@ -79,6 +99,7 @@ class Role extends _i1.TableRow {
   }
 
   @override
+  @Deprecated('Will be removed in 2.0.0')
   void setColumn(
     String columnName,
     value,
@@ -104,9 +125,10 @@ class Role extends _i1.TableRow {
     }
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
   static Future<List<Role>> find(
     _i1.Session session, {
-    RoleExpressionBuilder? where,
+    _i1.WhereExpressionBuilder<RoleTable>? where,
     int? limit,
     int? offset,
     _i1.Column? orderBy,
@@ -127,9 +149,10 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
   static Future<Role?> findSingleRow(
     _i1.Session session, {
-    RoleExpressionBuilder? where,
+    _i1.WhereExpressionBuilder<RoleTable>? where,
     int? offset,
     _i1.Column? orderBy,
     bool orderDescending = false,
@@ -146,6 +169,7 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
   static Future<Role?> findById(
     _i1.Session session,
     int id,
@@ -153,9 +177,10 @@ class Role extends _i1.TableRow {
     return session.db.findById<Role>(id);
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
   static Future<int> delete(
     _i1.Session session, {
-    required RoleExpressionBuilder where,
+    required _i1.WhereExpressionBuilder<RoleTable> where,
     _i1.Transaction? transaction,
   }) async {
     return session.db.delete<Role>(
@@ -164,6 +189,7 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
   static Future<bool> deleteRow(
     _i1.Session session,
     Role row, {
@@ -175,6 +201,7 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
   static Future<bool> update(
     _i1.Session session,
     Role row, {
@@ -186,6 +213,8 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated(
+      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
   static Future<void> insert(
     _i1.Session session,
     Role row, {
@@ -197,9 +226,10 @@ class Role extends _i1.TableRow {
     );
   }
 
+  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
   static Future<int> count(
     _i1.Session session, {
-    RoleExpressionBuilder? where,
+    _i1.WhereExpressionBuilder<RoleTable>? where,
     int? limit,
     bool useCache = true,
     _i1.Transaction? transaction,
@@ -211,25 +241,94 @@ class Role extends _i1.TableRow {
       transaction: transaction,
     );
   }
+
+  static RoleInclude include() {
+    return RoleInclude._();
+  }
+
+  static RoleIncludeList includeList({
+    _i1.WhereExpressionBuilder<RoleTable>? where,
+    int? limit,
+    int? offset,
+    _i1.OrderByBuilder<RoleTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<RoleTable>? orderByList,
+    RoleInclude? include,
+  }) {
+    return RoleIncludeList._(
+      where: where,
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy?.call(Role.t),
+      orderDescending: orderDescending,
+      orderByList: orderByList?.call(Role.t),
+      include: include,
+    );
+  }
 }
 
-typedef RoleExpressionBuilder = _i1.Expression Function(RoleTable);
+class _Undefined {}
+
+class _RoleImpl extends Role {
+  _RoleImpl({
+    int? id,
+    required int templateId,
+    required String name,
+    required bool display,
+    required bool edit,
+  }) : super._(
+          id: id,
+          templateId: templateId,
+          name: name,
+          display: display,
+          edit: edit,
+        );
+
+  @override
+  Role copyWith({
+    Object? id = _Undefined,
+    int? templateId,
+    String? name,
+    bool? display,
+    bool? edit,
+  }) {
+    return Role(
+      id: id is int? ? id : this.id,
+      templateId: templateId ?? this.templateId,
+      name: name ?? this.name,
+      display: display ?? this.display,
+      edit: edit ?? this.edit,
+    );
+  }
+}
 
 class RoleTable extends _i1.Table {
-  RoleTable() : super(tableName: 'role');
+  RoleTable({super.tableRelation}) : super(tableName: 'role') {
+    templateId = _i1.ColumnInt(
+      'templateId',
+      this,
+    );
+    name = _i1.ColumnString(
+      'name',
+      this,
+    );
+    display = _i1.ColumnBool(
+      'display',
+      this,
+    );
+    edit = _i1.ColumnBool(
+      'edit',
+      this,
+    );
+  }
 
-  /// The database id, set if the object has been inserted into the
-  /// database or if it has been fetched from the database. Otherwise,
-  /// the id will be null.
-  final id = _i1.ColumnInt('id');
+  late final _i1.ColumnInt templateId;
 
-  final templateId = _i1.ColumnInt('templateId');
+  late final _i1.ColumnString name;
 
-  final name = _i1.ColumnString('name');
+  late final _i1.ColumnBool display;
 
-  final display = _i1.ColumnBool('display');
-
-  final edit = _i1.ColumnBool('edit');
+  late final _i1.ColumnBool edit;
 
   @override
   List<_i1.Column> get columns => [
@@ -243,3 +342,182 @@ class RoleTable extends _i1.Table {
 
 @Deprecated('Use RoleTable.t instead.')
 RoleTable tRole = RoleTable();
+
+class RoleInclude extends _i1.IncludeObject {
+  RoleInclude._();
+
+  @override
+  Map<String, _i1.Include?> get includes => {};
+
+  @override
+  _i1.Table get table => Role.t;
+}
+
+class RoleIncludeList extends _i1.IncludeList {
+  RoleIncludeList._({
+    _i1.WhereExpressionBuilder<RoleTable>? where,
+    super.limit,
+    super.offset,
+    super.orderBy,
+    super.orderDescending,
+    super.orderByList,
+    super.include,
+  }) {
+    super.where = where?.call(Role.t);
+  }
+
+  @override
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+
+  @override
+  _i1.Table get table => Role.t;
+}
+
+class RoleRepository {
+  const RoleRepository._();
+
+  Future<List<Role>> find(
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<RoleTable>? where,
+    int? limit,
+    int? offset,
+    _i1.OrderByBuilder<RoleTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<RoleTable>? orderByList,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.find<Role>(
+      where: where?.call(Role.t),
+      orderBy: orderBy?.call(Role.t),
+      orderByList: orderByList?.call(Role.t),
+      orderDescending: orderDescending,
+      limit: limit,
+      offset: offset,
+      transaction: transaction,
+    );
+  }
+
+  Future<Role?> findFirstRow(
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<RoleTable>? where,
+    int? offset,
+    _i1.OrderByBuilder<RoleTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<RoleTable>? orderByList,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.findFirstRow<Role>(
+      where: where?.call(Role.t),
+      orderBy: orderBy?.call(Role.t),
+      orderByList: orderByList?.call(Role.t),
+      orderDescending: orderDescending,
+      offset: offset,
+      transaction: transaction,
+    );
+  }
+
+  Future<Role?> findById(
+    _i1.Session session,
+    int id, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.findById<Role>(
+      id,
+      transaction: transaction,
+    );
+  }
+
+  Future<List<Role>> insert(
+    _i1.Session session,
+    List<Role> rows, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.insert<Role>(
+      rows,
+      transaction: transaction,
+    );
+  }
+
+  Future<Role> insertRow(
+    _i1.Session session,
+    Role row, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.insertRow<Role>(
+      row,
+      transaction: transaction,
+    );
+  }
+
+  Future<List<Role>> update(
+    _i1.Session session,
+    List<Role> rows, {
+    _i1.ColumnSelections<RoleTable>? columns,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.update<Role>(
+      rows,
+      columns: columns?.call(Role.t),
+      transaction: transaction,
+    );
+  }
+
+  Future<Role> updateRow(
+    _i1.Session session,
+    Role row, {
+    _i1.ColumnSelections<RoleTable>? columns,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.updateRow<Role>(
+      row,
+      columns: columns?.call(Role.t),
+      transaction: transaction,
+    );
+  }
+
+  Future<List<int>> delete(
+    _i1.Session session,
+    List<Role> rows, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.delete<Role>(
+      rows,
+      transaction: transaction,
+    );
+  }
+
+  Future<int> deleteRow(
+    _i1.Session session,
+    Role row, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.deleteRow<Role>(
+      row,
+      transaction: transaction,
+    );
+  }
+
+  Future<List<int>> deleteWhere(
+    _i1.Session session, {
+    required _i1.WhereExpressionBuilder<RoleTable> where,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.deleteWhere<Role>(
+      where: where(Role.t),
+      transaction: transaction,
+    );
+  }
+
+  Future<int> count(
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<RoleTable>? where,
+    int? limit,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.dbNext.count<Role>(
+      where: where?.call(Role.t),
+      limit: limit,
+      transaction: transaction,
+    );
+  }
+}
