@@ -1,0 +1,18 @@
+userEndPoint:
+  - createUser:
+  - deleteUser:
+  - checkIfUserExists:
+example:
+  - hello:
+field:
+  - createField:
+  - getFieldsByTemplate:
+record:
+  - createRecord:
+  - getFieldsByTemplate:
+role:
+  - createRole:
+  - getRolesByTemplate:
+template:
+  - createTemplate:
+  - getTemplates:

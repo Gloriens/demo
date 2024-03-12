@@ -1,0 +1,7 @@
+class: Role
+table: role
+fields:
+  templateId: int, relation(parent=template)
+  name: String
+  display: bool
+  edit: bool

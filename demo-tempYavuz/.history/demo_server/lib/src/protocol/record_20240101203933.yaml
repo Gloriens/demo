@@ -1,0 +1,6 @@
+class: Record
+table: record
+fields:
+  templateId: int, parent=template
+  name: String
+  date: DateTime

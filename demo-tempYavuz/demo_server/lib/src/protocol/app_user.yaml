@@ -1,0 +1,7 @@
+class: AppUser
+table: app_user
+fields:
+  name: String
+  phone: String
+  email: String
+  password: String

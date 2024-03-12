@@ -1,0 +1,5 @@
+class: Template
+table: template
+fields:
+  userId: int, relation(parent=app_user)
+  name: String
