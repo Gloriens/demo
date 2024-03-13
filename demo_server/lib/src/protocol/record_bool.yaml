@@ -1,0 +1,6 @@
+class: RecordBool
+table: record_bool
+fields:
+  recordId: int, relation(parent=record)
+  fieldId: int, relation(parent=field)
+  contentBool: bool

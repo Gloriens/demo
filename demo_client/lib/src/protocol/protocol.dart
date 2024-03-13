@@ -14,17 +14,19 @@ import 'app_user.dart' as _i2;
 import 'example.dart' as _i3;
 import 'field.dart' as _i4;
 import 'record.dart' as _i5;
-import 'record_text.dart' as _i6;
-import 'role.dart' as _i7;
-import 'template.dart' as _i8;
-import 'package:demo_client/src/protocol/field.dart' as _i9;
-import 'package:demo_client/src/protocol/record.dart' as _i10;
-import 'package:demo_client/src/protocol/role.dart' as _i11;
-import 'package:demo_client/src/protocol/template.dart' as _i12;
+import 'record_bool.dart' as _i6;
+import 'record_text.dart' as _i7;
+import 'role.dart' as _i8;
+import 'template.dart' as _i9;
+import 'package:demo_client/src/protocol/field.dart' as _i10;
+import 'package:demo_client/src/protocol/record.dart' as _i11;
+import 'package:demo_client/src/protocol/role.dart' as _i12;
+import 'package:demo_client/src/protocol/template.dart' as _i13;
 export 'app_user.dart';
 export 'example.dart';
 export 'field.dart';
 export 'record.dart';
+export 'record_bool.dart';
 export 'record_text.dart';
 export 'role.dart';
 export 'template.dart';
@@ -60,14 +62,17 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i5.Record) {
       return _i5.Record.fromJson(data, this) as T;
     }
-    if (t == _i6.RecordText) {
-      return _i6.RecordText.fromJson(data, this) as T;
+    if (t == _i6.RecordBool) {
+      return _i6.RecordBool.fromJson(data, this) as T;
     }
-    if (t == _i7.Role) {
-      return _i7.Role.fromJson(data, this) as T;
+    if (t == _i7.RecordText) {
+      return _i7.RecordText.fromJson(data, this) as T;
     }
-    if (t == _i8.Template) {
-      return _i8.Template.fromJson(data, this) as T;
+    if (t == _i8.Role) {
+      return _i8.Role.fromJson(data, this) as T;
+    }
+    if (t == _i9.Template) {
+      return _i9.Template.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i2.AppUser?>()) {
       return (data != null ? _i2.AppUser.fromJson(data, this) : null) as T;
@@ -81,29 +86,32 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i5.Record?>()) {
       return (data != null ? _i5.Record.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i6.RecordText?>()) {
-      return (data != null ? _i6.RecordText.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i6.RecordBool?>()) {
+      return (data != null ? _i6.RecordBool.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i7.Role?>()) {
-      return (data != null ? _i7.Role.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i7.RecordText?>()) {
+      return (data != null ? _i7.RecordText.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i8.Template?>()) {
-      return (data != null ? _i8.Template.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i8.Role?>()) {
+      return (data != null ? _i8.Role.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i9.Field>) {
-      return (data as List).map((e) => deserialize<_i9.Field>(e)).toList()
+    if (t == _i1.getType<_i9.Template?>()) {
+      return (data != null ? _i9.Template.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i10.Field>) {
+      return (data as List).map((e) => deserialize<_i10.Field>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i10.Record>) {
-      return (data as List).map((e) => deserialize<_i10.Record>(e)).toList()
+    if (t == List<_i11.Record>) {
+      return (data as List).map((e) => deserialize<_i11.Record>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i11.Role>) {
-      return (data as List).map((e) => deserialize<_i11.Role>(e)).toList()
+    if (t == List<_i12.Role>) {
+      return (data as List).map((e) => deserialize<_i12.Role>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i12.Template>) {
-      return (data as List).map((e) => deserialize<_i12.Template>(e)).toList()
+    if (t == List<_i13.Template>) {
+      return (data as List).map((e) => deserialize<_i13.Template>(e)).toList()
           as dynamic;
     }
     return super.deserialize<T>(data, t);
@@ -123,13 +131,16 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i5.Record) {
       return 'Record';
     }
-    if (data is _i6.RecordText) {
+    if (data is _i6.RecordBool) {
+      return 'RecordBool';
+    }
+    if (data is _i7.RecordText) {
       return 'RecordText';
     }
-    if (data is _i7.Role) {
+    if (data is _i8.Role) {
       return 'Role';
     }
-    if (data is _i8.Template) {
+    if (data is _i9.Template) {
       return 'Template';
     }
     return super.getClassNameForObject(data);
@@ -149,14 +160,17 @@ class Protocol extends _i1.SerializationManager {
     if (data['className'] == 'Record') {
       return deserialize<_i5.Record>(data['data']);
     }
+    if (data['className'] == 'RecordBool') {
+      return deserialize<_i6.RecordBool>(data['data']);
+    }
     if (data['className'] == 'RecordText') {
-      return deserialize<_i6.RecordText>(data['data']);
+      return deserialize<_i7.RecordText>(data['data']);
     }
     if (data['className'] == 'Role') {
-      return deserialize<_i7.Role>(data['data']);
+      return deserialize<_i8.Role>(data['data']);
     }
     if (data['className'] == 'Template') {
-      return deserialize<_i8.Template>(data['data']);
+      return deserialize<_i9.Template>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

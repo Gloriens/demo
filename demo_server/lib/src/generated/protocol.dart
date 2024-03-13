@@ -15,17 +15,19 @@ import 'app_user.dart' as _i3;
 import 'example.dart' as _i4;
 import 'field.dart' as _i5;
 import 'record.dart' as _i6;
-import 'record_text.dart' as _i7;
-import 'role.dart' as _i8;
-import 'template.dart' as _i9;
-import 'package:demo_server/src/generated/field.dart' as _i10;
-import 'package:demo_server/src/generated/record.dart' as _i11;
-import 'package:demo_server/src/generated/role.dart' as _i12;
-import 'package:demo_server/src/generated/template.dart' as _i13;
+import 'record_bool.dart' as _i7;
+import 'record_text.dart' as _i8;
+import 'role.dart' as _i9;
+import 'template.dart' as _i10;
+import 'package:demo_server/src/generated/field.dart' as _i11;
+import 'package:demo_server/src/generated/record.dart' as _i12;
+import 'package:demo_server/src/generated/role.dart' as _i13;
+import 'package:demo_server/src/generated/template.dart' as _i14;
 export 'app_user.dart';
 export 'example.dart';
 export 'field.dart';
 export 'record.dart';
+export 'record_bool.dart';
 export 'record_text.dart';
 export 'role.dart';
 export 'template.dart';
@@ -204,6 +206,77 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'record_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'record_bool',
+      dartName: 'RecordBool',
+      schema: 'public',
+      module: 'demo',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'record_bool_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recordId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'fieldId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'contentBool',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'record_bool_fk_0',
+          columns: ['recordId'],
+          referenceTable: 'record',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'record_bool_fk_1',
+          columns: ['fieldId'],
+          referenceTable: 'field',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'record_bool_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -435,14 +508,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i6.Record) {
       return _i6.Record.fromJson(data, this) as T;
     }
-    if (t == _i7.RecordText) {
-      return _i7.RecordText.fromJson(data, this) as T;
+    if (t == _i7.RecordBool) {
+      return _i7.RecordBool.fromJson(data, this) as T;
     }
-    if (t == _i8.Role) {
-      return _i8.Role.fromJson(data, this) as T;
+    if (t == _i8.RecordText) {
+      return _i8.RecordText.fromJson(data, this) as T;
     }
-    if (t == _i9.Template) {
-      return _i9.Template.fromJson(data, this) as T;
+    if (t == _i9.Role) {
+      return _i9.Role.fromJson(data, this) as T;
+    }
+    if (t == _i10.Template) {
+      return _i10.Template.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i3.AppUser?>()) {
       return (data != null ? _i3.AppUser.fromJson(data, this) : null) as T;
@@ -456,29 +532,32 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i6.Record?>()) {
       return (data != null ? _i6.Record.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i7.RecordText?>()) {
-      return (data != null ? _i7.RecordText.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i7.RecordBool?>()) {
+      return (data != null ? _i7.RecordBool.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i8.Role?>()) {
-      return (data != null ? _i8.Role.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i8.RecordText?>()) {
+      return (data != null ? _i8.RecordText.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i9.Template?>()) {
-      return (data != null ? _i9.Template.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i9.Role?>()) {
+      return (data != null ? _i9.Role.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i10.Field>) {
-      return (data as List).map((e) => deserialize<_i10.Field>(e)).toList()
+    if (t == _i1.getType<_i10.Template?>()) {
+      return (data != null ? _i10.Template.fromJson(data, this) : null) as T;
+    }
+    if (t == List<_i11.Field>) {
+      return (data as List).map((e) => deserialize<_i11.Field>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i11.Record>) {
-      return (data as List).map((e) => deserialize<_i11.Record>(e)).toList()
+    if (t == List<_i12.Record>) {
+      return (data as List).map((e) => deserialize<_i12.Record>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i12.Role>) {
-      return (data as List).map((e) => deserialize<_i12.Role>(e)).toList()
+    if (t == List<_i13.Role>) {
+      return (data as List).map((e) => deserialize<_i13.Role>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i13.Template>) {
-      return (data as List).map((e) => deserialize<_i13.Template>(e)).toList()
+    if (t == List<_i14.Template>) {
+      return (data as List).map((e) => deserialize<_i14.Template>(e)).toList()
           as dynamic;
     }
     try {
@@ -501,13 +580,16 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i6.Record) {
       return 'Record';
     }
-    if (data is _i7.RecordText) {
+    if (data is _i7.RecordBool) {
+      return 'RecordBool';
+    }
+    if (data is _i8.RecordText) {
       return 'RecordText';
     }
-    if (data is _i8.Role) {
+    if (data is _i9.Role) {
       return 'Role';
     }
-    if (data is _i9.Template) {
+    if (data is _i10.Template) {
       return 'Template';
     }
     return super.getClassNameForObject(data);
@@ -527,14 +609,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Record') {
       return deserialize<_i6.Record>(data['data']);
     }
+    if (data['className'] == 'RecordBool') {
+      return deserialize<_i7.RecordBool>(data['data']);
+    }
     if (data['className'] == 'RecordText') {
-      return deserialize<_i7.RecordText>(data['data']);
+      return deserialize<_i8.RecordText>(data['data']);
     }
     if (data['className'] == 'Role') {
-      return deserialize<_i8.Role>(data['data']);
+      return deserialize<_i9.Role>(data['data']);
     }
     if (data['className'] == 'Template') {
-      return deserialize<_i9.Template>(data['data']);
+      return deserialize<_i10.Template>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -554,12 +639,14 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i5.Field.t;
       case _i6.Record:
         return _i6.Record.t;
-      case _i7.RecordText:
-        return _i7.RecordText.t;
-      case _i8.Role:
-        return _i8.Role.t;
-      case _i9.Template:
-        return _i9.Template.t;
+      case _i7.RecordBool:
+        return _i7.RecordBool.t;
+      case _i8.RecordText:
+        return _i8.RecordText.t;
+      case _i9.Role:
+        return _i9.Role.t;
+      case _i10.Template:
+        return _i10.Template.t;
     }
     return null;
   }
