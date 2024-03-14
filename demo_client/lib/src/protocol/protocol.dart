@@ -22,6 +22,7 @@ import 'package:demo_client/src/protocol/field.dart' as _i10;
 import 'package:demo_client/src/protocol/record.dart' as _i11;
 import 'package:demo_client/src/protocol/role.dart' as _i12;
 import 'package:demo_client/src/protocol/template.dart' as _i13;
+import 'package:serverpod_auth_client/module.dart' as _i14;
 export 'app_user.dart';
 export 'example.dart';
 export 'field.dart';
@@ -114,11 +115,19 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i13.Template>(e)).toList()
           as dynamic;
     }
+    try {
+      return _i14.Protocol().deserialize<T>(data, t);
+    } catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   @override
   String? getClassNameForObject(Object data) {
+    String? className;
+    className = _i14.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return 'serverpod_auth.$className';
+    }
     if (data is _i2.AppUser) {
       return 'AppUser';
     }
@@ -148,6 +157,10 @@ class Protocol extends _i1.SerializationManager {
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
+    if (data['className'].startsWith('serverpod_auth.')) {
+      data['className'] = data['className'].substring(15);
+      return _i14.Protocol().deserializeByClassName(data);
+    }
     if (data['className'] == 'AppUser') {
       return deserialize<_i2.AppUser>(data['data']);
     }
