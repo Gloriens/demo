@@ -20,6 +20,7 @@ import 'package:demo_server/src/generated/field.dart' as _i9;
 import 'package:demo_server/src/generated/record.dart' as _i10;
 import 'package:demo_server/src/generated/role.dart' as _i11;
 import 'package:demo_server/src/generated/template.dart' as _i12;
+import 'package:serverpod_auth_server/module.dart' as _i13;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -314,5 +315,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    modules['serverpod_auth'] = _i13.Endpoints()..initializeEndpoints(server);
   }
 }
