@@ -92,18 +92,18 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Title'),
-                              content: Column(children: [
-                                Expanded(
-                                  child: roles.when(
-                                      data: (data) {
-                                        return RoleCardsList(roles: data);
-                                      },
-                                      error: ((error, stackTrace) =>
-                                          Text(error.toString())),
-                                      loading: () => const Center(
-                                          child: CircularProgressIndicator())),
-                                ),
-                              ]),
+                              content: roles.when(
+                                  data: (data) {
+                                    return SizedBox(
+                                      child: RoleCardsList(roles: data),
+                                      height: 300,
+                                      width: 300,
+                                    );
+                                  },
+                                  error: ((error, stackTrace) =>
+                                      Text(error.toString())),
+                                  loading: () => const Center(
+                                      child: CircularProgressIndicator())),
                               actions: [
                                 TextButton(
                                   onPressed: () {
