@@ -24,7 +24,7 @@ void main() async {
   client = Client(
     // for android studio users, type 10.0.2.2 instead of localhost
     // localhost for chrome/edge users, 10.0.2.2 for android studio users
-    'http://localhost:8080/',
+    'http://10.0.2.2:8080/',
     authenticationKeyManager: FlutterAuthenticationKeyManager(),
   )..connectivityMonitor = FlutterConnectivityMonitor();
 
@@ -61,7 +61,6 @@ class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key, required this.title});
 
   final String title;
-
   @override
   ConsumerState<LoginScreen> createState() => LoginScreenState();
 }
@@ -126,6 +125,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 //Backend Part
                 var service = ref.read(serviceProvider);
                 var logInUser = AppUser(
+                    userInfoId: 0,
                     name: "",
                     phone: phoneN.text,
                     email: "",

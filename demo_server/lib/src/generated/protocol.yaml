@@ -2,6 +2,7 @@ userEndPoint:
   - createUser:
   - deleteUser:
   - checkIfUserExists:
+  - getUserByAuthUser:
 example:
   - hello:
 field:

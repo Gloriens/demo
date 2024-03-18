@@ -13,6 +13,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class AppUser extends _i1.SerializableEntity {
   AppUser._({
     this.id,
+    required this.userInfoId,
     required this.name,
     required this.phone,
     required this.email,
@@ -21,6 +22,7 @@ abstract class AppUser extends _i1.SerializableEntity {
 
   factory AppUser({
     int? id,
+    required int userInfoId,
     required String name,
     required String phone,
     required String email,
@@ -33,6 +35,8 @@ abstract class AppUser extends _i1.SerializableEntity {
   ) {
     return AppUser(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      userInfoId: serializationManager
+          .deserialize<int>(jsonSerialization['userInfoId']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       phone:
           serializationManager.deserialize<String>(jsonSerialization['phone']),
@@ -48,6 +52,8 @@ abstract class AppUser extends _i1.SerializableEntity {
   /// the id will be null.
   int? id;
 
+  int userInfoId;
+
   String name;
 
   String phone;
@@ -58,6 +64,7 @@ abstract class AppUser extends _i1.SerializableEntity {
 
   AppUser copyWith({
     int? id,
+    int? userInfoId,
     String? name,
     String? phone,
     String? email,
@@ -67,6 +74,7 @@ abstract class AppUser extends _i1.SerializableEntity {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'userInfoId': userInfoId,
       'name': name,
       'phone': phone,
       'email': email,
@@ -80,12 +88,14 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
+    required int userInfoId,
     required String name,
     required String phone,
     required String email,
     required String password,
   }) : super._(
           id: id,
+          userInfoId: userInfoId,
           name: name,
           phone: phone,
           email: email,
@@ -95,6 +105,7 @@ class _AppUserImpl extends AppUser {
   @override
   AppUser copyWith({
     Object? id = _Undefined,
+    int? userInfoId,
     String? name,
     String? phone,
     String? email,
@@ -102,6 +113,7 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
+      userInfoId: userInfoId ?? this.userInfoId,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       email: email ?? this.email,

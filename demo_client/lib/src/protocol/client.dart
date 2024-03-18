@@ -45,6 +45,13 @@ class EndpointUserEndPoint extends _i1.EndpointRef {
         'checkIfUserExists',
         {'existingUser': existingUser},
       );
+
+  _i2.Future<_i3.AppUser?> getUserByAuthUser({required int userInfoId}) =>
+      caller.callServerEndpoint<_i3.AppUser?>(
+        'userEndPoint',
+        'getUserByAuthUser',
+        {'userInfoId': userInfoId},
+      );
 }
 
 /// {@category Endpoint}

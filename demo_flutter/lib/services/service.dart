@@ -163,4 +163,16 @@ class Service {
       return List.empty();
     }
   }
+
+  checkIfAuthUserExits(int userInfoId) async {
+    final userProvider = ref.read(userStateNotifierProvider.notifier);
+    AppUser? appUser =
+        await client.userEndPoint.getUserByAuthUser(userInfoId: userInfoId);
+    if (appUser != null) {
+      userProvider.user = appUser;
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

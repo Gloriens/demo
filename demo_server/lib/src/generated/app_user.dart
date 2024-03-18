@@ -13,6 +13,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 abstract class AppUser extends _i1.TableRow {
   AppUser._({
     int? id,
+    required this.userInfoId,
     required this.name,
     required this.phone,
     required this.email,
@@ -21,6 +22,7 @@ abstract class AppUser extends _i1.TableRow {
 
   factory AppUser({
     int? id,
+    required int userInfoId,
     required String name,
     required String phone,
     required String email,
@@ -33,6 +35,8 @@ abstract class AppUser extends _i1.TableRow {
   ) {
     return AppUser(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      userInfoId: serializationManager
+          .deserialize<int>(jsonSerialization['userInfoId']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       phone:
           serializationManager.deserialize<String>(jsonSerialization['phone']),
@@ -47,6 +51,8 @@ abstract class AppUser extends _i1.TableRow {
 
   static const db = AppUserRepository._();
 
+  int userInfoId;
+
   String name;
 
   String phone;
@@ -60,6 +66,7 @@ abstract class AppUser extends _i1.TableRow {
 
   AppUser copyWith({
     int? id,
+    int? userInfoId,
     String? name,
     String? phone,
     String? email,
@@ -69,6 +76,7 @@ abstract class AppUser extends _i1.TableRow {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'userInfoId': userInfoId,
       'name': name,
       'phone': phone,
       'email': email,
@@ -81,6 +89,7 @@ abstract class AppUser extends _i1.TableRow {
   Map<String, dynamic> toJsonForDatabase() {
     return {
       'id': id,
+      'userInfoId': userInfoId,
       'name': name,
       'phone': phone,
       'email': email,
@@ -92,6 +101,7 @@ abstract class AppUser extends _i1.TableRow {
   Map<String, dynamic> allToJson() {
     return {
       if (id != null) 'id': id,
+      'userInfoId': userInfoId,
       'name': name,
       'phone': phone,
       'email': email,
@@ -108,6 +118,9 @@ abstract class AppUser extends _i1.TableRow {
     switch (columnName) {
       case 'id':
         id = value;
+        return;
+      case 'userInfoId':
+        userInfoId = value;
         return;
       case 'name':
         name = value;
@@ -273,12 +286,14 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
+    required int userInfoId,
     required String name,
     required String phone,
     required String email,
     required String password,
   }) : super._(
           id: id,
+          userInfoId: userInfoId,
           name: name,
           phone: phone,
           email: email,
@@ -288,6 +303,7 @@ class _AppUserImpl extends AppUser {
   @override
   AppUser copyWith({
     Object? id = _Undefined,
+    int? userInfoId,
     String? name,
     String? phone,
     String? email,
@@ -295,6 +311,7 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
+      userInfoId: userInfoId ?? this.userInfoId,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       email: email ?? this.email,
@@ -305,6 +322,10 @@ class _AppUserImpl extends AppUser {
 
 class AppUserTable extends _i1.Table {
   AppUserTable({super.tableRelation}) : super(tableName: 'app_user') {
+    userInfoId = _i1.ColumnInt(
+      'userInfoId',
+      this,
+    );
     name = _i1.ColumnString(
       'name',
       this,
@@ -323,6 +344,8 @@ class AppUserTable extends _i1.Table {
     );
   }
 
+  late final _i1.ColumnInt userInfoId;
+
   late final _i1.ColumnString name;
 
   late final _i1.ColumnString phone;
@@ -334,6 +357,7 @@ class AppUserTable extends _i1.Table {
   @override
   List<_i1.Column> get columns => [
         id,
+        userInfoId,
         name,
         phone,
         email,
