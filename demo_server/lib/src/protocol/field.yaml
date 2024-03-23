@@ -1,6 +1,6 @@
 class: Field
 table: field
 fields:
-  templateId: int, parent=template
+  templateId: int, relation(parent=template)
   type: String
   name: String

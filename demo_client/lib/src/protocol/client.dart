@@ -12,9 +12,10 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:demo_client/src/protocol/app_user.dart' as _i3;
 import 'package:demo_client/src/protocol/field.dart' as _i4;
-import 'package:demo_client/src/protocol/role.dart' as _i5;
-import 'package:demo_client/src/protocol/template.dart' as _i6;
-import 'protocol.dart' as _i7;
+import 'package:demo_client/src/protocol/record.dart' as _i5;
+import 'package:demo_client/src/protocol/role.dart' as _i6;
+import 'package:demo_client/src/protocol/template.dart' as _i7;
+import 'protocol.dart' as _i8;
 
 /// {@category Endpoint}
 class EndpointUserEndPoint extends _i1.EndpointRef {
@@ -82,20 +83,42 @@ class EndpointField extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointRecord extends _i1.EndpointRef {
+  EndpointRecord(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'record';
+
+  _i2.Future<void> createRecord(_i5.Record record) =>
+      caller.callServerEndpoint<void>(
+        'record',
+        'createRecord',
+        {'record': record},
+      );
+
+  _i2.Future<List<_i5.Record>> getFieldsByTemplate({required int templateId}) =>
+      caller.callServerEndpoint<List<_i5.Record>>(
+        'record',
+        'getFieldsByTemplate',
+        {'templateId': templateId},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointRole extends _i1.EndpointRef {
   EndpointRole(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'role';
 
-  _i2.Future<void> createRole(_i5.Role role) => caller.callServerEndpoint<void>(
+  _i2.Future<void> createRole(_i6.Role role) => caller.callServerEndpoint<void>(
         'role',
         'createRole',
         {'role': role},
       );
 
-  _i2.Future<List<_i5.Role>> getRolesByTemplate({required int templateId}) =>
-      caller.callServerEndpoint<List<_i5.Role>>(
+  _i2.Future<List<_i6.Role>> getRolesByTemplate({required int templateId}) =>
+      caller.callServerEndpoint<List<_i6.Role>>(
         'role',
         'getRolesByTemplate',
         {'templateId': templateId},
@@ -109,15 +132,15 @@ class EndpointTemplate extends _i1.EndpointRef {
   @override
   String get name => 'template';
 
-  _i2.Future<_i6.Template> createTemplate(_i6.Template template) =>
-      caller.callServerEndpoint<_i6.Template>(
+  _i2.Future<_i7.Template> createTemplate(_i7.Template template) =>
+      caller.callServerEndpoint<_i7.Template>(
         'template',
         'createTemplate',
         {'template': template},
       );
 
-  _i2.Future<List<_i6.Template>> getTemplates({required int userId}) =>
-      caller.callServerEndpoint<List<_i6.Template>>(
+  _i2.Future<List<_i7.Template>> getTemplates({required int userId}) =>
+      caller.callServerEndpoint<List<_i7.Template>>(
         'template',
         'getTemplates',
         {'userId': userId},
@@ -133,7 +156,7 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i7.Protocol(),
+          _i8.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -142,6 +165,7 @@ class Client extends _i1.ServerpodClient {
     userEndPoint = EndpointUserEndPoint(this);
     example = EndpointExample(this);
     field = EndpointField(this);
+    record = EndpointRecord(this);
     role = EndpointRole(this);
     template = EndpointTemplate(this);
   }
@@ -152,6 +176,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointField field;
 
+  late final EndpointRecord record;
+
   late final EndpointRole role;
 
   late final EndpointTemplate template;
@@ -161,6 +187,7 @@ class Client extends _i1.ServerpodClient {
         'userEndPoint': userEndPoint,
         'example': example,
         'field': field,
+        'record': record,
         'role': role,
         'template': template,
       };

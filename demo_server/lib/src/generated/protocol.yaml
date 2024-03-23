@@ -7,6 +7,9 @@ example:
 field:
   - createField:
   - getFieldsByTemplate:
+record:
+  - createRecord:
+  - getFieldsByTemplate:
 role:
   - createRole:
   - getRolesByTemplate:
