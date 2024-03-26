@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/LoginScreen.dart';
@@ -6,6 +7,7 @@ import 'package:demo_flutter/providers/template_notifier.dart';
 import 'package:demo_flutter/providers/user_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 final serviceProvider = Provider((ref) => Service(ref));
 final listOfFieldsProvider = FutureProvider<List<Field>>((ref) async {
@@ -174,5 +176,36 @@ class Service {
     } else {
       return false;
     }
+  }
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
+  Future<String?> uploadImage(XFile image, [String? path]) async {
+    path = path ?? "test.jpg";
+
+    final uploadDescription =
+        await client.fileUpload.getUploadDescription(path);
+    if (uploadDescription != null) {
+      final uploader = FileUploader(uploadDescription);
+      final length = (await image.readAsBytes()).length;
+      final stream = image.openRead();
+      await uploader.upload(stream, length);
+      final success = await client.fileUpload.verifyUpload(path);
+
+      if (!success) {
+        return null;
+      }
+
+      final Map<String, dynamic> decodedDesciption =
+          jsonDecode(uploadDescription);
+      return "${decodedDesciption['url']}/$path";
+    }
+
+    return null;
   }
 }

@@ -8,9 +8,13 @@ example:
 field:
   - createField:
   - getFieldsByTemplate:
+fileUpload:
+  - getUploadDescription:
+  - verifyUpload:
 record:
   - createRecord:
-  - getFieldsByTemplate:
+recordImage:
+  - createRecordImage:
 role:
   - createRole:
   - getRolesByTemplate:

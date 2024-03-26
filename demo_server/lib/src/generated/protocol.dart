@@ -17,11 +17,11 @@ import 'example.dart' as _i5;
 import 'field.dart' as _i6;
 import 'record.dart' as _i7;
 import 'record_bool.dart' as _i8;
-import 'record_text.dart' as _i9;
-import 'role.dart' as _i10;
-import 'template.dart' as _i11;
-import 'package:demo_server/src/generated/field.dart' as _i12;
-import 'package:demo_server/src/generated/record.dart' as _i13;
+import 'record_image.dart' as _i9;
+import 'record_text.dart' as _i10;
+import 'role.dart' as _i11;
+import 'template.dart' as _i12;
+import 'package:demo_server/src/generated/field.dart' as _i13;
 import 'package:demo_server/src/generated/role.dart' as _i14;
 import 'package:demo_server/src/generated/template.dart' as _i15;
 export 'app_user.dart';
@@ -29,6 +29,7 @@ export 'example.dart';
 export 'field.dart';
 export 'record.dart';
 export 'record_bool.dart';
+export 'record_image.dart';
 export 'record_text.dart';
 export 'role.dart';
 export 'template.dart';
@@ -323,6 +324,61 @@ class Protocol extends _i1.SerializationManagerServer {
       managed: true,
     ),
     _i2.TableDefinition(
+      name: 'record_image',
+      dartName: 'RecordImage',
+      schema: 'public',
+      module: 'demo',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'record_image_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recordId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'imageURL',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'record_image_fk_0',
+          columns: ['recordId'],
+          referenceTable: 'record',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'record_image_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
       name: 'record_text',
       dartName: 'RecordText',
       schema: 'public',
@@ -543,14 +599,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i8.RecordBool) {
       return _i8.RecordBool.fromJson(data, this) as T;
     }
-    if (t == _i9.RecordText) {
-      return _i9.RecordText.fromJson(data, this) as T;
+    if (t == _i9.RecordImage) {
+      return _i9.RecordImage.fromJson(data, this) as T;
     }
-    if (t == _i10.Role) {
-      return _i10.Role.fromJson(data, this) as T;
+    if (t == _i10.RecordText) {
+      return _i10.RecordText.fromJson(data, this) as T;
     }
-    if (t == _i11.Template) {
-      return _i11.Template.fromJson(data, this) as T;
+    if (t == _i11.Role) {
+      return _i11.Role.fromJson(data, this) as T;
+    }
+    if (t == _i12.Template) {
+      return _i12.Template.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i4.AppUser?>()) {
       return (data != null ? _i4.AppUser.fromJson(data, this) : null) as T;
@@ -567,21 +626,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i8.RecordBool?>()) {
       return (data != null ? _i8.RecordBool.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i9.RecordText?>()) {
-      return (data != null ? _i9.RecordText.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i9.RecordImage?>()) {
+      return (data != null ? _i9.RecordImage.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i10.Role?>()) {
-      return (data != null ? _i10.Role.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i10.RecordText?>()) {
+      return (data != null ? _i10.RecordText.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i11.Template?>()) {
-      return (data != null ? _i11.Template.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i11.Role?>()) {
+      return (data != null ? _i11.Role.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i12.Field>) {
-      return (data as List).map((e) => deserialize<_i12.Field>(e)).toList()
-          as dynamic;
+    if (t == _i1.getType<_i12.Template?>()) {
+      return (data != null ? _i12.Template.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i13.Record>) {
-      return (data as List).map((e) => deserialize<_i13.Record>(e)).toList()
+    if (t == List<_i13.Field>) {
+      return (data as List).map((e) => deserialize<_i13.Field>(e)).toList()
           as dynamic;
     }
     if (t == List<_i14.Role>) {
@@ -623,13 +681,16 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i8.RecordBool) {
       return 'RecordBool';
     }
-    if (data is _i9.RecordText) {
+    if (data is _i9.RecordImage) {
+      return 'RecordImage';
+    }
+    if (data is _i10.RecordText) {
       return 'RecordText';
     }
-    if (data is _i10.Role) {
+    if (data is _i11.Role) {
       return 'Role';
     }
-    if (data is _i11.Template) {
+    if (data is _i12.Template) {
       return 'Template';
     }
     return super.getClassNameForObject(data);
@@ -656,14 +717,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'RecordBool') {
       return deserialize<_i8.RecordBool>(data['data']);
     }
+    if (data['className'] == 'RecordImage') {
+      return deserialize<_i9.RecordImage>(data['data']);
+    }
     if (data['className'] == 'RecordText') {
-      return deserialize<_i9.RecordText>(data['data']);
+      return deserialize<_i10.RecordText>(data['data']);
     }
     if (data['className'] == 'Role') {
-      return deserialize<_i10.Role>(data['data']);
+      return deserialize<_i11.Role>(data['data']);
     }
     if (data['className'] == 'Template') {
-      return deserialize<_i11.Template>(data['data']);
+      return deserialize<_i12.Template>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -691,12 +755,14 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i7.Record.t;
       case _i8.RecordBool:
         return _i8.RecordBool.t;
-      case _i9.RecordText:
-        return _i9.RecordText.t;
-      case _i10.Role:
-        return _i10.Role.t;
-      case _i11.Template:
-        return _i11.Template.t;
+      case _i9.RecordImage:
+        return _i9.RecordImage.t;
+      case _i10.RecordText:
+        return _i10.RecordText.t;
+      case _i11.Role:
+        return _i11.Role.t;
+      case _i12.Template:
+        return _i12.Template.t;
     }
     return null;
   }
