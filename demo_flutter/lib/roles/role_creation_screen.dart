@@ -30,7 +30,10 @@ class _RoleCreationScreenState extends ConsumerState<RoleCreationScreen> {
               ),
             ),
           ),
-          TextField(controller: nameController),
+          TextField(
+            controller: nameController,
+            maxLength: 18, // Maksimum 50 karakter
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

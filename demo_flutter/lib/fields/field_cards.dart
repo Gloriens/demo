@@ -1,10 +1,12 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/roles/rolePermissions/role_card_listPermission.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/HomePage.dart';
 import 'package:demo_flutter/fields/field_cards_list.dart';
 import 'package:demo_flutter/fields/field_creation_screen.dart';
-import 'package:demo_flutter/roles/role_cards_list.dart';
+import 'package:demo_flutter/roles/roleDisplay/role_cards_list.dart';
 import 'package:demo_flutter/roles/role_creation_screen.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class FieldCards extends ConsumerStatefulWidget {
 }
 
 class _FieldCardsState extends ConsumerState<FieldCards> {
-  bool isChecked = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,13 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                               title: Text('Title'),
                               content: roles.when(
                                   data: (data) {
-                                    return RoleCardsList(roles: data);
+                                    return SizedBox(
+                                      height: 300,
+                                      width: 300,
+                                      child: SingleChildScrollView(
+                                        child: RoleCardsListPermissions(roles: data),
+                                      ),
+                                    );
                                   },
                                   error: ((error, stackTrace) =>
                                       Text(error.toString())),
@@ -79,7 +87,7 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                           },
                         );
                       },
-                      child: Text('Reading Permissions'),
+                      child: Text('Read Permissions'),
                     ),
                   ],
                 ),
@@ -95,9 +103,11 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                               content: roles.when(
                                   data: (data) {
                                     return SizedBox(
-                                      child: RoleCardsList(roles: data),
                                       height: 300,
                                       width: 300,
+                                      child: SingleChildScrollView(
+                                        child: RoleCardsListPermissions(roles: data),
+                                      ),
                                     );
                                   },
                                   error: ((error, stackTrace) =>
