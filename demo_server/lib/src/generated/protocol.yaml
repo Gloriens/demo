@@ -7,6 +7,13 @@ example:
 field:
   - createField:
   - getFieldsByTemplate:
+<<<<<<< Updated upstream
+=======
+fileUpload:
+  - getUploadDescription:
+  - verifyUpload:
+  - getUrl:
+>>>>>>> Stashed changes
 record:
   - createRecord:
   - getFieldsByTemplate:

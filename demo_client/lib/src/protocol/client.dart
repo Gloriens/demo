@@ -84,6 +84,36 @@ class EndpointField extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+<<<<<<< Updated upstream
+=======
+class EndpointFileUpload extends _i1.EndpointRef {
+  EndpointFileUpload(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'fileUpload';
+
+  _i2.Future<String?> getUploadDescription(String path) =>
+      caller.callServerEndpoint<String?>(
+        'fileUpload',
+        'getUploadDescription',
+        {'path': path},
+      );
+
+  _i2.Future<bool> verifyUpload(String path) => caller.callServerEndpoint<bool>(
+        'fileUpload',
+        'verifyUpload',
+        {'path': path},
+      );
+
+  _i2.Future<Uri?> getUrl(String path) => caller.callServerEndpoint<Uri?>(
+        'fileUpload',
+        'getUrl',
+        {'path': path},
+      );
+}
+
+/// {@category Endpoint}
+>>>>>>> Stashed changes
 class EndpointRecord extends _i1.EndpointRef {
   EndpointRecord(_i1.EndpointCaller caller) : super(caller);
 

@@ -189,6 +189,70 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+<<<<<<< Updated upstream
+=======
+    connectors['fileUpload'] = _i1.EndpointConnector(
+      name: 'fileUpload',
+      endpoint: endpoints['fileUpload']!,
+      methodConnectors: {
+        'getUploadDescription': _i1.MethodConnector(
+          name: 'getUploadDescription',
+          params: {
+            'path': _i1.ParameterDescription(
+              name: 'path',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['fileUpload'] as _i5.FileUploadEndpoint)
+                  .getUploadDescription(
+            session,
+            params['path'],
+          ),
+        ),
+        'verifyUpload': _i1.MethodConnector(
+          name: 'verifyUpload',
+          params: {
+            'path': _i1.ParameterDescription(
+              name: 'path',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['fileUpload'] as _i5.FileUploadEndpoint).verifyUpload(
+            session,
+            params['path'],
+          ),
+        ),
+        'getUrl': _i1.MethodConnector(
+          name: 'getUrl',
+          params: {
+            'path': _i1.ParameterDescription(
+              name: 'path',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['fileUpload'] as _i5.FileUploadEndpoint).getUrl(
+            session,
+            params['path'],
+          ),
+        ),
+      },
+    );
+>>>>>>> Stashed changes
     connectors['record'] = _i1.EndpointConnector(
       name: 'record',
       endpoint: endpoints['record']!,

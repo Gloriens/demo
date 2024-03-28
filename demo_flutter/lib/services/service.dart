@@ -163,4 +163,54 @@ class Service {
       return List.empty();
     }
   }
+<<<<<<< Updated upstream
+=======
+
+  checkIfAuthUserExits(int userInfoId) async {
+    final userProvider = ref.read(userStateNotifierProvider.notifier);
+    AppUser? appUser =
+        await client.userEndPoint.getUserByAuthUser(userInfoId: userInfoId);
+    if (appUser != null) {
+      userProvider.user = appUser;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
+  Future<String?> uploadImage(XFile image, [String? path]) async {
+    path = path ?? "test.jpg";
+
+    final uploadDescription =
+        await client.fileUpload.getUploadDescription(path);
+    if (uploadDescription != null) {
+      final uploader = FileUploader(uploadDescription);
+      final length = (await image.readAsBytes()).length;
+      final stream = image.openRead();
+      await uploader.upload(stream, length);
+      final success = await client.fileUpload.verifyUpload(path);
+
+      if (!success) {
+        print("uploadFailed");
+        return null;
+      }
+
+      // final Map<String, dynamic> decodedDesciption =
+      //     jsonDecode(uploadDescription);
+      // return "${decodedDesciption['url']}/$path";
+
+      var url = await client.fileUpload.getUrl(path);
+      return url.toString();
+    }
+
+    return null;
+  }
+>>>>>>> Stashed changes
 }
