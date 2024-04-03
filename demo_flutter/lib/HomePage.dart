@@ -36,7 +36,10 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
                       onPressed: () {
-                        ref.refresh(listOfTemplatesProvider);
+                        if (sessionManager.isSignedIn) {
+                          print("signed in");
+                          ref.refresh(listOfTemplatesProvider);
+                        }
                       },
                       child: const Text("Refresh")),
                 )),

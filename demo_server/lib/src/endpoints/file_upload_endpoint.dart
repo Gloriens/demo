@@ -14,4 +14,12 @@ class FileUploadEndpoint extends Endpoint {
       path: path,
     );
   }
+
+  Future<String> getUrl(Session session, String path) async {
+    var url = await session.storage.getPublicUrl(
+      storageId: 'public',
+      path: path,
+    );
+    return url.toString();
+  }
 }

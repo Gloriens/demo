@@ -263,6 +263,24 @@ class Endpoints extends _i1.EndpointDispatch {
             params['path'],
           ),
         ),
+        'getUrl': _i1.MethodConnector(
+          name: 'getUrl',
+          params: {
+            'path': _i1.ParameterDescription(
+              name: 'path',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['fileUpload'] as _i5.FileUploadEndpoint).getUrl(
+            session,
+            params['path'],
+          ),
+        ),
       },
     );
     connectors['record'] = _i1.EndpointConnector(

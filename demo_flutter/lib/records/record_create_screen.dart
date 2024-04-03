@@ -1,5 +1,6 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/records/record_bool_item.dart';
+import 'package:demo_flutter/records/record_signaturepad.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,6 +43,8 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
               ));
             } else if (field.type == 'bool') {
               widgets.add(const RecordBoolItem());
+            } else if (field.type == 'signaturepad') {
+              widgets.add(const RecordSignaturePad());
             }
           }
         },

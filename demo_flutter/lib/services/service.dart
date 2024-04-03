@@ -193,17 +193,19 @@ class Service {
     if (uploadDescription != null) {
       final uploader = FileUploader(uploadDescription);
       final length = (await image.readAsBytes()).length;
+      //final uint8List = await image.readAsBytes();
+      //final byteData = uint8List.buffer.asByteData();
       final stream = image.openRead();
       await uploader.upload(stream, length);
+      //await uploader.uploadByteData(byteData);
       final success = await client.fileUpload.verifyUpload(path);
 
       if (!success) {
+        print("Upload verification failed for path: $path");
         return null;
       }
-
-      final Map<String, dynamic> decodedDesciption =
-          jsonDecode(uploadDescription);
-      return "${decodedDesciption['url']}/$path";
+      var url = await client.fileUpload.getUrl(path);
+      return url.toString();
     }
 
     return null;
