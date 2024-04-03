@@ -5,6 +5,7 @@ import 'package:demo_flutter/templates/template_cards_list.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 
 class MyHomePAge extends ConsumerStatefulWidget {
   const MyHomePAge({super.key});
@@ -140,6 +141,9 @@ TextEditingController phoneNController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 TextEditingController passwordConfimController = TextEditingController();
 
+var userInfo = sessionManager.signedInUser!;
+
+//var signedIn = sessionManager.isSignedIn;
 class _SignUpState extends ConsumerState<SignUp> {
   @override
   Widget build(BuildContext context) {
@@ -208,9 +212,11 @@ class _SignUpState extends ConsumerState<SignUp> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (validateSignUp()) {
+                      // TO-DO : FIX LOGIN LOGIC FOR SIGNED IN USER !
                       var createdUser = AppUser(
-                        name: nameController.text,
-                        email: emailController.text,
+                        userInfoId: userInfo.id ?? 0,
+                        name: userInfo.userName,
+                        email: userInfo.email ?? "",
                         phone: phoneNController.text,
                         password: ref
                             .read(serviceProvider)

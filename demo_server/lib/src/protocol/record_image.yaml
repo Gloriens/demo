@@ -1,0 +1,5 @@
+class: RecordImage
+table: record_image
+fields:
+  recordId: int, relation(parent=record)
+  imageURL: String

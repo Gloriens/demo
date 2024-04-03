@@ -1,7 +1,12 @@
 class: AppUser
 table: app_user
 fields:
+  userInfoId: int, relation(parent=serverpod_user_info)
   name: String
   phone: String
   email: String
   password: String
+indexes:
+  user_info_id_unique_idx:
+    fields: userInfoId
+    unique: true

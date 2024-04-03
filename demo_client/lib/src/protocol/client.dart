@@ -13,10 +13,11 @@ import 'dart:async' as _i2;
 import 'package:demo_client/src/protocol/app_user.dart' as _i3;
 import 'package:demo_client/src/protocol/field.dart' as _i4;
 import 'package:demo_client/src/protocol/record.dart' as _i5;
-import 'package:demo_client/src/protocol/role.dart' as _i6;
-import 'package:demo_client/src/protocol/template.dart' as _i7;
-import 'package:serverpod_auth_client/module.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:demo_client/src/protocol/record_image.dart' as _i6;
+import 'package:demo_client/src/protocol/role.dart' as _i7;
+import 'package:demo_client/src/protocol/template.dart' as _i8;
+import 'package:serverpod_auth_client/module.dart' as _i9;
+import 'protocol.dart' as _i10;
 
 /// {@category Endpoint}
 class EndpointUserEndPoint extends _i1.EndpointRef {
@@ -44,6 +45,13 @@ class EndpointUserEndPoint extends _i1.EndpointRef {
         'userEndPoint',
         'checkIfUserExists',
         {'existingUser': existingUser},
+      );
+
+  _i2.Future<_i3.AppUser?> getUserByAuthUser({required int userInfoId}) =>
+      caller.callServerEndpoint<_i3.AppUser?>(
+        'userEndPoint',
+        'getUserByAuthUser',
+        {'userInfoId': userInfoId},
       );
 }
 
@@ -84,8 +92,6 @@ class EndpointField extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-<<<<<<< Updated upstream
-=======
 class EndpointFileUpload extends _i1.EndpointRef {
   EndpointFileUpload(_i1.EndpointCaller caller) : super(caller);
 
@@ -104,16 +110,9 @@ class EndpointFileUpload extends _i1.EndpointRef {
         'verifyUpload',
         {'path': path},
       );
-
-  _i2.Future<Uri?> getUrl(String path) => caller.callServerEndpoint<Uri?>(
-        'fileUpload',
-        'getUrl',
-        {'path': path},
-      );
 }
 
 /// {@category Endpoint}
->>>>>>> Stashed changes
 class EndpointRecord extends _i1.EndpointRef {
   EndpointRecord(_i1.EndpointCaller caller) : super(caller);
 
@@ -126,12 +125,20 @@ class EndpointRecord extends _i1.EndpointRef {
         'createRecord',
         {'record': record},
       );
+}
 
-  _i2.Future<List<_i5.Record>> getFieldsByTemplate({required int templateId}) =>
-      caller.callServerEndpoint<List<_i5.Record>>(
-        'record',
-        'getFieldsByTemplate',
-        {'templateId': templateId},
+/// {@category Endpoint}
+class EndpointRecordImage extends _i1.EndpointRef {
+  EndpointRecordImage(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordImage';
+
+  _i2.Future<_i6.RecordImage> createRecordImage(_i6.RecordImage recordImage) =>
+      caller.callServerEndpoint<_i6.RecordImage>(
+        'recordImage',
+        'createRecordImage',
+        {'recordImage': recordImage},
       );
 }
 
@@ -142,14 +149,14 @@ class EndpointRole extends _i1.EndpointRef {
   @override
   String get name => 'role';
 
-  _i2.Future<void> createRole(_i6.Role role) => caller.callServerEndpoint<void>(
+  _i2.Future<void> createRole(_i7.Role role) => caller.callServerEndpoint<void>(
         'role',
         'createRole',
         {'role': role},
       );
 
-  _i2.Future<List<_i6.Role>> getRolesByTemplate({required int templateId}) =>
-      caller.callServerEndpoint<List<_i6.Role>>(
+  _i2.Future<List<_i7.Role>> getRolesByTemplate({required int templateId}) =>
+      caller.callServerEndpoint<List<_i7.Role>>(
         'role',
         'getRolesByTemplate',
         {'templateId': templateId},
@@ -163,15 +170,15 @@ class EndpointTemplate extends _i1.EndpointRef {
   @override
   String get name => 'template';
 
-  _i2.Future<_i7.Template> createTemplate(_i7.Template template) =>
-      caller.callServerEndpoint<_i7.Template>(
+  _i2.Future<_i8.Template> createTemplate(_i8.Template template) =>
+      caller.callServerEndpoint<_i8.Template>(
         'template',
         'createTemplate',
         {'template': template},
       );
 
-  _i2.Future<List<_i7.Template>> getTemplates({required int userId}) =>
-      caller.callServerEndpoint<List<_i7.Template>>(
+  _i2.Future<List<_i8.Template>> getTemplates({required int userId}) =>
+      caller.callServerEndpoint<List<_i8.Template>>(
         'template',
         'getTemplates',
         {'userId': userId},
@@ -180,10 +187,10 @@ class EndpointTemplate extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i8.Caller(client);
+    auth = _i9.Caller(client);
   }
 
-  late final _i8.Caller auth;
+  late final _i9.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -195,7 +202,7 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i9.Protocol(),
+          _i10.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -204,7 +211,9 @@ class Client extends _i1.ServerpodClient {
     userEndPoint = EndpointUserEndPoint(this);
     example = EndpointExample(this);
     field = EndpointField(this);
+    fileUpload = EndpointFileUpload(this);
     record = EndpointRecord(this);
+    recordImage = EndpointRecordImage(this);
     role = EndpointRole(this);
     template = EndpointTemplate(this);
     modules = _Modules(this);
@@ -216,7 +225,11 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointField field;
 
+  late final EndpointFileUpload fileUpload;
+
   late final EndpointRecord record;
+
+  late final EndpointRecordImage recordImage;
 
   late final EndpointRole role;
 
@@ -229,7 +242,9 @@ class Client extends _i1.ServerpodClient {
         'userEndPoint': userEndPoint,
         'example': example,
         'field': field,
+        'fileUpload': fileUpload,
         'record': record,
+        'recordImage': recordImage,
         'role': role,
         'template': template,
       };

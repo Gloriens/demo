@@ -2,21 +2,19 @@ userEndPoint:
   - createUser:
   - deleteUser:
   - checkIfUserExists:
+  - getUserByAuthUser:
 example:
   - hello:
 field:
   - createField:
   - getFieldsByTemplate:
-<<<<<<< Updated upstream
-=======
 fileUpload:
   - getUploadDescription:
   - verifyUpload:
-  - getUrl:
->>>>>>> Stashed changes
 record:
   - createRecord:
-  - getFieldsByTemplate:
+recordImage:
+  - createRecordImage:
 role:
   - createRole:
   - getRolesByTemplate:

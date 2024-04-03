@@ -8,7 +8,8 @@ final userStateNotifierProvider =
 
 class UserStateNotifier extends StateNotifier<AppUser> {
   UserStateNotifier()
-      : super(AppUser(name: '', phone: '', email: '', password: ''));
+      : super(AppUser(
+            userInfoId: 0, name: '', phone: '', email: '', password: ''));
 
   set user(AppUser appUser) {
     state = appUser;

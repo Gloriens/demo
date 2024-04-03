@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/LoginScreen.dart';
@@ -6,6 +7,7 @@ import 'package:demo_flutter/providers/template_notifier.dart';
 import 'package:demo_flutter/providers/user_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 final serviceProvider = Provider((ref) => Service(ref));
 final listOfFieldsProvider = FutureProvider<List<Field>>((ref) async {
@@ -163,8 +165,6 @@ class Service {
       return List.empty();
     }
   }
-<<<<<<< Updated upstream
-=======
 
   checkIfAuthUserExits(int userInfoId) async {
     final userProvider = ref.read(userStateNotifierProvider.notifier);
@@ -198,19 +198,14 @@ class Service {
       final success = await client.fileUpload.verifyUpload(path);
 
       if (!success) {
-        print("uploadFailed");
         return null;
       }
 
-      // final Map<String, dynamic> decodedDesciption =
-      //     jsonDecode(uploadDescription);
-      // return "${decodedDesciption['url']}/$path";
-
-      var url = await client.fileUpload.getUrl(path);
-      return url.toString();
+      final Map<String, dynamic> decodedDesciption =
+          jsonDecode(uploadDescription);
+      return "${decodedDesciption['url']}/$path";
     }
 
     return null;
   }
->>>>>>> Stashed changes
 }

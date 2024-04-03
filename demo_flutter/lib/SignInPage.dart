@@ -1,20 +1,19 @@
-<<<<<<< Updated upstream
-=======
-// import 'dart:ffi';
+import 'dart:ffi';
 
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/main_menu.dart';
 import 'package:demo_flutter/services/service.dart';
->>>>>>> Stashed changes
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:demo_flutter/LoginScreen.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignInPage extends ConsumerWidget {
+  const SignInPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Dialog(
         child: Container(
@@ -26,10 +25,43 @@ class SignInPage extends StatelessWidget {
             children: [
               SignInWithEmailButton(
                 caller: client.modules.auth,
+                onSignedIn: () async {
+                  // THERE IS A PROBLEM WITH ASYNC GAP.
+                  var newAuthUser = sessionManager.signedInUser;
+                  if (newAuthUser != null) {
+                    bool isExits = await ref
+                        .read(serviceProvider)
+                        .checkIfAuthUserExits(newAuthUser.id ?? 0);
+                    if (isExits) {
+                      if (!context.mounted) {
+                        return;
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainMenu()),
+                      );
+                    } else {
+                      AppUser appUser = AppUser(
+                          userInfoId: newAuthUser.id ?? 0,
+                          name: newAuthUser.userName,
+                          email: newAuthUser.email ?? "",
+                          password: "",
+                          phone: "");
+                      if (!context.mounted) {
+                        return;
+                      }
+                      ref.read(serviceProvider).createNewUser(appUser, context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainMenu()),
+                      );
+                    }
+                  }
+                },
               ),
-<<<<<<< Updated upstream
-=======
-              ElevatedButton(
+              /*ElevatedButton(
                 onPressed: () async {
                   //FILE UPLOAD FOR RECORD DO NOT USE IT NOW !!!!!!.
                   final image = await ImagePicker()
@@ -38,38 +70,15 @@ class SignInPage extends StatelessWidget {
                     final ext = image.path.split(".").last;
                     final path =
                         "avatars/${ref.read(serviceProvider).generateRandomString(12)}.$ext";
-                    final url = await ref
-                        .read(serviceProvider)
-                        .uploadImage(image, path);
+                    ref.read(serviceProvider).uploadImage(image, path);
                     RecordImage recordImage = RecordImage(
                       recordId: 0,
                       imageURL: path,
                     );
-                    if (url != null) {
-                      // Yükleme başarılıysa resmi gösterme işlemi
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Image Uploaded'),
-                              content:
-                                  Image.network(url, width: 32, height: 32),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Close'),
-                                ),
-                              ],
-                            );
-                          });
-                    }
                   }
                 },
                 child: const Text('Upload Image'),
-              ),
->>>>>>> Stashed changes
+              ),*/
             ],
           ),
         ),

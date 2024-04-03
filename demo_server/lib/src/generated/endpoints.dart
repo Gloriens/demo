@@ -12,15 +12,18 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/app_user_endpoint.dart' as _i2;
 import '../endpoints/example_endpoint.dart' as _i3;
 import '../endpoints/field_endpoint.dart' as _i4;
-import '../endpoints/record_endpoint.dart' as _i5;
-import '../endpoints/role_endpoint.dart' as _i6;
-import '../endpoints/template_endpoint.dart' as _i7;
-import 'package:demo_server/src/generated/app_user.dart' as _i8;
-import 'package:demo_server/src/generated/field.dart' as _i9;
-import 'package:demo_server/src/generated/record.dart' as _i10;
-import 'package:demo_server/src/generated/role.dart' as _i11;
-import 'package:demo_server/src/generated/template.dart' as _i12;
-import 'package:serverpod_auth_server/module.dart' as _i13;
+import '../endpoints/file_upload_endpoint.dart' as _i5;
+import '../endpoints/record_endpoint.dart' as _i6;
+import '../endpoints/record_image_endpoint.dart' as _i7;
+import '../endpoints/role_endpoint.dart' as _i8;
+import '../endpoints/template_endpoint.dart' as _i9;
+import 'package:demo_server/src/generated/app_user.dart' as _i10;
+import 'package:demo_server/src/generated/field.dart' as _i11;
+import 'package:demo_server/src/generated/record.dart' as _i12;
+import 'package:demo_server/src/generated/record_image.dart' as _i13;
+import 'package:demo_server/src/generated/role.dart' as _i14;
+import 'package:demo_server/src/generated/template.dart' as _i15;
+import 'package:serverpod_auth_server/module.dart' as _i16;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -44,19 +47,31 @@ class Endpoints extends _i1.EndpointDispatch {
           'field',
           null,
         ),
-      'record': _i5.RecordEndpoint()
+      'fileUpload': _i5.FileUploadEndpoint()
+        ..initialize(
+          server,
+          'fileUpload',
+          null,
+        ),
+      'record': _i6.RecordEndpoint()
         ..initialize(
           server,
           'record',
           null,
         ),
-      'role': _i6.RoleEndpoint()
+      'recordImage': _i7.RecordImageEndpoint()
+        ..initialize(
+          server,
+          'recordImage',
+          null,
+        ),
+      'role': _i8.RoleEndpoint()
         ..initialize(
           server,
           'role',
           null,
         ),
-      'template': _i7.TemplateEndpoint()
+      'template': _i9.TemplateEndpoint()
         ..initialize(
           server,
           'template',
@@ -72,7 +87,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i8.AppUser>(),
+              type: _i1.getType<_i10.AppUser>(),
               nullable: false,
             )
           },
@@ -90,7 +105,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i8.AppUser>(),
+              type: _i1.getType<_i10.AppUser>(),
               nullable: false,
             )
           },
@@ -108,7 +123,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'existingUser': _i1.ParameterDescription(
               name: 'existingUser',
-              type: _i1.getType<_i8.AppUser>(),
+              type: _i1.getType<_i10.AppUser>(),
               nullable: false,
             )
           },
@@ -119,6 +134,24 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['userEndPoint'] as _i2.UserEndPoint).checkIfUserExists(
             session,
             params['existingUser'],
+          ),
+        ),
+        'getUserByAuthUser': _i1.MethodConnector(
+          name: 'getUserByAuthUser',
+          params: {
+            'userInfoId': _i1.ParameterDescription(
+              name: 'userInfoId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['userEndPoint'] as _i2.UserEndPoint).getUserByAuthUser(
+            session,
+            userInfoId: params['userInfoId'],
           ),
         ),
       },
@@ -156,7 +189,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'field': _i1.ParameterDescription(
               name: 'field',
-              type: _i1.getType<_i9.Field>(),
+              type: _i1.getType<_i11.Field>(),
               nullable: false,
             )
           },
@@ -189,8 +222,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-<<<<<<< Updated upstream
-=======
     connectors['fileUpload'] = _i1.EndpointConnector(
       name: 'fileUpload',
       endpoint: endpoints['fileUpload']!,
@@ -232,27 +263,8 @@ class Endpoints extends _i1.EndpointDispatch {
             params['path'],
           ),
         ),
-        'getUrl': _i1.MethodConnector(
-          name: 'getUrl',
-          params: {
-            'path': _i1.ParameterDescription(
-              name: 'path',
-              type: _i1.getType<String>(),
-              nullable: false,
-            )
-          },
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['fileUpload'] as _i5.FileUploadEndpoint).getUrl(
-            session,
-            params['path'],
-          ),
-        ),
       },
     );
->>>>>>> Stashed changes
     connectors['record'] = _i1.EndpointConnector(
       name: 'record',
       endpoint: endpoints['record']!,
@@ -262,7 +274,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'record': _i1.ParameterDescription(
               name: 'record',
-              type: _i1.getType<_i10.Record>(),
+              type: _i1.getType<_i12.Record>(),
               nullable: false,
             )
           },
@@ -270,17 +282,23 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['record'] as _i5.RecordEndpoint).createRecord(
+              (endpoints['record'] as _i6.RecordEndpoint).createRecord(
             session,
             params['record'],
           ),
-        ),
-        'getFieldsByTemplate': _i1.MethodConnector(
-          name: 'getFieldsByTemplate',
+        )
+      },
+    );
+    connectors['recordImage'] = _i1.EndpointConnector(
+      name: 'recordImage',
+      endpoint: endpoints['recordImage']!,
+      methodConnectors: {
+        'createRecordImage': _i1.MethodConnector(
+          name: 'createRecordImage',
           params: {
-            'templateId': _i1.ParameterDescription(
-              name: 'templateId',
-              type: _i1.getType<int>(),
+            'recordImage': _i1.ParameterDescription(
+              name: 'recordImage',
+              type: _i1.getType<_i13.RecordImage>(),
               nullable: false,
             )
           },
@@ -288,11 +306,12 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['record'] as _i5.RecordEndpoint).getFieldsByTemplate(
+              (endpoints['recordImage'] as _i7.RecordImageEndpoint)
+                  .createRecordImage(
             session,
-            templateId: params['templateId'],
+            params['recordImage'],
           ),
-        ),
+        )
       },
     );
     connectors['role'] = _i1.EndpointConnector(
@@ -304,7 +323,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'role': _i1.ParameterDescription(
               name: 'role',
-              type: _i1.getType<_i11.Role>(),
+              type: _i1.getType<_i14.Role>(),
               nullable: false,
             )
           },
@@ -312,7 +331,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['role'] as _i6.RoleEndpoint).createRole(
+              (endpoints['role'] as _i8.RoleEndpoint).createRole(
             session,
             params['role'],
           ),
@@ -330,7 +349,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['role'] as _i6.RoleEndpoint).getRolesByTemplate(
+              (endpoints['role'] as _i8.RoleEndpoint).getRolesByTemplate(
             session,
             templateId: params['templateId'],
           ),
@@ -346,7 +365,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'template': _i1.ParameterDescription(
               name: 'template',
-              type: _i1.getType<_i12.Template>(),
+              type: _i1.getType<_i15.Template>(),
               nullable: false,
             )
           },
@@ -354,7 +373,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i7.TemplateEndpoint).createTemplate(
+              (endpoints['template'] as _i9.TemplateEndpoint).createTemplate(
             session,
             params['template'],
           ),
@@ -372,13 +391,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i7.TemplateEndpoint).getTemplates(
+              (endpoints['template'] as _i9.TemplateEndpoint).getTemplates(
             session,
             userId: params['userId'],
           ),
         ),
       },
     );
-    modules['serverpod_auth'] = _i13.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i16.Endpoints()..initializeEndpoints(server);
   }
 }
