@@ -111,7 +111,7 @@ class EndpointFileUpload extends _i1.EndpointRef {
         {'path': path},
       );
 
-  _i2.Future<Uri?> getUrl(String path) => caller.callServerEndpoint<Uri?>(
+  _i2.Future<String> getUrl(String path) => caller.callServerEndpoint<String>(
         'fileUpload',
         'getUrl',
         {'path': path},

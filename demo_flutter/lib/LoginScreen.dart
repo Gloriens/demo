@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RecordGoogleMaps(),
+      home: const LoginScreen(
+        title: 'Login',
+      ),
     );
   }
 }

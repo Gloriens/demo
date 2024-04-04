@@ -192,11 +192,11 @@ class Service {
         await client.fileUpload.getUploadDescription(path);
     if (uploadDescription != null) {
       final uploader = FileUploader(uploadDescription);
-      final length = (await image.readAsBytes()).length;
-      //final uint8List = await image.readAsBytes();
-      //final byteData = uint8List.buffer.asByteData();
-      final stream = image.openRead();
-      await uploader.upload(stream, length);
+      //final length = (await image.readAsBytes()).length;
+      final uint8List = await image.readAsBytes();
+      final byteData = uint8List.buffer.asByteData();
+      //final stream = image.openRead();
+      await uploader.uploadByteData(byteData);
       //await uploader.uploadByteData(byteData);
       final success = await client.fileUpload.verifyUpload(path);
 
@@ -205,7 +205,7 @@ class Service {
         return null;
       }
       var url = await client.fileUpload.getUrl(path);
-      return url.toString();
+      return url;
     }
 
     return null;
