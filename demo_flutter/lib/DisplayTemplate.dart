@@ -1,5 +1,6 @@
 import 'package:demo_flutter/LoginScreen.dart';
 import 'package:demo_flutter/after_template_screen.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:demo_flutter/templates/template_cards_list.dart';
 import 'package:flutter/material.dart';
@@ -39,13 +40,63 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                       },
                       child: const Text("Refresh")),
                 )),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  "Templates",
-                  style: TextStyle(fontSize: 20),
+                child: Row(
+                  children: [
+                    Text(
+                      "Templates",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Create new Template'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 15, top: 15),
+                                        child: Text("Name"),
+                                      ),
+                                      TextField(
+                                        controller: templateName,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 40),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            // Template ismi aldığımız yer
+                                            // Backend Part
+                                            ref
+                                                .read(serviceProvider)
+                                                .createTemplate(context, name: templateName.text);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                    const AfterTemplateScreen()));
+                                          },
+                                          child: const Text("Ok"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Text("Add Template")
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -62,55 +113,27 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
           //padding: EdgeInsets.only(top: 180.0),
           //),
           ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Create new Template'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15, top: 15),
-                      child: Text("Name"),
-                    ),
-                    TextField(
-                      controller: templateName,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 40),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Template ismi aldığımız yer
-                          // Backend Part
-                          ref
-                              .read(serviceProvider)
-                              .createTemplate(context, name: templateName.text);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const AfterTemplateScreen()));
-                        },
-                        child: const Text("Ok"),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Container(
+          width: 75,
+          height: 75,
+          child:FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
+              },
+              backgroundColor: Color(0xFF7A3E85),
+              child: Icon(Icons.add),
+              shape: CircleBorder(),
+            ),
+          )
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: const BottomAppBar(
-        height: 40.0,
-        color: Colors.blue,
-        shape: CircularNotchedRectangle(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      bottomNavigationBar: Container(
+          height: 55,
+          child: BottomAppBar(
+              color: Colors.blue
+          )
       ),
     );
   }

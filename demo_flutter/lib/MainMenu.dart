@@ -1,4 +1,4 @@
-import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/DisplayTemplate.dart';
 import 'package:demo_flutter/records/select_template_for_record.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +53,30 @@ class _MainMenuState extends State<MainMenu> {
                   child: const Text("Create Record"))),
         ],
       )),
+
+      floatingActionButton: Container(
+        width: 75,
+        height: 75,
+        child:FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              MaterialPageRoute(builder: (context) => MainMenu());
+            },
+            backgroundColor: Color(0xFF7A3E85),
+            child: Icon(Icons.add),
+            shape: CircleBorder(),
+          ),
+        )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      bottomNavigationBar: Container(
+        height: 55,
+        child: BottomAppBar(
+            color: Colors.blue
+        )
+      ),
+
     );
   }
 }

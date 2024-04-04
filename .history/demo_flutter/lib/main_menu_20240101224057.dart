@@ -1,4 +1,4 @@
-import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/DisplayTemplate.dart';
 import 'package:demo_flutter/records/select_template_for_record.dart';
 import 'package:flutter/material.dart';
 
