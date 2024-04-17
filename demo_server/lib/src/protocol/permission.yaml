@@ -1,0 +1,7 @@
+class: Permission
+table: permission
+fields:
+  fieldId: int, relation(parent=field)
+  roleId: int, relation(parent=role)
+  display: bool
+  edit: bool
