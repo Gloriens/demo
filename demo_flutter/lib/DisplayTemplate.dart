@@ -122,8 +122,11 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
               },
               backgroundColor: Color(0xFF7A3E85),
-              child: Icon(Icons.add),
+              child: ImageIcon(
+                AssetImage('images/icons/homePage.png'),
+              ),
               shape: CircleBorder(),
+
             ),
           )
       ),
