@@ -61,7 +61,7 @@ class SignInPage extends ConsumerWidget {
               ),
               /*ElevatedButton(
                 onPressed: () async {
-                  //FILE UPLOAD FOR RECORD DO NOT USE IT NOW !!!!!!.
+                  //FILE UPLOAD FOR RECORD PAGE.
                   final XFile? image = await ImagePicker()
                       .pickImage(source: ImageSource.gallery);
                   if (image != null) {

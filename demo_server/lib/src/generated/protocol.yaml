@@ -12,6 +12,8 @@ fileUpload:
   - getUploadDescription:
   - verifyUpload:
   - getUrl:
+recordBoolItem:
+  - createRecord:
 record:
   - createRecord:
 recordImage:
