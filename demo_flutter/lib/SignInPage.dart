@@ -24,7 +24,6 @@ class SignInPage extends ConsumerWidget {
               SignInWithEmailButton(
                 caller: client.modules.auth,
                 onSignedIn: () async {
-                  // THERE IS A PROBLEM WITH ASYNC GAP.
                   var newAuthUser = sessionManager.signedInUser;
                   if (newAuthUser != null) {
                     bool isExits = await ref
@@ -53,7 +52,7 @@ class SignInPage extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MainMenu()),
+                            builder: (context) => const SignInPage()),
                       );
                     }
                   }
