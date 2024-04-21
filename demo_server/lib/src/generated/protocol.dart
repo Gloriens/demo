@@ -23,9 +23,10 @@ import 'record_role.dart' as _i11;
 import 'record_text.dart' as _i12;
 import 'role.dart' as _i13;
 import 'template.dart' as _i14;
-import 'package:demo_server/src/generated/field.dart' as _i15;
-import 'package:demo_server/src/generated/role.dart' as _i16;
-import 'package:demo_server/src/generated/template.dart' as _i17;
+import 'package:demo_server/src/generated/app_user.dart' as _i15;
+import 'package:demo_server/src/generated/field.dart' as _i16;
+import 'package:demo_server/src/generated/role.dart' as _i17;
+import 'package:demo_server/src/generated/template.dart' as _i18;
 export 'app_user.dart';
 export 'example.dart';
 export 'field.dart';
@@ -818,16 +819,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i14.Template?>()) {
       return (data != null ? _i14.Template.fromJson(data, this) : null) as T;
     }
-    if (t == List<_i15.Field>) {
-      return (data as List).map((e) => deserialize<_i15.Field>(e)).toList()
+    if (t == List<_i15.AppUser>) {
+      return (data as List).map((e) => deserialize<_i15.AppUser>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i16.Role>) {
-      return (data as List).map((e) => deserialize<_i16.Role>(e)).toList()
+    if (t == List<_i16.Field>) {
+      return (data as List).map((e) => deserialize<_i16.Field>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i17.Template>) {
-      return (data as List).map((e) => deserialize<_i17.Template>(e)).toList()
+    if (t == List<_i17.Role>) {
+      return (data as List).map((e) => deserialize<_i17.Role>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i18.Template>) {
+      return (data as List).map((e) => deserialize<_i18.Template>(e)).toList()
           as dynamic;
     }
     try {

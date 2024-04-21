@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RecordBoolItem extends ConsumerStatefulWidget {
   final int fieldId;
-  const RecordBoolItem({super.key, required this.fieldId});
+  final String fieldName;
+  const RecordBoolItem(
+      {super.key, required this.fieldId, required this.fieldName});
 
   @override
   ConsumerState<RecordBoolItem> createState() => _RecordBoolItemState();
@@ -15,12 +17,27 @@ class _RecordBoolItemState extends ConsumerState<RecordBoolItem> {
     final isChecked = ref.watch(recordBoolProvider);
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Checkbox(
-          checkColor: Colors.white,
-          value: isChecked[widget.fieldId] ?? false,
-          onChanged: (bool? value) {
-            ref.read(recordBoolProvider.notifier).add(widget.fieldId, value!);
-          }),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.fieldName,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Checkbox(
+                checkColor: Colors.white,
+                value: isChecked[widget.fieldId] ?? false,
+                onChanged: (bool? value) {
+                  ref
+                      .read(recordBoolProvider.notifier)
+                      .add(widget.fieldId, value!);
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

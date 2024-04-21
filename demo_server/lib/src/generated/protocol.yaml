@@ -3,6 +3,8 @@ userEndPoint:
   - deleteUser:
   - checkIfUserExists:
   - getUserByAuthUser:
+  - getUsers:
+  - getUserByName:
 example:
   - hello:
 field:
@@ -16,8 +18,14 @@ recordBoolItem:
   - createRecord:
 record:
   - createRecord:
+  - getRecord:
+  - getRecordByName:
 recordImage:
   - createRecordImage:
+recordRole:
+  - createRecord:
+recordTextField:
+  - createRecord:
 role:
   - createRole:
   - getRolesByTemplate:

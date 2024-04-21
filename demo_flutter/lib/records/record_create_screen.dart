@@ -1,13 +1,15 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/records/record_bool_item.dart';
+import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
+import 'package:demo_flutter/records/record_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RecordCreateScreen extends ConsumerStatefulWidget {
-  const RecordCreateScreen({super.key});
-
+  const RecordCreateScreen({super.key, required this.recordId});
+  final int recordId;
   @override
   ConsumerState<RecordCreateScreen> createState() => _RecordCreateScreenState();
 }
@@ -30,9 +32,34 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
         onPressed: () {
           //TO-DO: This is the part where we will send the data to the server.
           //For now, we will just print the data to the console for test.
-          //this one is for the recordBool.
-          ref.read(recordBoolProvider).forEach((key, value) {
-            print('Field ID: $key, Value: $value');
+          ref.read(recordBoolProvider).forEach((fieldId, boolValue) {
+            //this one is for the recordBool.
+            print('Field ID: $fieldId, Value: $boolValue');
+            RecordBool newRecordBool = RecordBool(
+                recordId: widget.recordId,
+                fieldId: fieldId,
+                contentBool: boolValue);
+            ref.read(serviceProvider).createRecordBool(newRecordBool);
+          });
+          print(widget.recordId);
+          ref.read(recordRoleProvider).forEach((roleId, roleUserName) async {
+            //this one is for the recordRole.
+            print('Role ID: $roleId, Value: $roleUserName');
+            final user =
+                await ref.read(serviceProvider).getUserByUName(roleUserName);
+            RecordRole newRecordRole = RecordRole(
+                name: roleUserName,
+                roleId: roleId,
+                userId: user.id ?? 0,
+                recordId: widget.recordId);
+            await ref.read(serviceProvider).createRecordRole(newRecordRole);
+          });
+          ref.read(recordTextFieldProvider).forEach((fieldId, text) {
+            //this one is for the recordTextField.
+            print('Field ID: $fieldId, Value: $text');
+            RecordText newRecordText = RecordText(
+                recordId: widget.recordId, fieldId: fieldId, contentText: text);
+            ref.read(serviceProvider).createRecordTextField(newRecordText);
           });
         },
         child: const Icon(Icons.save),
@@ -56,7 +83,10 @@ class DynamicWidgetList extends StatelessWidget {
     return Column(
       children: [
         _buildFieldWidgets(fields),
-        _buildRoleWidgets(roles),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _buildRoleWidgets(roles),
+        ),
       ],
     );
   }
@@ -67,11 +97,16 @@ class DynamicWidgetList extends StatelessWidget {
         List<Widget> widgets = [];
         for (var field in data) {
           if (field.type == 'text') {
-            widgets.add(TextField(
-              decoration: InputDecoration(hintText: field.name),
-            ));
+            widgets.add(
+              RecordTextField(
+                fieldName: field.name,
+                fieldId: field.id ?? 0,
+              ),
+            );
           } else if (field.type == 'bool') {
-            widgets.add(RecordBoolItem(fieldId: field.id ?? 0));
+            widgets.add(
+              RecordBoolItem(fieldId: field.id ?? 0, fieldName: field.name),
+            );
           } else if (field.type == 'signaturepad') {
             widgets.add(const RecordSignaturePad());
           }
@@ -89,9 +124,12 @@ class DynamicWidgetList extends StatelessWidget {
         List<Widget> widgets = [];
         for (var role in data) {
           widgets.add(
-            Text(
-              role.name,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RecordRoleDropDown(
+                roleName: role.name,
+                roleId: role.id ?? 0,
+              ),
             ),
           );
         }
