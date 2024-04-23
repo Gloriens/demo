@@ -356,7 +356,32 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordBool'],
           ),
-        )
+        ),
+        'getRecordBool': _i1.MethodConnector(
+          name: 'getRecordBool',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordBoolItem'] as _i6.RecordBoolItemEndpoint)
+                  .getRecordBool(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
       },
     );
     connectors['record'] = _i1.EndpointConnector(
@@ -509,7 +534,32 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordText'],
           ),
-        )
+        ),
+        'getRecordText': _i1.MethodConnector(
+          name: 'getRecordText',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+                  .getRecordText(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
       },
     );
     connectors['role'] = _i1.EndpointConnector(

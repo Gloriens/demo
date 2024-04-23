@@ -148,6 +148,19 @@ class EndpointRecordBoolItem extends _i1.EndpointRef {
         'createRecord',
         {'recordBool': recordBool},
       );
+
+  _i2.Future<_i5.RecordBool> getRecordBool(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i5.RecordBool>(
+        'recordBoolItem',
+        'getRecordBool',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
 }
 
 /// {@category Endpoint}
@@ -228,6 +241,19 @@ class EndpointRecordTextField extends _i1.EndpointRef {
         'recordTextField',
         'createRecord',
         {'recordText': recordText},
+      );
+
+  _i2.Future<_i9.RecordText> getRecordText(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i9.RecordText>(
+        'recordTextField',
+        'getRecordText',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
       );
 }
 

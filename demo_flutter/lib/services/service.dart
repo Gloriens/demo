@@ -317,4 +317,17 @@ class Service {
       throw Exception("Record not found");
     }
   }
+
+  Future<RecordBool> getRecordBool(int recordId, int fieldId) async {
+    final record = await client.recordBoolItem.getRecordBool(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<RecordText> getRecordTextField(int recordId, int fieldId) async {
+    final record =
+        await client.recordTextField.getRecordText(recordId, fieldId);
+
+    return record;
+  }
 }

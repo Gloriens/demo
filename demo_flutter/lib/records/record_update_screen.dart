@@ -3,6 +3,8 @@ import 'package:demo_flutter/records/record_bool_item.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
 import 'package:demo_flutter/records/record_textfield.dart';
+import 'package:demo_flutter/records/record_update_bool.dart';
+import 'package:demo_flutter/records/record_update_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +26,8 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
         backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: DynamicWidgetUpdateList(fields: fields, roles: roles),
+        child: DynamicWidgetUpdateList(
+            fields: fields, roles: roles, recordId: widget.record.id ?? 0),
       ),
     );
   }
@@ -33,11 +36,13 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
 class DynamicWidgetUpdateList extends StatelessWidget {
   final AsyncValue<List<Field>> fields;
   final AsyncValue<List<Role>> roles;
+  final int recordId;
 
   const DynamicWidgetUpdateList({
     super.key,
     required this.fields,
     required this.roles,
+    required this.recordId,
   });
 
   @override
@@ -60,14 +65,17 @@ class DynamicWidgetUpdateList extends StatelessWidget {
         for (var field in data) {
           if (field.type == 'text') {
             widgets.add(
-              RecordTextField(
-                fieldName: field.name,
-                fieldId: field.id ?? 0,
-              ),
+              RecordUpdateTextfield(
+                  fieldId: field.id ?? 0,
+                  recordId: recordId,
+                  fieldName: field.name),
             );
           } else if (field.type == 'bool') {
             widgets.add(
-              RecordBoolItem(fieldId: field.id ?? 0, fieldName: field.name),
+              RecordUpdateBool(
+                  fieldId: field.id ?? 0,
+                  fieldName: field.name,
+                  recordId: recordId),
             );
           } else if (field.type == 'signaturepad') {
             widgets.add(const RecordSignaturePad());
