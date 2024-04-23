@@ -273,6 +273,13 @@ class EndpointTemplate extends _i1.EndpointRef {
         'getTemplates',
         {'userId': userId},
       );
+
+  _i2.Future<_i11.Template> getTemplate({required int id}) =>
+      caller.callServerEndpoint<_i11.Template>(
+        'template',
+        'getTemplate',
+        {'id': id},
+      );
 }
 
 class _Modules {

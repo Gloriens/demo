@@ -594,6 +594,24 @@ class Endpoints extends _i1.EndpointDispatch {
             userId: params['userId'],
           ),
         ),
+        'getTemplate': _i1.MethodConnector(
+          name: 'getTemplate',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['template'] as _i12.TemplateEndpoint).getTemplate(
+            session,
+            id: params['id'],
+          ),
+        ),
       },
     );
     modules['serverpod_auth'] = _i22.Endpoints()..initializeEndpoints(server);

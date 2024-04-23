@@ -45,6 +45,18 @@ final listOfRecordsProvider = FutureProvider<List<Record>>((ref) async {
   }
   return records;
 });
+final fieldsProvider = FutureProvider.autoDispose
+    .family<List<Field>, int>((ref, templateId) async {
+  final listFields =
+      await ref.read(serviceProvider).getFieldsByTemplateId(templateId);
+  return listFields;
+});
+final roleProvider =
+    FutureProvider.autoDispose.family<List<Role>, int>((ref, templateId) async {
+  final listRoles =
+      await ref.read(serviceProvider).getRolesByTemplateId(templateId);
+  return listRoles;
+});
 
 class Service {
   final Ref ref;
@@ -168,6 +180,18 @@ class Service {
 
     final List<Role> listOfRoles = await client.role
         .getRolesByTemplate(templateId: templateProvider.template.id ?? 0);
+    return listOfRoles;
+  }
+
+  Future<List<Field>> getFieldsByTemplateId(int templateId) async {
+    final List<Field> listOfFields =
+        await client.field.getFieldsByTemplate(templateId: templateId);
+    return listOfFields;
+  }
+
+  Future<List<Role>> getRolesByTemplateId(int templateId) async {
+    final List<Role> listOfRoles =
+        await client.role.getRolesByTemplate(templateId: templateId);
     return listOfRoles;
   }
 

@@ -33,3 +33,4 @@ role:
 template:
   - createTemplate:
   - getTemplates:
+  - getTemplate:
