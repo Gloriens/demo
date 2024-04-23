@@ -29,6 +29,22 @@ final listOfUsersProvider = FutureProvider<List<AppUser>>((ref) async {
   final listUsers = await ref.read(serviceProvider).getListOfUsers();
   return listUsers;
 });
+final listOfRecordRolesProvider = FutureProvider<List<RecordRole>>((ref) async {
+  final listRecordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  return listRecordRoles;
+});
+final listOfRecordsProvider = FutureProvider<List<Record>>((ref) async {
+  final recordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  final records = <Record>[];
+  for (RecordRole recordRole in recordRoles) {
+    final record =
+        await ref.read(serviceProvider).getRecord(recordRole.recordId);
+    records.add(record);
+  }
+  return records;
+});
 
 class Service {
   final Ref ref;
@@ -261,5 +277,20 @@ class Service {
     final createdRecordText =
         await client.recordTextField.createRecord(recordText);
     return createdRecordText;
+  }
+
+  Future<List<RecordRole>> getListOfRecordRoles(int userId) async {
+    final List<RecordRole> listOfRecordRoles =
+        await client.recordRole.getRecordRoles(userId);
+    return listOfRecordRoles;
+  }
+
+  Future<Record> getRecord(int recordId) async {
+    final record = await client.record.getRecord(recordId);
+    if (record != null) {
+      return record;
+    } else {
+      throw Exception("Record not found");
+    }
   }
 }

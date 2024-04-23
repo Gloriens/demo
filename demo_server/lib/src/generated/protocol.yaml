@@ -24,6 +24,7 @@ recordImage:
   - createRecordImage:
 recordRole:
   - createRecord:
+  - getRecordRoles:
 recordTextField:
   - createRecord:
 role:

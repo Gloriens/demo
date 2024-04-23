@@ -207,6 +207,13 @@ class EndpointRecordRole extends _i1.EndpointRef {
         'createRecord',
         {'recordRole': recordRole},
       );
+
+  _i2.Future<List<_i8.RecordRole>> getRecordRoles(int userId) =>
+      caller.callServerEndpoint<List<_i8.RecordRole>>(
+        'recordRole',
+        'getRecordRoles',
+        {'userId': userId},
+      );
 }
 
 /// {@category Endpoint}
