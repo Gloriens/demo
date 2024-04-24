@@ -2,11 +2,13 @@ import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/HomePage.dart';
 import 'package:demo_flutter/fields/field_cards_list.dart';
 import 'package:demo_flutter/fields/field_creation_screen.dart';
-import 'package:demo_flutter/roles/role_cards_list.dart';
-import 'package:demo_flutter/roles/role_creation_screen.dart';
+import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/roles/roleDisplay/role_cards_list.dart';
+import 'package:demo_flutter/roles/roleDisplay/role_creation_screen.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:demo_flutter/roles/roleDisplay/role_cards_list.dart';
 
 class AfterTemplateScreen extends ConsumerStatefulWidget {
   const AfterTemplateScreen({super.key});
@@ -24,6 +26,14 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Geri butonu ikonu
+          onPressed: () {
+            //Navigator.push(context,
+            //MaterialPageRoute(builder: (context) => SecondPage()),
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
+          },
+        ),
       ),
       body: Center(
         child: Column(
