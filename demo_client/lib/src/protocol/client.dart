@@ -161,6 +161,13 @@ class EndpointRecordBoolItem extends _i1.EndpointRef {
           'fieldId': fieldId,
         },
       );
+
+  _i2.Future<void> updateRecordBool(_i5.RecordBool recordBool) =>
+      caller.callServerEndpoint<void>(
+        'recordBoolItem',
+        'updateRecordBool',
+        {'recordBool': recordBool},
+      );
 }
 
 /// {@category Endpoint}
@@ -254,6 +261,13 @@ class EndpointRecordTextField extends _i1.EndpointRef {
           'recordId': recordId,
           'fieldId': fieldId,
         },
+      );
+
+  _i2.Future<void> updateRecordText(_i9.RecordText recordText) =>
+      caller.callServerEndpoint<void>(
+        'recordTextField',
+        'updateRecordText',
+        {'recordText': recordText},
       );
 }
 

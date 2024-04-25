@@ -17,4 +17,8 @@ class RecordTextFieldEndpoint extends Endpoint {
     }
     return recordText;
   }
+
+  Future<void> updateRecordText(Session session, RecordText recordText) async {
+    await RecordText.db.updateRow(session, recordText);
+  }
 }

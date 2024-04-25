@@ -382,6 +382,25 @@ class Endpoints extends _i1.EndpointDispatch {
             params['fieldId'],
           ),
         ),
+        'updateRecordBool': _i1.MethodConnector(
+          name: 'updateRecordBool',
+          params: {
+            'recordBool': _i1.ParameterDescription(
+              name: 'recordBool',
+              type: _i1.getType<_i15.RecordBool>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordBoolItem'] as _i6.RecordBoolItemEndpoint)
+                  .updateRecordBool(
+            session,
+            params['recordBool'],
+          ),
+        ),
       },
     );
     connectors['record'] = _i1.EndpointConnector(
@@ -558,6 +577,25 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordId'],
             params['fieldId'],
+          ),
+        ),
+        'updateRecordText': _i1.MethodConnector(
+          name: 'updateRecordText',
+          params: {
+            'recordText': _i1.ParameterDescription(
+              name: 'recordText',
+              type: _i1.getType<_i19.RecordText>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+                  .updateRecordText(
+            session,
+            params['recordText'],
           ),
         ),
       },

@@ -330,4 +330,12 @@ class Service {
 
     return record;
   }
+
+  Future<void> updateRecordTextField(RecordText recordText) async {
+    await client.recordTextField.updateRecordText(recordText);
+  }
+
+  Future<void> updateRecordBool(RecordBool recordBool) async {
+    await client.recordBoolItem.updateRecordBool(recordBool);
+  }
 }

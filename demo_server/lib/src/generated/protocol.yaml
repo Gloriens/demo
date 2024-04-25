@@ -17,6 +17,7 @@ fileUpload:
 recordBoolItem:
   - createRecord:
   - getRecordBool:
+  - updateRecordBool:
 record:
   - createRecord:
   - getRecord:
@@ -29,6 +30,7 @@ recordRole:
 recordTextField:
   - createRecord:
   - getRecordText:
+  - updateRecordText:
 role:
   - createRole:
   - getRolesByTemplate:

@@ -1,8 +1,6 @@
 import 'package:demo_client/demo_client.dart';
-import 'package:demo_flutter/records/record_bool_item.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
-import 'package:demo_flutter/records/record_textfield.dart';
 import 'package:demo_flutter/records/record_update_bool.dart';
 import 'package:demo_flutter/records/record_update_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
@@ -22,6 +20,32 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
     final fields = ref.watch(fieldsProvider(widget.record.templateId));
     final roles = ref.watch(roleProvider(widget.record.templateId));
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref
+              .read(recordBoolUpdateProvider)
+              .forEach((fieldId, boolValue) async {
+            RecordBool currRecordBool = await ref
+                .read(serviceProvider)
+                .getRecordBool(widget.record.id ?? 0, fieldId);
+            currRecordBool.contentBool = boolValue;
+            await ref.read(serviceProvider).updateRecordBool(currRecordBool);
+          });
+          ref
+              .read(recordTextFieldUpdateProvider)
+              .forEach((fieldId, text) async {
+            RecordText currRecordText = await ref
+                .read(serviceProvider)
+                .getRecordTextField(widget.record.id ?? 0, fieldId);
+            currRecordText.contentText = text;
+            await ref
+                .read(serviceProvider)
+                .updateRecordTextField(currRecordText);
+          });
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.save),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.blue,
       ),

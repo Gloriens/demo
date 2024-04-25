@@ -17,4 +17,8 @@ class RecordBoolItemEndpoint extends Endpoint {
     }
     return recordBool;
   }
+
+  Future<void> updateRecordBool(Session session, RecordBool recordBool) async {
+    await RecordBool.db.updateRow(session, recordBool);
+  }
 }

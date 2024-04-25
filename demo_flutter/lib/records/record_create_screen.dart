@@ -30,8 +30,6 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //TO-DO: This is the part where we will send the data to the server.
-          //For now, we will just print the data to the console for test.
           ref.read(recordBoolProvider).forEach((fieldId, boolValue) {
             //this one is for the recordBool.
             print('Field ID: $fieldId, Value: $boolValue');
@@ -61,6 +59,7 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
                 recordId: widget.recordId, fieldId: fieldId, contentText: text);
             ref.read(serviceProvider).createRecordTextField(newRecordText);
           });
+          Navigator.pop(context);
         },
         child: const Icon(Icons.save),
       ),
