@@ -81,6 +81,7 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                                   },
                                   child: Text('close'),
                                 ),
+
                               ],
                             );
                           },
@@ -102,9 +103,11 @@ class _FieldCardsState extends ConsumerState<FieldCards> {
                               content: roles.when(
                                   data: (data) {
                                     return SizedBox(
-                                      child: RoleCardsList(roles: data),
                                       height: 300,
                                       width: 300,
+                                      child: SingleChildScrollView(
+                                        child: RoleCardsListPermissions(roles: data),
+                                      ),
                                     );
                                   },
                                   error: ((error, stackTrace) =>
