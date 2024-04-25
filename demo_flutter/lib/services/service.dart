@@ -25,6 +25,11 @@ final listOfTemplatesProvider = FutureProvider<List<Template>>((ref) async {
   return listTemplates;
 });
 
+final listOfUsersProvider = FutureProvider<List<AppUser>>((ref) async {
+  final listUsers = await ref.read(serviceProvider).getListOfUsers();
+  return listUsers;
+});
+
 class Service {
   final Ref ref;
   Service(this.ref);
@@ -113,15 +118,17 @@ class Service {
     }
   }
 
-  Future<void> createRecord(
+  Future<Record> createRecord(
       {required String name, required DateTime date}) async {
     final templateProvider = ref.read(templateStateNotifierProvider.notifier);
     final record = Record(
         templateId: templateProvider.template.id ?? 0, name: name, date: date);
     try {
-      return await client.record.createRecord(record);
+      final createdRecord = await client.record.createRecord(record);
+      return createdRecord;
     } on Exception catch (e) {
       debugPrint('$e');
+      throw Exception('Failed to create record');
     }
   }
 
@@ -161,6 +168,15 @@ class Service {
       final List<String> listOfTemplatesName =
           templates.map((e) => e.name).toList();
       return listOfTemplatesName;
+    } else {
+      return List.empty();
+    }
+  }
+
+  List<String> getListOfUsersName(List<AppUser> users) {
+    if (users.isNotEmpty) {
+      final List<String> listOfUsersName = users.map((e) => e.name).toList();
+      return listOfUsersName;
     } else {
       return List.empty();
     }
@@ -209,5 +225,41 @@ class Service {
     }
 
     return null;
+  }
+
+  Future<Record> getRecordByName(String name) async {
+    final record = await client.record.getRecordByName(name);
+    if (record != null) {
+      return record;
+    } else {
+      throw Exception("Record not found");
+    }
+  }
+
+  Future<AppUser> getUserByUName(String name) async {
+    final user = await client.userEndPoint.getUserByName(name);
+    return user;
+  }
+
+  Future<List<AppUser>> getListOfUsers() async {
+    final List<AppUser> listOfUsers = await client.userEndPoint.getUsers();
+    return listOfUsers;
+  }
+
+  Future<RecordRole> createRecordRole(RecordRole recordRole) async {
+    final createdRecordRole = await client.recordRole.createRecord(recordRole);
+    return createdRecordRole;
+  }
+
+  Future<RecordBool> createRecordBool(RecordBool recordBool) async {
+    final createdRecordBool =
+        await client.recordBoolItem.createRecord(recordBool);
+    return createdRecordBool;
+  }
+
+  Future<RecordText> createRecordTextField(RecordText recordText) async {
+    final createdRecordText =
+        await client.recordTextField.createRecord(recordText);
+    return createdRecordText;
   }
 }
