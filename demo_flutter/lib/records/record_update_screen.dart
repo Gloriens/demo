@@ -73,11 +73,11 @@ class DynamicWidgetUpdateList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildFieldWidgets(fields),
-        Padding(
+        _buildFieldWidgets(fields)
+        /*Padding(
           padding: const EdgeInsets.all(8.0),
           child: _buildRoleWidgets(roles),
-        ),
+        ),*/
       ],
     );
   }
@@ -112,7 +112,7 @@ class DynamicWidgetUpdateList extends StatelessWidget {
     );
   }
 
-  Widget _buildRoleWidgets(AsyncValue<List<Role>> roles) {
+  /*Widget _buildRoleWidgets(AsyncValue<List<Role>> roles) {
     return roles.when(
       data: (data) {
         print(data.length);
@@ -133,5 +133,5 @@ class DynamicWidgetUpdateList extends StatelessWidget {
       error: (error, stackTrace) => Text(error.toString()),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
-  }
+  }*/
 }

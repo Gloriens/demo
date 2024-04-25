@@ -1,4 +1,5 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/main_menu.dart';
 import 'package:demo_flutter/records/record_bool_item.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
@@ -59,7 +60,8 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
                 recordId: widget.recordId, fieldId: fieldId, contentText: text);
             ref.read(serviceProvider).createRecordTextField(newRecordText);
           });
-          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MainMenu()));
         },
         child: const Icon(Icons.save),
       ),
