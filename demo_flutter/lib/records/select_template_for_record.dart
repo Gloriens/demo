@@ -1,5 +1,6 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/providers/template_notifier.dart';
+import 'package:demo_flutter/records/record_bool_item.dart';
 import 'package:demo_flutter/records/record_create_screen.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,7 @@ class _SelectTemplateForRecordState
               child: Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         template = templates.firstWhere(
                           (template) => template.name == dropdownValue,
                         );
@@ -84,11 +85,17 @@ class _SelectTemplateForRecordState
                             .template = template;
                         ref.read(serviceProvider).createRecord(
                             name: nameController.text, date: DateTime.now());
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const RecordCreateScreen()));
+                        ref
+                            .read(serviceProvider)
+                            .getRecordByName(nameController.text)
+                            .then((value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RecordCreateScreen(
+                                        recordId: value.id ?? 0,
+                                      )));
+                        });
                       },
                       child: const Text("Ok")))),
         ],

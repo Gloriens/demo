@@ -28,4 +28,19 @@ class UserEndPoint extends Endpoint {
         .findFirstRow(session, where: (au) => au.userInfoId.equals(userInfoId));
     return appUser;
   }
+
+  Future<List<AppUser>> getUsers(Session session) async {
+    return await AppUser.db.find(session);
+  }
+
+  Future<AppUser> getUserByName(Session session, String name) async {
+    AppUser? user = await AppUser.db.findFirstRow(
+      session,
+      where: (au) => au.name.equals(name),
+    );
+    if (user == null) {
+      throw Exception('User not found');
+    }
+    return user;
+  }
 }
