@@ -24,6 +24,8 @@ record:
   - getRecordByName:
 recordImage:
   - createRecordImage:
+  - getRecordImage:
+  - updateRecordImage:
 recordRole:
   - createRecord:
   - getRecordRoles:

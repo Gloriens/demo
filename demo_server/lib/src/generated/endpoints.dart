@@ -485,7 +485,51 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordImage'],
           ),
-        )
+        ),
+        'getRecordImage': _i1.MethodConnector(
+          name: 'getRecordImage',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+                  .getRecordImage(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
+        'updateRecordImage': _i1.MethodConnector(
+          name: 'updateRecordImage',
+          params: {
+            'recordImage': _i1.ParameterDescription(
+              name: 'recordImage',
+              type: _i1.getType<_i17.RecordImage>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+                  .updateRecordImage(
+            session,
+            params['recordImage'],
+          ),
+        ),
       },
     );
     connectors['recordRole'] = _i1.EndpointConnector(

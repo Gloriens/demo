@@ -1,6 +1,7 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
+import 'package:demo_flutter/records/record_signaturepad_update.dart';
 import 'package:demo_flutter/records/record_update_bool.dart';
 import 'package:demo_flutter/records/record_update_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
@@ -102,7 +103,10 @@ class DynamicWidgetUpdateList extends StatelessWidget {
                   recordId: recordId),
             );
           } else if (field.type == 'signaturepad') {
-            widgets.add(const RecordSignaturePad());
+            widgets.add(RecordSignaturepadUpdate(
+              fieldId: field.id ?? 0,
+              recordId: recordId,
+            ));
           }
         }
         return Column(children: widgets);

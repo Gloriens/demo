@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/LoginScreen.dart';
@@ -56,6 +57,12 @@ final roleProvider =
   final listRoles =
       await ref.read(serviceProvider).getRolesByTemplateId(templateId);
   return listRoles;
+});
+final recordImageProvider = FutureProvider.autoDispose
+    .family<RecordImage, (int, int)>((ref, arg) async {
+  final recordImage =
+      await ref.read(serviceProvider).getRecordImage(arg.$1, arg.$2);
+  return recordImage;
 });
 
 class Service {
@@ -265,6 +272,38 @@ class Service {
     }
 
     return null;
+  }
+
+  Future<String?> uploadSignature(ByteData byteData, [String? path]) async {
+    path = path ?? "test.jpg";
+    final uploadDescription =
+        await client.fileUpload.getUploadDescription(path);
+    if (uploadDescription != null) {
+      final uploader = FileUploader(uploadDescription);
+      await uploader.uploadByteData(byteData);
+      final success = await client.fileUpload.verifyUpload(path);
+      if (!success) {
+        print("Signateure upload verification failed for path: $path");
+        return null;
+      }
+      var url = await client.fileUpload.getUrl(path);
+      return url;
+    }
+    return null;
+  }
+
+  Future<void> createRecordImage(RecordImage recordImage) async {
+    await client.recordImage.createRecordImage(recordImage);
+  }
+
+  Future<void> updateRecordImage(RecordImage recordImage) async {
+    await client.recordImage.updateRecordImage(recordImage);
+  }
+
+  Future<RecordImage> getRecordImage(int fieldId, int recordId) async {
+    final recordImage =
+        await client.recordImage.getRecordImage(fieldId, recordId);
+    return recordImage;
   }
 
   Future<Record> getRecordByName(String name) async {

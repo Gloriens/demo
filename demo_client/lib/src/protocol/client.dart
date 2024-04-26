@@ -212,6 +212,26 @@ class EndpointRecordImage extends _i1.EndpointRef {
         'createRecordImage',
         {'recordImage': recordImage},
       );
+
+  _i2.Future<_i7.RecordImage> getRecordImage(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i7.RecordImage>(
+        'recordImage',
+        'getRecordImage',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordImage(_i7.RecordImage recordImage) =>
+      caller.callServerEndpoint<void>(
+        'recordImage',
+        'updateRecordImage',
+        {'recordImage': recordImage},
+      );
 }
 
 /// {@category Endpoint}

@@ -1,0 +1,99 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "record_image"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "record_image",
+        "dartName": "RecordImage",
+        "module": "demo",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('record_image_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "recordId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "fieldId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "imageURL",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "record_image_fk_0",
+            "columns": [
+              "recordId"
+            ],
+            "referenceTable": "record",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "record_image_fk_1",
+            "columns": [
+              "fieldId"
+            ],
+            "referenceTable": "field",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "record_image_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "One or more columns are added to table \"record_image\" which cannot be added in a table migration. The complete table will be deleted and recreated.",
+      "table": "record_image",
+      "columns": [
+        "fieldId"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}
