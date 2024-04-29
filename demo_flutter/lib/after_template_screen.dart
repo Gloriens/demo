@@ -1,8 +1,8 @@
 import 'package:demo_client/demo_client.dart';
-import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/Templates.dart';
 import 'package:demo_flutter/fields/field_cards_list.dart';
 import 'package:demo_flutter/fields/field_creation_screen.dart';
-import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/roles/roleDisplay/role_cards_list.dart';
 import 'package:demo_flutter/roles/roleDisplay/role_creation_screen.dart';
 import 'package:demo_flutter/services/service.dart';
