@@ -16,19 +16,27 @@ fileUpload:
   - getUrl:
 recordBoolItem:
   - createRecord:
+  - getRecordBool:
+  - updateRecordBool:
 record:
   - createRecord:
   - getRecord:
   - getRecordByName:
 recordImage:
   - createRecordImage:
+  - getRecordImage:
+  - updateRecordImage:
 recordRole:
   - createRecord:
+  - getRecordRoles:
 recordTextField:
   - createRecord:
+  - getRecordText:
+  - updateRecordText:
 role:
   - createRole:
   - getRolesByTemplate:
 template:
   - createTemplate:
   - getTemplates:
+  - getTemplate:

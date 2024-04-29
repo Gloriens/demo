@@ -14,12 +14,14 @@ abstract class RecordImage extends _i1.TableRow {
   RecordImage._({
     int? id,
     required this.recordId,
+    required this.fieldId,
     required this.imageURL,
   }) : super(id);
 
   factory RecordImage({
     int? id,
     required int recordId,
+    required int fieldId,
     required String imageURL,
   }) = _RecordImageImpl;
 
@@ -31,6 +33,8 @@ abstract class RecordImage extends _i1.TableRow {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       recordId:
           serializationManager.deserialize<int>(jsonSerialization['recordId']),
+      fieldId:
+          serializationManager.deserialize<int>(jsonSerialization['fieldId']),
       imageURL: serializationManager
           .deserialize<String>(jsonSerialization['imageURL']),
     );
@@ -42,6 +46,8 @@ abstract class RecordImage extends _i1.TableRow {
 
   int recordId;
 
+  int fieldId;
+
   String imageURL;
 
   @override
@@ -50,6 +56,7 @@ abstract class RecordImage extends _i1.TableRow {
   RecordImage copyWith({
     int? id,
     int? recordId,
+    int? fieldId,
     String? imageURL,
   });
   @override
@@ -57,6 +64,7 @@ abstract class RecordImage extends _i1.TableRow {
     return {
       if (id != null) 'id': id,
       'recordId': recordId,
+      'fieldId': fieldId,
       'imageURL': imageURL,
     };
   }
@@ -67,6 +75,7 @@ abstract class RecordImage extends _i1.TableRow {
     return {
       'id': id,
       'recordId': recordId,
+      'fieldId': fieldId,
       'imageURL': imageURL,
     };
   }
@@ -76,6 +85,7 @@ abstract class RecordImage extends _i1.TableRow {
     return {
       if (id != null) 'id': id,
       'recordId': recordId,
+      'fieldId': fieldId,
       'imageURL': imageURL,
     };
   }
@@ -92,6 +102,9 @@ abstract class RecordImage extends _i1.TableRow {
         return;
       case 'recordId':
         recordId = value;
+        return;
+      case 'fieldId':
+        fieldId = value;
         return;
       case 'imageURL':
         imageURL = value;
@@ -249,10 +262,12 @@ class _RecordImageImpl extends RecordImage {
   _RecordImageImpl({
     int? id,
     required int recordId,
+    required int fieldId,
     required String imageURL,
   }) : super._(
           id: id,
           recordId: recordId,
+          fieldId: fieldId,
           imageURL: imageURL,
         );
 
@@ -260,11 +275,13 @@ class _RecordImageImpl extends RecordImage {
   RecordImage copyWith({
     Object? id = _Undefined,
     int? recordId,
+    int? fieldId,
     String? imageURL,
   }) {
     return RecordImage(
       id: id is int? ? id : this.id,
       recordId: recordId ?? this.recordId,
+      fieldId: fieldId ?? this.fieldId,
       imageURL: imageURL ?? this.imageURL,
     );
   }
@@ -276,6 +293,10 @@ class RecordImageTable extends _i1.Table {
       'recordId',
       this,
     );
+    fieldId = _i1.ColumnInt(
+      'fieldId',
+      this,
+    );
     imageURL = _i1.ColumnString(
       'imageURL',
       this,
@@ -284,12 +305,15 @@ class RecordImageTable extends _i1.Table {
 
   late final _i1.ColumnInt recordId;
 
+  late final _i1.ColumnInt fieldId;
+
   late final _i1.ColumnString imageURL;
 
   @override
   List<_i1.Column> get columns => [
         id,
         recordId,
+        fieldId,
         imageURL,
       ];
 }

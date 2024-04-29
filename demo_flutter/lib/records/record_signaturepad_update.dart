@@ -6,19 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
-class RecordSignaturePad extends ConsumerStatefulWidget {
-  const RecordSignaturePad(
+class RecordSignaturepadUpdate extends ConsumerStatefulWidget {
+  const RecordSignaturepadUpdate(
       {super.key, required this.recordId, required this.fieldId});
   final int recordId;
   final int fieldId;
   @override
-  ConsumerState<RecordSignaturePad> createState() => _RecordSignaturePadState();
+  ConsumerState<RecordSignaturepadUpdate> createState() =>
+      _RecordSignaturepadUpdateState();
 }
 
-class _RecordSignaturePadState extends ConsumerState<RecordSignaturePad> {
+class _RecordSignaturepadUpdateState
+    extends ConsumerState<RecordSignaturepadUpdate> {
   final GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final imageProv =
+        ref.watch(recordImageProvider((widget.recordId, widget.fieldId)));
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Column(
@@ -34,7 +38,7 @@ class _RecordSignaturePadState extends ConsumerState<RecordSignaturePad> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 120),
+                padding: const EdgeInsets.only(left: 30),
                 child: ElevatedButton(
                   child: const Text("Save as image"),
                   onPressed: () async {
@@ -56,8 +60,37 @@ class _RecordSignaturePadState extends ConsumerState<RecordSignaturePad> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    ui.Image image = await _signaturePadKey.currentState!
+                        .toImage(pixelRatio: 1);
+                    final path =
+                        'signature/${ref.read(serviceProvider).generateRandomString(6)}.png';
+                    final byteData =
+                        await image.toByteData(format: ui.ImageByteFormat.png);
+                    final url = await ref
+                        .read(serviceProvider)
+                        .uploadSignature(byteData!, path);
+                    RecordImage recordImage = await ref
+                        .read(serviceProvider)
+                        .getRecordImage(widget.recordId, widget.fieldId);
+                    recordImage.imageURL = url ?? "";
+                    ref.read(serviceProvider).updateRecordImage(recordImage);
+                  },
+                  child: const Text("Update Signature"),
+                ),
+              ),
             ],
           ),
+          imageProv.when(data: (data) {
+            return Image.network(data.imageURL);
+          }, loading: () {
+            return const CircularProgressIndicator();
+          }, error: (error, _) {
+            return Text("Error: $error");
+          }),
         ],
       ),
     );

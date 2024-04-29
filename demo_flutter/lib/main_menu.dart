@@ -1,4 +1,5 @@
 import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/records/record_display_screen.dart';
 import 'package:demo_flutter/records/select_template_for_record.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +52,17 @@ class _MainMenuState extends State<MainMenu> {
                         });
                   },
                   child: const Text("Create Record"))),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const RecordsDisplayScreen();
+                        });
+                  },
+                  child: const Text("Display Record"))),
         ],
       )),
       floatingActionButton: Container(

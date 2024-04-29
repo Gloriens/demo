@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/LoginScreen.dart';
@@ -28,6 +29,40 @@ final listOfTemplatesProvider = FutureProvider<List<Template>>((ref) async {
 final listOfUsersProvider = FutureProvider<List<AppUser>>((ref) async {
   final listUsers = await ref.read(serviceProvider).getListOfUsers();
   return listUsers;
+});
+final listOfRecordRolesProvider = FutureProvider<List<RecordRole>>((ref) async {
+  final listRecordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  return listRecordRoles;
+});
+final listOfRecordsProvider = FutureProvider<List<Record>>((ref) async {
+  final recordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  final records = <Record>[];
+  for (RecordRole recordRole in recordRoles) {
+    final record =
+        await ref.read(serviceProvider).getRecord(recordRole.recordId);
+    records.add(record);
+  }
+  return records;
+});
+final fieldsProvider = FutureProvider.autoDispose
+    .family<List<Field>, int>((ref, templateId) async {
+  final listFields =
+      await ref.read(serviceProvider).getFieldsByTemplateId(templateId);
+  return listFields;
+});
+final roleProvider =
+    FutureProvider.autoDispose.family<List<Role>, int>((ref, templateId) async {
+  final listRoles =
+      await ref.read(serviceProvider).getRolesByTemplateId(templateId);
+  return listRoles;
+});
+final recordImageProvider = FutureProvider.autoDispose
+    .family<RecordImage, (int, int)>((ref, arg) async {
+  final recordImage =
+      await ref.read(serviceProvider).getRecordImage(arg.$1, arg.$2);
+  return recordImage;
 });
 
 class Service {
@@ -155,6 +190,18 @@ class Service {
     return listOfRoles;
   }
 
+  Future<List<Field>> getFieldsByTemplateId(int templateId) async {
+    final List<Field> listOfFields =
+        await client.field.getFieldsByTemplate(templateId: templateId);
+    return listOfFields;
+  }
+
+  Future<List<Role>> getRolesByTemplateId(int templateId) async {
+    final List<Role> listOfRoles =
+        await client.role.getRolesByTemplate(templateId: templateId);
+    return listOfRoles;
+  }
+
   Future<List<Template>> getListOfTemplatesByUser() async {
     final userProvider = ref.read(userStateNotifierProvider.notifier);
 
@@ -227,6 +274,38 @@ class Service {
     return null;
   }
 
+  Future<String?> uploadSignature(ByteData byteData, [String? path]) async {
+    path = path ?? "test.jpg";
+    final uploadDescription =
+        await client.fileUpload.getUploadDescription(path);
+    if (uploadDescription != null) {
+      final uploader = FileUploader(uploadDescription);
+      await uploader.uploadByteData(byteData);
+      final success = await client.fileUpload.verifyUpload(path);
+      if (!success) {
+        print("Signateure upload verification failed for path: $path");
+        return null;
+      }
+      var url = await client.fileUpload.getUrl(path);
+      return url;
+    }
+    return null;
+  }
+
+  Future<void> createRecordImage(RecordImage recordImage) async {
+    await client.recordImage.createRecordImage(recordImage);
+  }
+
+  Future<void> updateRecordImage(RecordImage recordImage) async {
+    await client.recordImage.updateRecordImage(recordImage);
+  }
+
+  Future<RecordImage> getRecordImage(int fieldId, int recordId) async {
+    final recordImage =
+        await client.recordImage.getRecordImage(fieldId, recordId);
+    return recordImage;
+  }
+
   Future<Record> getRecordByName(String name) async {
     final record = await client.record.getRecordByName(name);
     if (record != null) {
@@ -261,5 +340,41 @@ class Service {
     final createdRecordText =
         await client.recordTextField.createRecord(recordText);
     return createdRecordText;
+  }
+
+  Future<List<RecordRole>> getListOfRecordRoles(int userId) async {
+    final List<RecordRole> listOfRecordRoles =
+        await client.recordRole.getRecordRoles(userId);
+    return listOfRecordRoles;
+  }
+
+  Future<Record> getRecord(int recordId) async {
+    final record = await client.record.getRecord(recordId);
+    if (record != null) {
+      return record;
+    } else {
+      throw Exception("Record not found");
+    }
+  }
+
+  Future<RecordBool> getRecordBool(int recordId, int fieldId) async {
+    final record = await client.recordBoolItem.getRecordBool(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<RecordText> getRecordTextField(int recordId, int fieldId) async {
+    final record =
+        await client.recordTextField.getRecordText(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<void> updateRecordTextField(RecordText recordText) async {
+    await client.recordTextField.updateRecordText(recordText);
+  }
+
+  Future<void> updateRecordBool(RecordBool recordBool) async {
+    await client.recordBoolItem.updateRecordBool(recordBool);
   }
 }

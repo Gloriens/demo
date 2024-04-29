@@ -1,4 +1,5 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/main_menu.dart';
 import 'package:demo_flutter/records/record_bool_item.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
@@ -26,12 +27,13 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
       // This is the part where we dynamically create the widgets based on fields and roles
       //of the related template.
       body: Center(
-        child: DynamicWidgetList(fields: listOfFields, roles: listOfRoles),
+        child: DynamicWidgetList(
+            fields: listOfFields,
+            roles: listOfRoles,
+            recordId: widget.recordId),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //TO-DO: This is the part where we will send the data to the server.
-          //For now, we will just print the data to the console for test.
           ref.read(recordBoolProvider).forEach((fieldId, boolValue) {
             //this one is for the recordBool.
             print('Field ID: $fieldId, Value: $boolValue');
@@ -61,6 +63,8 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
                 recordId: widget.recordId, fieldId: fieldId, contentText: text);
             ref.read(serviceProvider).createRecordTextField(newRecordText);
           });
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MainMenu()));
         },
         child: const Icon(Icons.save),
       ),
@@ -71,11 +75,12 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
 class DynamicWidgetList extends StatelessWidget {
   final AsyncValue<List<Field>> fields;
   final AsyncValue<List<Role>> roles;
-
+  final int recordId;
   const DynamicWidgetList({
     super.key,
     required this.fields,
     required this.roles,
+    required this.recordId,
   });
 
   @override
@@ -108,7 +113,10 @@ class DynamicWidgetList extends StatelessWidget {
               RecordBoolItem(fieldId: field.id ?? 0, fieldName: field.name),
             );
           } else if (field.type == 'signaturepad') {
-            widgets.add(const RecordSignaturePad());
+            widgets.add(RecordSignaturePad(
+              fieldId: field.id ?? 0,
+              recordId: recordId,
+            ));
           }
         }
         return Column(children: widgets);

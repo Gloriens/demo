@@ -148,6 +148,26 @@ class EndpointRecordBoolItem extends _i1.EndpointRef {
         'createRecord',
         {'recordBool': recordBool},
       );
+
+  _i2.Future<_i5.RecordBool> getRecordBool(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i5.RecordBool>(
+        'recordBoolItem',
+        'getRecordBool',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordBool(_i5.RecordBool recordBool) =>
+      caller.callServerEndpoint<void>(
+        'recordBoolItem',
+        'updateRecordBool',
+        {'recordBool': recordBool},
+      );
 }
 
 /// {@category Endpoint}
@@ -192,6 +212,26 @@ class EndpointRecordImage extends _i1.EndpointRef {
         'createRecordImage',
         {'recordImage': recordImage},
       );
+
+  _i2.Future<_i7.RecordImage> getRecordImage(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i7.RecordImage>(
+        'recordImage',
+        'getRecordImage',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordImage(_i7.RecordImage recordImage) =>
+      caller.callServerEndpoint<void>(
+        'recordImage',
+        'updateRecordImage',
+        {'recordImage': recordImage},
+      );
 }
 
 /// {@category Endpoint}
@@ -207,6 +247,13 @@ class EndpointRecordRole extends _i1.EndpointRef {
         'createRecord',
         {'recordRole': recordRole},
       );
+
+  _i2.Future<List<_i8.RecordRole>> getRecordRoles(int userId) =>
+      caller.callServerEndpoint<List<_i8.RecordRole>>(
+        'recordRole',
+        'getRecordRoles',
+        {'userId': userId},
+      );
 }
 
 /// {@category Endpoint}
@@ -220,6 +267,26 @@ class EndpointRecordTextField extends _i1.EndpointRef {
       caller.callServerEndpoint<_i9.RecordText>(
         'recordTextField',
         'createRecord',
+        {'recordText': recordText},
+      );
+
+  _i2.Future<_i9.RecordText> getRecordText(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i9.RecordText>(
+        'recordTextField',
+        'getRecordText',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordText(_i9.RecordText recordText) =>
+      caller.callServerEndpoint<void>(
+        'recordTextField',
+        'updateRecordText',
         {'recordText': recordText},
       );
 }
@@ -265,6 +332,13 @@ class EndpointTemplate extends _i1.EndpointRef {
         'template',
         'getTemplates',
         {'userId': userId},
+      );
+
+  _i2.Future<_i11.Template> getTemplate({required int id}) =>
+      caller.callServerEndpoint<_i11.Template>(
+        'template',
+        'getTemplate',
+        {'id': id},
       );
 }
 

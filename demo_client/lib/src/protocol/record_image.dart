@@ -14,12 +14,14 @@ abstract class RecordImage extends _i1.SerializableEntity {
   RecordImage._({
     this.id,
     required this.recordId,
+    required this.fieldId,
     required this.imageURL,
   });
 
   factory RecordImage({
     int? id,
     required int recordId,
+    required int fieldId,
     required String imageURL,
   }) = _RecordImageImpl;
 
@@ -31,6 +33,8 @@ abstract class RecordImage extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       recordId:
           serializationManager.deserialize<int>(jsonSerialization['recordId']),
+      fieldId:
+          serializationManager.deserialize<int>(jsonSerialization['fieldId']),
       imageURL: serializationManager
           .deserialize<String>(jsonSerialization['imageURL']),
     );
@@ -43,11 +47,14 @@ abstract class RecordImage extends _i1.SerializableEntity {
 
   int recordId;
 
+  int fieldId;
+
   String imageURL;
 
   RecordImage copyWith({
     int? id,
     int? recordId,
+    int? fieldId,
     String? imageURL,
   });
   @override
@@ -55,6 +62,7 @@ abstract class RecordImage extends _i1.SerializableEntity {
     return {
       if (id != null) 'id': id,
       'recordId': recordId,
+      'fieldId': fieldId,
       'imageURL': imageURL,
     };
   }
@@ -66,10 +74,12 @@ class _RecordImageImpl extends RecordImage {
   _RecordImageImpl({
     int? id,
     required int recordId,
+    required int fieldId,
     required String imageURL,
   }) : super._(
           id: id,
           recordId: recordId,
+          fieldId: fieldId,
           imageURL: imageURL,
         );
 
@@ -77,11 +87,13 @@ class _RecordImageImpl extends RecordImage {
   RecordImage copyWith({
     Object? id = _Undefined,
     int? recordId,
+    int? fieldId,
     String? imageURL,
   }) {
     return RecordImage(
       id: id is int? ? id : this.id,
       recordId: recordId ?? this.recordId,
+      fieldId: fieldId ?? this.fieldId,
       imageURL: imageURL ?? this.imageURL,
     );
   }

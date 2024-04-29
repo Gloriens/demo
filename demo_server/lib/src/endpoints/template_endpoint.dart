@@ -15,4 +15,12 @@ class TemplateEndpoint extends Endpoint {
     );
     return templates;
   }
+
+  Future<Template> getTemplate(Session session, {required int id}) async {
+    Template? template = await Template.db.findById(session, id);
+    if (template == null) {
+      throw Exception('Template not found');
+    }
+    return template;
+  }
 }

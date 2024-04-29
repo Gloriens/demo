@@ -6,4 +6,19 @@ class RecordTextFieldEndpoint extends Endpoint {
       Session session, RecordText recordText) async {
     return await RecordText.db.insertRow(session, recordText);
   }
+
+  Future<RecordText> getRecordText(
+      Session session, int recordId, int fieldId) async {
+    final RecordText? recordText = await RecordText.db.findFirstRow(session,
+        where: (rect) =>
+            rect.recordId.equals(recordId) & rect.fieldId.equals(fieldId));
+    if (recordText == null) {
+      throw Exception('RecordText not found');
+    }
+    return recordText;
+  }
+
+  Future<void> updateRecordText(Session session, RecordText recordText) async {
+    await RecordText.db.updateRow(session, recordText);
+  }
 }

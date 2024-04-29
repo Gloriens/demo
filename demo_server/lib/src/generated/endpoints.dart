@@ -356,7 +356,51 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordBool'],
           ),
-        )
+        ),
+        'getRecordBool': _i1.MethodConnector(
+          name: 'getRecordBool',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordBoolItem'] as _i6.RecordBoolItemEndpoint)
+                  .getRecordBool(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
+        'updateRecordBool': _i1.MethodConnector(
+          name: 'updateRecordBool',
+          params: {
+            'recordBool': _i1.ParameterDescription(
+              name: 'recordBool',
+              type: _i1.getType<_i15.RecordBool>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordBoolItem'] as _i6.RecordBoolItemEndpoint)
+                  .updateRecordBool(
+            session,
+            params['recordBool'],
+          ),
+        ),
       },
     );
     connectors['record'] = _i1.EndpointConnector(
@@ -441,7 +485,51 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordImage'],
           ),
-        )
+        ),
+        'getRecordImage': _i1.MethodConnector(
+          name: 'getRecordImage',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+                  .getRecordImage(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
+        'updateRecordImage': _i1.MethodConnector(
+          name: 'updateRecordImage',
+          params: {
+            'recordImage': _i1.ParameterDescription(
+              name: 'recordImage',
+              type: _i1.getType<_i17.RecordImage>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+                  .updateRecordImage(
+            session,
+            params['recordImage'],
+          ),
+        ),
       },
     );
     connectors['recordRole'] = _i1.EndpointConnector(
@@ -465,7 +553,26 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordRole'],
           ),
-        )
+        ),
+        'getRecordRoles': _i1.MethodConnector(
+          name: 'getRecordRoles',
+          params: {
+            'userId': _i1.ParameterDescription(
+              name: 'userId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordRole'] as _i9.RecordRoleEndpoint)
+                  .getRecordRoles(
+            session,
+            params['userId'],
+          ),
+        ),
       },
     );
     connectors['recordTextField'] = _i1.EndpointConnector(
@@ -490,7 +597,51 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['recordText'],
           ),
-        )
+        ),
+        'getRecordText': _i1.MethodConnector(
+          name: 'getRecordText',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+                  .getRecordText(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
+        'updateRecordText': _i1.MethodConnector(
+          name: 'updateRecordText',
+          params: {
+            'recordText': _i1.ParameterDescription(
+              name: 'recordText',
+              type: _i1.getType<_i19.RecordText>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+                  .updateRecordText(
+            session,
+            params['recordText'],
+          ),
+        ),
       },
     );
     connectors['role'] = _i1.EndpointConnector(
@@ -573,6 +724,24 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['template'] as _i12.TemplateEndpoint).getTemplates(
             session,
             userId: params['userId'],
+          ),
+        ),
+        'getTemplate': _i1.MethodConnector(
+          name: 'getTemplate',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['template'] as _i12.TemplateEndpoint).getTemplate(
+            session,
+            id: params['id'],
           ),
         ),
       },
