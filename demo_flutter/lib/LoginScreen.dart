@@ -21,7 +21,7 @@ void main() async {
   client = Client(
     // for android studio users, type 10.0.2.2 instead of localhost
     // localhost for chrome/edge, 10.0.2.2 for android studio users
-    'http://localhost:8080/',
+    'http://10.0.2.2:8080/',
     authenticationKeyManager: FlutterAuthenticationKeyManager(),
   )..connectivityMonitor = FlutterConnectivityMonitor();
 

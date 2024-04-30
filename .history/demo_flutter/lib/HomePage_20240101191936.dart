@@ -1,6 +1,6 @@
 import 'package:demo_flutter/LoginScreen.dart';
 import 'package:demo_flutter/after_template_screen.dart';
-import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:demo_flutter/templates/template_cards_list.dart';
 import 'package:flutter/material.dart';

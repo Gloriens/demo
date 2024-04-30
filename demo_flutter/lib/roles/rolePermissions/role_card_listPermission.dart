@@ -1,11 +1,12 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/roles/roleDisplay/role_cards.dart';
+import 'package:demo_flutter/roles/rolePermissions/role_cardPermission.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_flutter/fields/field_cards.dart';
 
-class FieldCardsList extends StatelessWidget {
-  const FieldCardsList({super.key, required this.fields});
+class RoleCardsListPermissions extends StatelessWidget {
+  const RoleCardsListPermissions({super.key, required this.roles});
 
-  final List<Field> fields;
+  final List<Role> roles;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -15,8 +16,8 @@ class FieldCardsList extends StatelessWidget {
           //Ekranın scroll özelliği kaldırıldığında ise ortaya absürt görüntüler ortaya çıkıyor,
           //bu yüzden listelerin scoll özelliğini kapatın
           shrinkWrap: true,
-          itemCount: fields.length,
-          itemBuilder: (context, index) => FieldCards(fields[index])),
+          itemCount: roles.length,
+          itemBuilder: (context, index) => RoleCardPermission(roles[index])),
     );
   }
 }
