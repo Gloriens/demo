@@ -14,22 +14,24 @@ import '../endpoints/example_endpoint.dart' as _i3;
 import '../endpoints/field_endpoint.dart' as _i4;
 import '../endpoints/file_upload_endpoint.dart' as _i5;
 import '../endpoints/record_bool_endpoint.dart' as _i6;
-import '../endpoints/record_endpoint.dart' as _i7;
-import '../endpoints/record_image_endpoint.dart' as _i8;
-import '../endpoints/record_role_endpoint.dart' as _i9;
-import '../endpoints/record_textfield_endpoint.dart' as _i10;
-import '../endpoints/role_endpoint.dart' as _i11;
-import '../endpoints/template_endpoint.dart' as _i12;
-import 'package:demo_server/src/generated/app_user.dart' as _i13;
-import 'package:demo_server/src/generated/field.dart' as _i14;
-import 'package:demo_server/src/generated/record_bool.dart' as _i15;
-import 'package:demo_server/src/generated/record.dart' as _i16;
-import 'package:demo_server/src/generated/record_image.dart' as _i17;
-import 'package:demo_server/src/generated/record_role.dart' as _i18;
-import 'package:demo_server/src/generated/record_text.dart' as _i19;
-import 'package:demo_server/src/generated/role.dart' as _i20;
-import 'package:demo_server/src/generated/template.dart' as _i21;
-import 'package:serverpod_auth_server/module.dart' as _i22;
+import '../endpoints/record_date_endpoint.dart' as _i7;
+import '../endpoints/record_endpoint.dart' as _i8;
+import '../endpoints/record_image_endpoint.dart' as _i9;
+import '../endpoints/record_role_endpoint.dart' as _i10;
+import '../endpoints/record_textfield_endpoint.dart' as _i11;
+import '../endpoints/role_endpoint.dart' as _i12;
+import '../endpoints/template_endpoint.dart' as _i13;
+import 'package:demo_server/src/generated/app_user.dart' as _i14;
+import 'package:demo_server/src/generated/field.dart' as _i15;
+import 'package:demo_server/src/generated/record_bool.dart' as _i16;
+import 'package:demo_server/src/generated/record_date.dart' as _i17;
+import 'package:demo_server/src/generated/record.dart' as _i18;
+import 'package:demo_server/src/generated/record_image.dart' as _i19;
+import 'package:demo_server/src/generated/record_role.dart' as _i20;
+import 'package:demo_server/src/generated/record_text.dart' as _i21;
+import 'package:demo_server/src/generated/role.dart' as _i22;
+import 'package:demo_server/src/generated/template.dart' as _i23;
+import 'package:serverpod_auth_server/module.dart' as _i24;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -65,37 +67,43 @@ class Endpoints extends _i1.EndpointDispatch {
           'recordBoolItem',
           null,
         ),
-      'record': _i7.RecordEndpoint()
+      'recordDate': _i7.RecordDateEndpoint()
+        ..initialize(
+          server,
+          'recordDate',
+          null,
+        ),
+      'record': _i8.RecordEndpoint()
         ..initialize(
           server,
           'record',
           null,
         ),
-      'recordImage': _i8.RecordImageEndpoint()
+      'recordImage': _i9.RecordImageEndpoint()
         ..initialize(
           server,
           'recordImage',
           null,
         ),
-      'recordRole': _i9.RecordRoleEndpoint()
+      'recordRole': _i10.RecordRoleEndpoint()
         ..initialize(
           server,
           'recordRole',
           null,
         ),
-      'recordTextField': _i10.RecordTextFieldEndpoint()
+      'recordTextField': _i11.RecordTextFieldEndpoint()
         ..initialize(
           server,
           'recordTextField',
           null,
         ),
-      'role': _i11.RoleEndpoint()
+      'role': _i12.RoleEndpoint()
         ..initialize(
           server,
           'role',
           null,
         ),
-      'template': _i12.TemplateEndpoint()
+      'template': _i13.TemplateEndpoint()
         ..initialize(
           server,
           'template',
@@ -111,7 +119,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i13.AppUser>(),
+              type: _i1.getType<_i14.AppUser>(),
               nullable: false,
             )
           },
@@ -129,7 +137,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i13.AppUser>(),
+              type: _i1.getType<_i14.AppUser>(),
               nullable: false,
             )
           },
@@ -147,7 +155,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'existingUser': _i1.ParameterDescription(
               name: 'existingUser',
-              type: _i1.getType<_i13.AppUser>(),
+              type: _i1.getType<_i14.AppUser>(),
               nullable: false,
             )
           },
@@ -240,7 +248,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'field': _i1.ParameterDescription(
               name: 'field',
-              type: _i1.getType<_i14.Field>(),
+              type: _i1.getType<_i15.Field>(),
               nullable: false,
             )
           },
@@ -343,7 +351,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordBool': _i1.ParameterDescription(
               name: 'recordBool',
-              type: _i1.getType<_i15.RecordBool>(),
+              type: _i1.getType<_i16.RecordBool>(),
               nullable: false,
             )
           },
@@ -387,7 +395,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordBool': _i1.ParameterDescription(
               name: 'recordBool',
-              type: _i1.getType<_i15.RecordBool>(),
+              type: _i1.getType<_i16.RecordBool>(),
               nullable: false,
             )
           },
@@ -403,6 +411,73 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['recordDate'] = _i1.EndpointConnector(
+      name: 'recordDate',
+      endpoint: endpoints['recordDate']!,
+      methodConnectors: {
+        'createRecord': _i1.MethodConnector(
+          name: 'createRecord',
+          params: {
+            'recordDate': _i1.ParameterDescription(
+              name: 'recordDate',
+              type: _i1.getType<_i17.RecordDate>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordDate'] as _i7.RecordDateEndpoint).createRecord(
+            session,
+            params['recordDate'],
+          ),
+        ),
+        'getRecordDate': _i1.MethodConnector(
+          name: 'getRecordDate',
+          params: {
+            'recordId': _i1.ParameterDescription(
+              name: 'recordId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'fieldId': _i1.ParameterDescription(
+              name: 'fieldId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordDate'] as _i7.RecordDateEndpoint).getRecordDate(
+            session,
+            params['recordId'],
+            params['fieldId'],
+          ),
+        ),
+        'updateRecordDate': _i1.MethodConnector(
+          name: 'updateRecordDate',
+          params: {
+            'recordDate': _i1.ParameterDescription(
+              name: 'recordDate',
+              type: _i1.getType<_i17.RecordDate>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['recordDate'] as _i7.RecordDateEndpoint)
+                  .updateRecordDate(
+            session,
+            params['recordDate'],
+          ),
+        ),
+      },
+    );
     connectors['record'] = _i1.EndpointConnector(
       name: 'record',
       endpoint: endpoints['record']!,
@@ -412,7 +487,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'record': _i1.ParameterDescription(
               name: 'record',
-              type: _i1.getType<_i16.Record>(),
+              type: _i1.getType<_i18.Record>(),
               nullable: false,
             )
           },
@@ -420,7 +495,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['record'] as _i7.RecordEndpoint).createRecord(
+              (endpoints['record'] as _i8.RecordEndpoint).createRecord(
             session,
             params['record'],
           ),
@@ -438,7 +513,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['record'] as _i7.RecordEndpoint).getRecord(
+              (endpoints['record'] as _i8.RecordEndpoint).getRecord(
             session,
             params['recordId'],
           ),
@@ -456,7 +531,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['record'] as _i7.RecordEndpoint).getRecordByName(
+              (endpoints['record'] as _i8.RecordEndpoint).getRecordByName(
             session,
             params['name'],
           ),
@@ -472,7 +547,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordImage': _i1.ParameterDescription(
               name: 'recordImage',
-              type: _i1.getType<_i17.RecordImage>(),
+              type: _i1.getType<_i19.RecordImage>(),
               nullable: false,
             )
           },
@@ -480,7 +555,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+              (endpoints['recordImage'] as _i9.RecordImageEndpoint)
                   .createRecordImage(
             session,
             params['recordImage'],
@@ -504,7 +579,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+              (endpoints['recordImage'] as _i9.RecordImageEndpoint)
                   .getRecordImage(
             session,
             params['recordId'],
@@ -516,7 +591,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordImage': _i1.ParameterDescription(
               name: 'recordImage',
-              type: _i1.getType<_i17.RecordImage>(),
+              type: _i1.getType<_i19.RecordImage>(),
               nullable: false,
             )
           },
@@ -524,7 +599,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordImage'] as _i8.RecordImageEndpoint)
+              (endpoints['recordImage'] as _i9.RecordImageEndpoint)
                   .updateRecordImage(
             session,
             params['recordImage'],
@@ -541,7 +616,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordRole': _i1.ParameterDescription(
               name: 'recordRole',
-              type: _i1.getType<_i18.RecordRole>(),
+              type: _i1.getType<_i20.RecordRole>(),
               nullable: false,
             )
           },
@@ -549,7 +624,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordRole'] as _i9.RecordRoleEndpoint).createRecord(
+              (endpoints['recordRole'] as _i10.RecordRoleEndpoint).createRecord(
             session,
             params['recordRole'],
           ),
@@ -567,7 +642,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordRole'] as _i9.RecordRoleEndpoint)
+              (endpoints['recordRole'] as _i10.RecordRoleEndpoint)
                   .getRecordRoles(
             session,
             params['userId'],
@@ -584,7 +659,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordText': _i1.ParameterDescription(
               name: 'recordText',
-              type: _i1.getType<_i19.RecordText>(),
+              type: _i1.getType<_i21.RecordText>(),
               nullable: false,
             )
           },
@@ -592,7 +667,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+              (endpoints['recordTextField'] as _i11.RecordTextFieldEndpoint)
                   .createRecord(
             session,
             params['recordText'],
@@ -616,7 +691,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+              (endpoints['recordTextField'] as _i11.RecordTextFieldEndpoint)
                   .getRecordText(
             session,
             params['recordId'],
@@ -628,7 +703,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'recordText': _i1.ParameterDescription(
               name: 'recordText',
-              type: _i1.getType<_i19.RecordText>(),
+              type: _i1.getType<_i21.RecordText>(),
               nullable: false,
             )
           },
@@ -636,7 +711,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['recordTextField'] as _i10.RecordTextFieldEndpoint)
+              (endpoints['recordTextField'] as _i11.RecordTextFieldEndpoint)
                   .updateRecordText(
             session,
             params['recordText'],
@@ -653,7 +728,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'role': _i1.ParameterDescription(
               name: 'role',
-              type: _i1.getType<_i20.Role>(),
+              type: _i1.getType<_i22.Role>(),
               nullable: false,
             )
           },
@@ -661,7 +736,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['role'] as _i11.RoleEndpoint).createRole(
+              (endpoints['role'] as _i12.RoleEndpoint).createRole(
             session,
             params['role'],
           ),
@@ -679,7 +754,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['role'] as _i11.RoleEndpoint).getRolesByTemplate(
+              (endpoints['role'] as _i12.RoleEndpoint).getRolesByTemplate(
             session,
             templateId: params['templateId'],
           ),
@@ -695,7 +770,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'template': _i1.ParameterDescription(
               name: 'template',
-              type: _i1.getType<_i21.Template>(),
+              type: _i1.getType<_i23.Template>(),
               nullable: false,
             )
           },
@@ -703,7 +778,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i12.TemplateEndpoint).createTemplate(
+              (endpoints['template'] as _i13.TemplateEndpoint).createTemplate(
             session,
             params['template'],
           ),
@@ -721,7 +796,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i12.TemplateEndpoint).getTemplates(
+              (endpoints['template'] as _i13.TemplateEndpoint).getTemplates(
             session,
             userId: params['userId'],
           ),
@@ -739,13 +814,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['template'] as _i12.TemplateEndpoint).getTemplate(
+              (endpoints['template'] as _i13.TemplateEndpoint).getTemplate(
             session,
             id: params['id'],
           ),
         ),
       },
     );
-    modules['serverpod_auth'] = _i22.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i24.Endpoints()..initializeEndpoints(server);
   }
 }

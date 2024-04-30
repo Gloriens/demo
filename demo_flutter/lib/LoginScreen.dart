@@ -1,5 +1,6 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/SignInPage.dart';
+import 'package:demo_flutter/records/record_date_picker.dart';
 import 'package:demo_flutter/records/record_google_maps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,7 @@ void main() async {
   client = Client(
     // for android studio users, type 10.0.2.2 instead of localhost
     // localhost for chrome/edge, 10.0.2.2 for android studio users
-    'http://10.0.2.2:8080/',
+    'http://localhost:8080/',
     authenticationKeyManager: FlutterAuthenticationKeyManager(),
   )..connectivityMonitor = FlutterConnectivityMonitor();
 
@@ -78,10 +79,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: const SignInPage(),
-    );
+        appBar: AppBar(
+          title: const Text('Login'),
+        ),
+        body: const SignInPage());
   }
 }

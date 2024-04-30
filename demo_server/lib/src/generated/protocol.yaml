@@ -18,6 +18,10 @@ recordBoolItem:
   - createRecord:
   - getRecordBool:
   - updateRecordBool:
+recordDate:
+  - createRecord:
+  - getRecordDate:
+  - updateRecordDate:
 record:
   - createRecord:
   - getRecord:

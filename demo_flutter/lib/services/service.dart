@@ -76,6 +76,12 @@ final recordImageProvider = FutureProvider.autoDispose
       await ref.read(serviceProvider).getRecordImage(arg.$1, arg.$2);
   return recordImage;
 });
+final recordDateProvider =
+    FutureProvider.autoDispose.family<RecordDate, (int, int)>((ref, arg) async {
+  final recordDate =
+      await ref.read(serviceProvider).getRecordDate(arg.$1, arg.$2);
+  return recordDate;
+});
 
 class Service {
   final Ref ref;
@@ -348,6 +354,15 @@ class Service {
     return createdRecordBool;
   }
 
+  Future<RecordDate> createRecordDate(RecordDate recordDate) async {
+    final createdRecordDate = await client.recordDate.createRecord(recordDate);
+    return createdRecordDate;
+  }
+
+  Future<void> updateRecordDate(RecordDate recordDate) async {
+    await client.recordDate.updateRecordDate(recordDate);
+  }
+
   Future<RecordText> createRecordTextField(RecordText recordText) async {
     final createdRecordText =
         await client.recordTextField.createRecord(recordText);
@@ -371,6 +386,12 @@ class Service {
 
   Future<RecordBool> getRecordBool(int recordId, int fieldId) async {
     final record = await client.recordBoolItem.getRecordBool(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<RecordDate> getRecordDate(int recordId, int fieldId) async {
+    final record = await client.recordDate.getRecordDate(recordId, fieldId);
 
     return record;
   }

@@ -3,6 +3,7 @@ import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
 import 'package:demo_flutter/records/record_signaturepad_update.dart';
 import 'package:demo_flutter/records/record_update_bool.dart';
+import 'package:demo_flutter/records/record_update_date_picker.dart';
 import 'package:demo_flutter/records/record_update_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,15 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
             await ref
                 .read(serviceProvider)
                 .updateRecordTextField(currRecordText);
+          });
+          ref
+              .read(recordUpdateDatePickerProvider)
+              .forEach((fieldId, date) async {
+            RecordDate currRecordDate = await ref
+                .read(serviceProvider)
+                .getRecordDate(widget.record.id ?? 0, fieldId);
+            currRecordDate.contentDate = date;
+            await ref.read(serviceProvider).updateRecordDate(currRecordDate);
           });
           Navigator.pop(context);
         },
@@ -107,6 +117,13 @@ class DynamicWidgetUpdateList extends StatelessWidget {
               fieldId: field.id ?? 0,
               recordId: recordId,
             ));
+          } else if (field.type == 'date') {
+            widgets.add(
+              RecordUpdateDatePicker(
+                fieldId: field.id ?? 0,
+                recordId: recordId,
+              ),
+            );
           }
         }
         return Column(children: widgets);
