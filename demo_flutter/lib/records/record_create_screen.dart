@@ -36,17 +36,14 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
         onPressed: () {
           ref.read(recordBoolProvider).forEach((fieldId, boolValue) {
             //this one is for the recordBool.
-            print('Field ID: $fieldId, Value: $boolValue');
             RecordBool newRecordBool = RecordBool(
                 recordId: widget.recordId,
                 fieldId: fieldId,
                 contentBool: boolValue);
             ref.read(serviceProvider).createRecordBool(newRecordBool);
           });
-          print(widget.recordId);
           ref.read(recordRoleProvider).forEach((roleId, roleUserName) async {
             //this one is for the recordRole.
-            print('Role ID: $roleId, Value: $roleUserName');
             final user =
                 await ref.read(serviceProvider).getUserByUName(roleUserName);
             RecordRole newRecordRole = RecordRole(
@@ -58,7 +55,6 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
           });
           ref.read(recordTextFieldProvider).forEach((fieldId, text) {
             //this one is for the recordTextField.
-            print('Field ID: $fieldId, Value: $text');
             RecordText newRecordText = RecordText(
                 recordId: widget.recordId, fieldId: fieldId, contentText: text);
             ref.read(serviceProvider).createRecordTextField(newRecordText);

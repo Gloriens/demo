@@ -58,6 +58,18 @@ final roleProvider =
       await ref.read(serviceProvider).getRolesByTemplateId(templateId);
   return listRoles;
 });
+final recordTextUpdateProvider =
+    FutureProvider.autoDispose.family<RecordText, (int, int)>((ref, arg) async {
+  final recordText =
+      await ref.read(serviceProvider).getRecordTextField(arg.$1, arg.$2);
+  return recordText;
+});
+final recordBoolItemUpdateProvider =
+    FutureProvider.autoDispose.family<RecordBool, (int, int)>((ref, arg) async {
+  final recordBool =
+      await ref.read(serviceProvider).getRecordBool(arg.$1, arg.$2);
+  return recordBool;
+});
 final recordImageProvider = FutureProvider.autoDispose
     .family<RecordImage, (int, int)>((ref, arg) async {
   final recordImage =

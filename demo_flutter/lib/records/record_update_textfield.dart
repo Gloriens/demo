@@ -18,19 +18,44 @@ class RecordUpdateTextfield extends ConsumerStatefulWidget {
 }
 
 class _RecordUpdateTextfieldState extends ConsumerState<RecordUpdateTextfield> {
-  late Future<RecordText> _recordTextFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _recordTextFuture = ref
-        .read(serviceProvider)
-        .getRecordTextField(widget.recordId, widget.fieldId);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    final txtfield =
+        ref.watch(recordTextUpdateProvider((widget.recordId, widget.fieldId)));
+    return txtfield.when(data: (data) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: TextEditingController(text: data.contentText),
+          onChanged: (value) {
+            ref
+                .read(recordTextFieldUpdateProvider.notifier)
+                .add(widget.fieldId, value);
+          },
+          decoration: InputDecoration(hintText: widget.fieldName),
+        ),
+      );
+    }, error: (error, _) {
+      return Text('Error: $error');
+    }, loading: () {
+      return const CircularProgressIndicator();
+    });
+  }
+}
+
+final recordTextFieldUpdateProvider =
+    StateNotifierProvider<RecordTextFieldUpdateNotifier, Map<int, String>>(
+        (ref) => RecordTextFieldUpdateNotifier());
+
+class RecordTextFieldUpdateNotifier extends StateNotifier<Map<int, String>> {
+  RecordTextFieldUpdateNotifier() : super({});
+
+  void add(int fieldId, String value) {
+    Map<int, String> newRecordTextField = {fieldId: value};
+    state = {...state, ...newRecordTextField};
+  }
+}
+/*FutureBuilder(
         future: _recordTextFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -53,19 +78,4 @@ class _RecordUpdateTextfieldState extends ConsumerState<RecordUpdateTextfield> {
               ),
             );
           }
-        });
-  }
-}
-
-final recordTextFieldUpdateProvider =
-    StateNotifierProvider<RecordTextFieldUpdateNotifier, Map<int, String>>(
-        (ref) => RecordTextFieldUpdateNotifier());
-
-class RecordTextFieldUpdateNotifier extends StateNotifier<Map<int, String>> {
-  RecordTextFieldUpdateNotifier() : super({});
-
-  void add(int fieldId, String value) {
-    Map<int, String> newRecordTextField = {fieldId: value};
-    state = {...state, ...newRecordTextField};
-  }
-}
+        });*/
