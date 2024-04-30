@@ -13,7 +13,9 @@ class RecordBoolItemEndpoint extends Endpoint {
         where: (recb) =>
             recb.recordId.equals(recordId) & recb.fieldId.equals(fieldId));
     if (recordBool == null) {
-      throw Exception('RecordBool not found');
+      final record = await RecordBool.db.insertRow(session,
+          RecordBool(recordId: recordId, fieldId: fieldId, contentBool: false));
+      return record;
     }
     return recordBool;
   }

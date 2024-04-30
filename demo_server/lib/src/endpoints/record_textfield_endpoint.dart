@@ -13,7 +13,13 @@ class RecordTextFieldEndpoint extends Endpoint {
         where: (rect) =>
             rect.recordId.equals(recordId) & rect.fieldId.equals(fieldId));
     if (recordText == null) {
-      throw Exception('RecordText not found');
+      final record = await RecordText.db.insertRow(
+          session,
+          RecordText(
+              recordId: recordId,
+              fieldId: fieldId,
+              contentText: 'enter text here'));
+      return record;
     }
     return recordText;
   }
