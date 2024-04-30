@@ -82,6 +82,12 @@ final recordDateProvider =
       await ref.read(serviceProvider).getRecordDate(arg.$1, arg.$2);
   return recordDate;
 });
+final recordCounterFutureProvider = FutureProvider.autoDispose
+    .family<RecordCounter, (int, int)>((ref, arg) async {
+  final recordCounter =
+      await ref.read(serviceProvider).getRecordCounter(arg.$1, arg.$2);
+  return recordCounter;
+});
 
 class Service {
   final Ref ref;
@@ -359,6 +365,18 @@ class Service {
     return createdRecordDate;
   }
 
+  Future<RecordCounter> getRecordCounter(int fieldId, int recordId) async {
+    final recordCounter =
+        await client.recordCounterItem.getRecordCounter(fieldId, recordId);
+    return recordCounter;
+  }
+
+  Future<RecordCounter> createRecordCounter(RecordCounter recordCounter) async {
+    final createdRecordCounter =
+        await client.recordCounterItem.createRecord(recordCounter);
+    return createdRecordCounter;
+  }
+
   Future<void> updateRecordDate(RecordDate recordDate) async {
     await client.recordDate.updateRecordDate(recordDate);
   }
@@ -409,5 +427,9 @@ class Service {
 
   Future<void> updateRecordBool(RecordBool recordBool) async {
     await client.recordBoolItem.updateRecordBool(recordBool);
+  }
+
+  Future<void> updateRecordCounter(RecordCounter recordCounter) async {
+    await client.recordCounterItem.updateRecordCounter(recordCounter);
   }
 }

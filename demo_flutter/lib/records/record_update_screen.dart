@@ -1,8 +1,10 @@
 import 'package:demo_client/demo_client.dart';
+import 'package:demo_flutter/records/record_counter_item.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
 import 'package:demo_flutter/records/record_signaturepad_update.dart';
 import 'package:demo_flutter/records/record_update_bool.dart';
+import 'package:demo_flutter/records/record_update_counter.dart';
 import 'package:demo_flutter/records/record_update_date_picker.dart';
 import 'package:demo_flutter/records/record_update_textfield.dart';
 import 'package:demo_flutter/services/service.dart';
@@ -53,6 +55,15 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
             currRecordDate.contentDate = date;
             await ref.read(serviceProvider).updateRecordDate(currRecordDate);
           });
+          ref.read(recordUpdateCounterProvider).forEach((fieldId, count) async {
+            RecordCounter currRecordCounter = await ref
+                .read(serviceProvider)
+                .getRecordCounter(widget.record.id ?? 0, fieldId);
+            currRecordCounter.counterValue = count;
+            await ref
+                .read(serviceProvider)
+                .updateRecordCounter(currRecordCounter);
+          });
           Navigator.pop(context);
         },
         child: const Icon(Icons.save),
@@ -82,14 +93,16 @@ class DynamicWidgetUpdateList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildFieldWidgets(fields)
-        /*Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _buildRoleWidgets(roles),
-        ),*/
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildFieldWidgets(fields)
+          /*Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildRoleWidgets(roles),
+          ),*/
+        ],
+      ),
     );
   }
 
@@ -122,6 +135,14 @@ class DynamicWidgetUpdateList extends StatelessWidget {
               RecordUpdateDatePicker(
                 fieldId: field.id ?? 0,
                 recordId: recordId,
+              ),
+            );
+          } else if (field.type == 'counter') {
+            widgets.add(
+              RecordUpdateCounter(
+                fieldId: field.id ?? 0,
+                recordId: recordId,
+                fieldName: field.name,
               ),
             );
           }

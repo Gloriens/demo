@@ -13,15 +13,16 @@ import 'dart:async' as _i2;
 import 'package:demo_client/src/protocol/app_user.dart' as _i3;
 import 'package:demo_client/src/protocol/field.dart' as _i4;
 import 'package:demo_client/src/protocol/record_bool.dart' as _i5;
-import 'package:demo_client/src/protocol/record_date.dart' as _i6;
-import 'package:demo_client/src/protocol/record.dart' as _i7;
-import 'package:demo_client/src/protocol/record_image.dart' as _i8;
-import 'package:demo_client/src/protocol/record_role.dart' as _i9;
-import 'package:demo_client/src/protocol/record_text.dart' as _i10;
-import 'package:demo_client/src/protocol/role.dart' as _i11;
-import 'package:demo_client/src/protocol/template.dart' as _i12;
-import 'package:serverpod_auth_client/module.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'package:demo_client/src/protocol/record_counter.dart' as _i6;
+import 'package:demo_client/src/protocol/record_date.dart' as _i7;
+import 'package:demo_client/src/protocol/record.dart' as _i8;
+import 'package:demo_client/src/protocol/record_image.dart' as _i9;
+import 'package:demo_client/src/protocol/record_role.dart' as _i10;
+import 'package:demo_client/src/protocol/record_text.dart' as _i11;
+import 'package:demo_client/src/protocol/role.dart' as _i12;
+import 'package:demo_client/src/protocol/template.dart' as _i13;
+import 'package:serverpod_auth_client/module.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// {@category Endpoint}
 class EndpointUserEndPoint extends _i1.EndpointRef {
@@ -172,24 +173,59 @@ class EndpointRecordBoolItem extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointRecordCounterItem extends _i1.EndpointRef {
+  EndpointRecordCounterItem(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordCounterItem';
+
+  _i2.Future<_i6.RecordCounter> createRecord(_i6.RecordCounter recordCounter) =>
+      caller.callServerEndpoint<_i6.RecordCounter>(
+        'recordCounterItem',
+        'createRecord',
+        {'recordCounter': recordCounter},
+      );
+
+  _i2.Future<_i6.RecordCounter> getRecordCounter(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i6.RecordCounter>(
+        'recordCounterItem',
+        'getRecordCounter',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordCounter(_i6.RecordCounter recordCounter) =>
+      caller.callServerEndpoint<void>(
+        'recordCounterItem',
+        'updateRecordCounter',
+        {'recordCounter': recordCounter},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointRecordDate extends _i1.EndpointRef {
   EndpointRecordDate(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'recordDate';
 
-  _i2.Future<_i6.RecordDate> createRecord(_i6.RecordDate recordDate) =>
-      caller.callServerEndpoint<_i6.RecordDate>(
+  _i2.Future<_i7.RecordDate> createRecord(_i7.RecordDate recordDate) =>
+      caller.callServerEndpoint<_i7.RecordDate>(
         'recordDate',
         'createRecord',
         {'recordDate': recordDate},
       );
 
-  _i2.Future<_i6.RecordDate> getRecordDate(
+  _i2.Future<_i7.RecordDate> getRecordDate(
     int recordId,
     int fieldId,
   ) =>
-      caller.callServerEndpoint<_i6.RecordDate>(
+      caller.callServerEndpoint<_i7.RecordDate>(
         'recordDate',
         'getRecordDate',
         {
@@ -198,7 +234,7 @@ class EndpointRecordDate extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<void> updateRecordDate(_i6.RecordDate recordDate) =>
+  _i2.Future<void> updateRecordDate(_i7.RecordDate recordDate) =>
       caller.callServerEndpoint<void>(
         'recordDate',
         'updateRecordDate',
@@ -213,22 +249,22 @@ class EndpointRecord extends _i1.EndpointRef {
   @override
   String get name => 'record';
 
-  _i2.Future<_i7.Record> createRecord(_i7.Record record) =>
-      caller.callServerEndpoint<_i7.Record>(
+  _i2.Future<_i8.Record> createRecord(_i8.Record record) =>
+      caller.callServerEndpoint<_i8.Record>(
         'record',
         'createRecord',
         {'record': record},
       );
 
-  _i2.Future<_i7.Record?> getRecord(int recordId) =>
-      caller.callServerEndpoint<_i7.Record?>(
+  _i2.Future<_i8.Record?> getRecord(int recordId) =>
+      caller.callServerEndpoint<_i8.Record?>(
         'record',
         'getRecord',
         {'recordId': recordId},
       );
 
-  _i2.Future<_i7.Record?> getRecordByName(String name) =>
-      caller.callServerEndpoint<_i7.Record?>(
+  _i2.Future<_i8.Record?> getRecordByName(String name) =>
+      caller.callServerEndpoint<_i8.Record?>(
         'record',
         'getRecordByName',
         {'name': name},
@@ -242,18 +278,18 @@ class EndpointRecordImage extends _i1.EndpointRef {
   @override
   String get name => 'recordImage';
 
-  _i2.Future<_i8.RecordImage> createRecordImage(_i8.RecordImage recordImage) =>
-      caller.callServerEndpoint<_i8.RecordImage>(
+  _i2.Future<_i9.RecordImage> createRecordImage(_i9.RecordImage recordImage) =>
+      caller.callServerEndpoint<_i9.RecordImage>(
         'recordImage',
         'createRecordImage',
         {'recordImage': recordImage},
       );
 
-  _i2.Future<_i8.RecordImage> getRecordImage(
+  _i2.Future<_i9.RecordImage> getRecordImage(
     int recordId,
     int fieldId,
   ) =>
-      caller.callServerEndpoint<_i8.RecordImage>(
+      caller.callServerEndpoint<_i9.RecordImage>(
         'recordImage',
         'getRecordImage',
         {
@@ -262,7 +298,7 @@ class EndpointRecordImage extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<void> updateRecordImage(_i8.RecordImage recordImage) =>
+  _i2.Future<void> updateRecordImage(_i9.RecordImage recordImage) =>
       caller.callServerEndpoint<void>(
         'recordImage',
         'updateRecordImage',
@@ -277,15 +313,15 @@ class EndpointRecordRole extends _i1.EndpointRef {
   @override
   String get name => 'recordRole';
 
-  _i2.Future<_i9.RecordRole> createRecord(_i9.RecordRole recordRole) =>
-      caller.callServerEndpoint<_i9.RecordRole>(
+  _i2.Future<_i10.RecordRole> createRecord(_i10.RecordRole recordRole) =>
+      caller.callServerEndpoint<_i10.RecordRole>(
         'recordRole',
         'createRecord',
         {'recordRole': recordRole},
       );
 
-  _i2.Future<List<_i9.RecordRole>> getRecordRoles(int userId) =>
-      caller.callServerEndpoint<List<_i9.RecordRole>>(
+  _i2.Future<List<_i10.RecordRole>> getRecordRoles(int userId) =>
+      caller.callServerEndpoint<List<_i10.RecordRole>>(
         'recordRole',
         'getRecordRoles',
         {'userId': userId},
@@ -299,18 +335,18 @@ class EndpointRecordTextField extends _i1.EndpointRef {
   @override
   String get name => 'recordTextField';
 
-  _i2.Future<_i10.RecordText> createRecord(_i10.RecordText recordText) =>
-      caller.callServerEndpoint<_i10.RecordText>(
+  _i2.Future<_i11.RecordText> createRecord(_i11.RecordText recordText) =>
+      caller.callServerEndpoint<_i11.RecordText>(
         'recordTextField',
         'createRecord',
         {'recordText': recordText},
       );
 
-  _i2.Future<_i10.RecordText> getRecordText(
+  _i2.Future<_i11.RecordText> getRecordText(
     int recordId,
     int fieldId,
   ) =>
-      caller.callServerEndpoint<_i10.RecordText>(
+      caller.callServerEndpoint<_i11.RecordText>(
         'recordTextField',
         'getRecordText',
         {
@@ -319,7 +355,7 @@ class EndpointRecordTextField extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<void> updateRecordText(_i10.RecordText recordText) =>
+  _i2.Future<void> updateRecordText(_i11.RecordText recordText) =>
       caller.callServerEndpoint<void>(
         'recordTextField',
         'updateRecordText',
@@ -334,15 +370,15 @@ class EndpointRole extends _i1.EndpointRef {
   @override
   String get name => 'role';
 
-  _i2.Future<void> createRole(_i11.Role role) =>
+  _i2.Future<void> createRole(_i12.Role role) =>
       caller.callServerEndpoint<void>(
         'role',
         'createRole',
         {'role': role},
       );
 
-  _i2.Future<List<_i11.Role>> getRolesByTemplate({required int templateId}) =>
-      caller.callServerEndpoint<List<_i11.Role>>(
+  _i2.Future<List<_i12.Role>> getRolesByTemplate({required int templateId}) =>
+      caller.callServerEndpoint<List<_i12.Role>>(
         'role',
         'getRolesByTemplate',
         {'templateId': templateId},
@@ -356,22 +392,22 @@ class EndpointTemplate extends _i1.EndpointRef {
   @override
   String get name => 'template';
 
-  _i2.Future<_i12.Template> createTemplate(_i12.Template template) =>
-      caller.callServerEndpoint<_i12.Template>(
+  _i2.Future<_i13.Template> createTemplate(_i13.Template template) =>
+      caller.callServerEndpoint<_i13.Template>(
         'template',
         'createTemplate',
         {'template': template},
       );
 
-  _i2.Future<List<_i12.Template>> getTemplates({required int userId}) =>
-      caller.callServerEndpoint<List<_i12.Template>>(
+  _i2.Future<List<_i13.Template>> getTemplates({required int userId}) =>
+      caller.callServerEndpoint<List<_i13.Template>>(
         'template',
         'getTemplates',
         {'userId': userId},
       );
 
-  _i2.Future<_i12.Template> getTemplate({required int id}) =>
-      caller.callServerEndpoint<_i12.Template>(
+  _i2.Future<_i13.Template> getTemplate({required int id}) =>
+      caller.callServerEndpoint<_i13.Template>(
         'template',
         'getTemplate',
         {'id': id},
@@ -380,10 +416,10 @@ class EndpointTemplate extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i13.Caller(client);
+    auth = _i14.Caller(client);
   }
 
-  late final _i13.Caller auth;
+  late final _i14.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -395,7 +431,7 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i15.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -406,6 +442,7 @@ class Client extends _i1.ServerpodClient {
     field = EndpointField(this);
     fileUpload = EndpointFileUpload(this);
     recordBoolItem = EndpointRecordBoolItem(this);
+    recordCounterItem = EndpointRecordCounterItem(this);
     recordDate = EndpointRecordDate(this);
     record = EndpointRecord(this);
     recordImage = EndpointRecordImage(this);
@@ -425,6 +462,8 @@ class Client extends _i1.ServerpodClient {
   late final EndpointFileUpload fileUpload;
 
   late final EndpointRecordBoolItem recordBoolItem;
+
+  late final EndpointRecordCounterItem recordCounterItem;
 
   late final EndpointRecordDate recordDate;
 
@@ -449,6 +488,7 @@ class Client extends _i1.ServerpodClient {
         'field': field,
         'fileUpload': fileUpload,
         'recordBoolItem': recordBoolItem,
+        'recordCounterItem': recordCounterItem,
         'recordDate': recordDate,
         'record': record,
         'recordImage': recordImage,

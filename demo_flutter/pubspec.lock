@@ -281,6 +281,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.14"
+  customizable_counter:
+    dependency: "direct main"
+    description:
+      name: customizable_counter
+      sha256: b9fd2052295ce9b61be167713211661541d4212fbcf6367731095fad3c38554f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   dart_style:
     dependency: transitive
     description:

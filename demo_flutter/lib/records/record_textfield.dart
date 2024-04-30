@@ -22,7 +22,7 @@ class _RecordTextFieldState extends ConsumerState<RecordTextField> {
         onChanged: (value) {
           ref.read(recordTextFieldProvider.notifier).add(widget.fieldId, value);
         },
-        decoration: InputDecoration(hintText: widget.fieldName),
+        decoration: InputDecoration(labelText: widget.fieldName),
       ),
     );
   }
