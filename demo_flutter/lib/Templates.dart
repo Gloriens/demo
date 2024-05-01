@@ -63,7 +63,7 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                       ),
                     ),
                       child: const Text(
-                        "Display Record",
+                        "Refresh",
                         style: TextStyle(
                           fontSize: 15.0,
                           color: Color(0xFF212A3E),

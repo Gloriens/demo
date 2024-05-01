@@ -48,7 +48,25 @@ class _RecordUpdateScreenState extends ConsumerState<RecordUpdateScreen> {
         child: const Icon(Icons.save),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF212A3E),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,), // Geri tuşunun ikonu
+          onPressed: () {
+            //Navigator.push(context,
+            //MaterialPageRoute(builder: (context) => SecondPage()),
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          'Record Update',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: DynamicWidgetUpdateList(

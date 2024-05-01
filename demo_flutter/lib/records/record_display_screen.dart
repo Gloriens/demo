@@ -1,3 +1,4 @@
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/records/record_card_list.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,25 @@ class _RecordDisplayScreenState extends ConsumerState<RecordsDisplayScreen> {
     final listOfRecords = ref.watch(listOfRecordsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Records'),
+        backgroundColor: Color(0xFF212A3E),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,), // Geri tuşunun ikonu
+          onPressed: () {
+            //Navigator.push(context,
+            //MaterialPageRoute(builder: (context) => SecondPage()),
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
+          },
+        ),
+        title: Text(
+          'Records',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Column(children: [
         Padding(

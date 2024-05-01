@@ -25,15 +25,25 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
     final roles = ref.watch(listOfRolesProvider);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF212A3E),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Geri butonu ikonu
+          icon: Icon(Icons.exit_to_app, color: Colors.white,), // Geri tuşunun ikonu
           onPressed: () {
             //Navigator.push(context,
             //MaterialPageRoute(builder: (context) => SecondPage()),
             Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
           },
         ),
+        title: Text(
+          'Template Configuration',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
