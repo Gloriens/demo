@@ -1,0 +1,7 @@
+class: RecordRole
+table: record_role
+fields:
+  userId: int, relation(parent=app_user)
+  recordId: int, relation(parent=record)
+  roleId: int, relation(parent=role)
+  name: String

@@ -12,12 +12,17 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:demo_client/src/protocol/app_user.dart' as _i3;
 import 'package:demo_client/src/protocol/field.dart' as _i4;
-import 'package:demo_client/src/protocol/record.dart' as _i5;
-import 'package:demo_client/src/protocol/record_image.dart' as _i6;
-import 'package:demo_client/src/protocol/role.dart' as _i7;
-import 'package:demo_client/src/protocol/template.dart' as _i8;
-import 'package:serverpod_auth_client/module.dart' as _i9;
-import 'protocol.dart' as _i10;
+import 'package:demo_client/src/protocol/record_bool.dart' as _i5;
+import 'package:demo_client/src/protocol/record_counter.dart' as _i6;
+import 'package:demo_client/src/protocol/record_date.dart' as _i7;
+import 'package:demo_client/src/protocol/record.dart' as _i8;
+import 'package:demo_client/src/protocol/record_image.dart' as _i9;
+import 'package:demo_client/src/protocol/record_role.dart' as _i10;
+import 'package:demo_client/src/protocol/record_text.dart' as _i11;
+import 'package:demo_client/src/protocol/role.dart' as _i12;
+import 'package:demo_client/src/protocol/template.dart' as _i13;
+import 'package:serverpod_auth_client/module.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// {@category Endpoint}
 class EndpointUserEndPoint extends _i1.EndpointRef {
@@ -52,6 +57,20 @@ class EndpointUserEndPoint extends _i1.EndpointRef {
         'userEndPoint',
         'getUserByAuthUser',
         {'userInfoId': userInfoId},
+      );
+
+  _i2.Future<List<_i3.AppUser>> getUsers() =>
+      caller.callServerEndpoint<List<_i3.AppUser>>(
+        'userEndPoint',
+        'getUsers',
+        {},
+      );
+
+  _i2.Future<_i3.AppUser> getUserByName(String name) =>
+      caller.callServerEndpoint<_i3.AppUser>(
+        'userEndPoint',
+        'getUserByName',
+        {'name': name},
       );
 }
 
@@ -110,6 +129,117 @@ class EndpointFileUpload extends _i1.EndpointRef {
         'verifyUpload',
         {'path': path},
       );
+
+  _i2.Future<String> getUrl(String path) => caller.callServerEndpoint<String>(
+        'fileUpload',
+        'getUrl',
+        {'path': path},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointRecordBoolItem extends _i1.EndpointRef {
+  EndpointRecordBoolItem(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordBoolItem';
+
+  _i2.Future<_i5.RecordBool> createRecord(_i5.RecordBool recordBool) =>
+      caller.callServerEndpoint<_i5.RecordBool>(
+        'recordBoolItem',
+        'createRecord',
+        {'recordBool': recordBool},
+      );
+
+  _i2.Future<_i5.RecordBool> getRecordBool(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i5.RecordBool>(
+        'recordBoolItem',
+        'getRecordBool',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordBool(_i5.RecordBool recordBool) =>
+      caller.callServerEndpoint<void>(
+        'recordBoolItem',
+        'updateRecordBool',
+        {'recordBool': recordBool},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointRecordCounterItem extends _i1.EndpointRef {
+  EndpointRecordCounterItem(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordCounterItem';
+
+  _i2.Future<_i6.RecordCounter> createRecord(_i6.RecordCounter recordCounter) =>
+      caller.callServerEndpoint<_i6.RecordCounter>(
+        'recordCounterItem',
+        'createRecord',
+        {'recordCounter': recordCounter},
+      );
+
+  _i2.Future<_i6.RecordCounter> getRecordCounter(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i6.RecordCounter>(
+        'recordCounterItem',
+        'getRecordCounter',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordCounter(_i6.RecordCounter recordCounter) =>
+      caller.callServerEndpoint<void>(
+        'recordCounterItem',
+        'updateRecordCounter',
+        {'recordCounter': recordCounter},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointRecordDate extends _i1.EndpointRef {
+  EndpointRecordDate(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordDate';
+
+  _i2.Future<_i7.RecordDate> createRecord(_i7.RecordDate recordDate) =>
+      caller.callServerEndpoint<_i7.RecordDate>(
+        'recordDate',
+        'createRecord',
+        {'recordDate': recordDate},
+      );
+
+  _i2.Future<_i7.RecordDate> getRecordDate(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i7.RecordDate>(
+        'recordDate',
+        'getRecordDate',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordDate(_i7.RecordDate recordDate) =>
+      caller.callServerEndpoint<void>(
+        'recordDate',
+        'updateRecordDate',
+        {'recordDate': recordDate},
+      );
 }
 
 /// {@category Endpoint}
@@ -119,11 +249,25 @@ class EndpointRecord extends _i1.EndpointRef {
   @override
   String get name => 'record';
 
-  _i2.Future<void> createRecord(_i5.Record record) =>
-      caller.callServerEndpoint<void>(
+  _i2.Future<_i8.Record> createRecord(_i8.Record record) =>
+      caller.callServerEndpoint<_i8.Record>(
         'record',
         'createRecord',
         {'record': record},
+      );
+
+  _i2.Future<_i8.Record?> getRecord(int recordId) =>
+      caller.callServerEndpoint<_i8.Record?>(
+        'record',
+        'getRecord',
+        {'recordId': recordId},
+      );
+
+  _i2.Future<_i8.Record?> getRecordByName(String name) =>
+      caller.callServerEndpoint<_i8.Record?>(
+        'record',
+        'getRecordByName',
+        {'name': name},
       );
 }
 
@@ -134,11 +278,88 @@ class EndpointRecordImage extends _i1.EndpointRef {
   @override
   String get name => 'recordImage';
 
-  _i2.Future<_i6.RecordImage> createRecordImage(_i6.RecordImage recordImage) =>
-      caller.callServerEndpoint<_i6.RecordImage>(
+  _i2.Future<_i9.RecordImage> createRecordImage(_i9.RecordImage recordImage) =>
+      caller.callServerEndpoint<_i9.RecordImage>(
         'recordImage',
         'createRecordImage',
         {'recordImage': recordImage},
+      );
+
+  _i2.Future<_i9.RecordImage> getRecordImage(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i9.RecordImage>(
+        'recordImage',
+        'getRecordImage',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordImage(_i9.RecordImage recordImage) =>
+      caller.callServerEndpoint<void>(
+        'recordImage',
+        'updateRecordImage',
+        {'recordImage': recordImage},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointRecordRole extends _i1.EndpointRef {
+  EndpointRecordRole(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordRole';
+
+  _i2.Future<_i10.RecordRole> createRecord(_i10.RecordRole recordRole) =>
+      caller.callServerEndpoint<_i10.RecordRole>(
+        'recordRole',
+        'createRecord',
+        {'recordRole': recordRole},
+      );
+
+  _i2.Future<List<_i10.RecordRole>> getRecordRoles(int userId) =>
+      caller.callServerEndpoint<List<_i10.RecordRole>>(
+        'recordRole',
+        'getRecordRoles',
+        {'userId': userId},
+      );
+}
+
+/// {@category Endpoint}
+class EndpointRecordTextField extends _i1.EndpointRef {
+  EndpointRecordTextField(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'recordTextField';
+
+  _i2.Future<_i11.RecordText> createRecord(_i11.RecordText recordText) =>
+      caller.callServerEndpoint<_i11.RecordText>(
+        'recordTextField',
+        'createRecord',
+        {'recordText': recordText},
+      );
+
+  _i2.Future<_i11.RecordText> getRecordText(
+    int recordId,
+    int fieldId,
+  ) =>
+      caller.callServerEndpoint<_i11.RecordText>(
+        'recordTextField',
+        'getRecordText',
+        {
+          'recordId': recordId,
+          'fieldId': fieldId,
+        },
+      );
+
+  _i2.Future<void> updateRecordText(_i11.RecordText recordText) =>
+      caller.callServerEndpoint<void>(
+        'recordTextField',
+        'updateRecordText',
+        {'recordText': recordText},
       );
 }
 
@@ -149,14 +370,15 @@ class EndpointRole extends _i1.EndpointRef {
   @override
   String get name => 'role';
 
-  _i2.Future<void> createRole(_i7.Role role) => caller.callServerEndpoint<void>(
+  _i2.Future<void> createRole(_i12.Role role) =>
+      caller.callServerEndpoint<void>(
         'role',
         'createRole',
         {'role': role},
       );
 
-  _i2.Future<List<_i7.Role>> getRolesByTemplate({required int templateId}) =>
-      caller.callServerEndpoint<List<_i7.Role>>(
+  _i2.Future<List<_i12.Role>> getRolesByTemplate({required int templateId}) =>
+      caller.callServerEndpoint<List<_i12.Role>>(
         'role',
         'getRolesByTemplate',
         {'templateId': templateId},
@@ -170,27 +392,34 @@ class EndpointTemplate extends _i1.EndpointRef {
   @override
   String get name => 'template';
 
-  _i2.Future<_i8.Template> createTemplate(_i8.Template template) =>
-      caller.callServerEndpoint<_i8.Template>(
+  _i2.Future<_i13.Template> createTemplate(_i13.Template template) =>
+      caller.callServerEndpoint<_i13.Template>(
         'template',
         'createTemplate',
         {'template': template},
       );
 
-  _i2.Future<List<_i8.Template>> getTemplates({required int userId}) =>
-      caller.callServerEndpoint<List<_i8.Template>>(
+  _i2.Future<List<_i13.Template>> getTemplates({required int userId}) =>
+      caller.callServerEndpoint<List<_i13.Template>>(
         'template',
         'getTemplates',
         {'userId': userId},
+      );
+
+  _i2.Future<_i13.Template> getTemplate({required int id}) =>
+      caller.callServerEndpoint<_i13.Template>(
+        'template',
+        'getTemplate',
+        {'id': id},
       );
 }
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i9.Caller(client);
+    auth = _i14.Caller(client);
   }
 
-  late final _i9.Caller auth;
+  late final _i14.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -202,7 +431,7 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i10.Protocol(),
+          _i15.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -212,8 +441,13 @@ class Client extends _i1.ServerpodClient {
     example = EndpointExample(this);
     field = EndpointField(this);
     fileUpload = EndpointFileUpload(this);
+    recordBoolItem = EndpointRecordBoolItem(this);
+    recordCounterItem = EndpointRecordCounterItem(this);
+    recordDate = EndpointRecordDate(this);
     record = EndpointRecord(this);
     recordImage = EndpointRecordImage(this);
+    recordRole = EndpointRecordRole(this);
+    recordTextField = EndpointRecordTextField(this);
     role = EndpointRole(this);
     template = EndpointTemplate(this);
     modules = _Modules(this);
@@ -227,9 +461,19 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointFileUpload fileUpload;
 
+  late final EndpointRecordBoolItem recordBoolItem;
+
+  late final EndpointRecordCounterItem recordCounterItem;
+
+  late final EndpointRecordDate recordDate;
+
   late final EndpointRecord record;
 
   late final EndpointRecordImage recordImage;
+
+  late final EndpointRecordRole recordRole;
+
+  late final EndpointRecordTextField recordTextField;
 
   late final EndpointRole role;
 
@@ -243,8 +487,13 @@ class Client extends _i1.ServerpodClient {
         'example': example,
         'field': field,
         'fileUpload': fileUpload,
+        'recordBoolItem': recordBoolItem,
+        'recordCounterItem': recordCounterItem,
+        'recordDate': recordDate,
         'record': record,
         'recordImage': recordImage,
+        'recordRole': recordRole,
+        'recordTextField': recordTextField,
         'role': role,
         'template': template,
       };

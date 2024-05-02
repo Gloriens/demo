@@ -1,0 +1,6 @@
+class: RecordDate
+table: record_date
+fields:
+  recordId: int, relation(parent=record)
+  fieldId: int, relation(parent=field)
+  contentDate: String

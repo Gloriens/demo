@@ -2,4 +2,5 @@ class: RecordImage
 table: record_image
 fields:
   recordId: int, relation(parent=record)
+  fieldId: int, relation(parent=field)
   imageURL: String

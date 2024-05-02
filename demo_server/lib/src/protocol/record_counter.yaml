@@ -1,0 +1,6 @@
+class: RecordCounter
+table: record_counter
+fields:
+  recordId: int, relation(parent=record)
+  fieldId: int, relation(parent=field)
+  counterValue: int

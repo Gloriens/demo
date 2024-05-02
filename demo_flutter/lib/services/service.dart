@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/LoginScreen.dart';
@@ -23,6 +24,69 @@ final listOfTemplatesProvider = FutureProvider<List<Template>>((ref) async {
   final listTemplates =
       await ref.read(serviceProvider).getListOfTemplatesByUser();
   return listTemplates;
+});
+
+final listOfUsersProvider = FutureProvider<List<AppUser>>((ref) async {
+  final listUsers = await ref.read(serviceProvider).getListOfUsers();
+  return listUsers;
+});
+final listOfRecordRolesProvider = FutureProvider<List<RecordRole>>((ref) async {
+  final listRecordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  return listRecordRoles;
+});
+final listOfRecordsProvider = FutureProvider<List<Record>>((ref) async {
+  final recordRoles = await ref.read(serviceProvider).getListOfRecordRoles(
+      ref.read(userStateNotifierProvider.notifier).user.id ?? 0);
+  final records = <Record>[];
+  for (RecordRole recordRole in recordRoles) {
+    final record =
+        await ref.read(serviceProvider).getRecord(recordRole.recordId);
+    records.add(record);
+  }
+  return records;
+});
+final fieldsProvider = FutureProvider.autoDispose
+    .family<List<Field>, int>((ref, templateId) async {
+  final listFields =
+      await ref.read(serviceProvider).getFieldsByTemplateId(templateId);
+  return listFields;
+});
+final roleProvider =
+    FutureProvider.autoDispose.family<List<Role>, int>((ref, templateId) async {
+  final listRoles =
+      await ref.read(serviceProvider).getRolesByTemplateId(templateId);
+  return listRoles;
+});
+final recordTextUpdateProvider =
+    FutureProvider.autoDispose.family<RecordText, (int, int)>((ref, arg) async {
+  final recordText =
+      await ref.read(serviceProvider).getRecordTextField(arg.$1, arg.$2);
+  return recordText;
+});
+final recordBoolItemUpdateProvider =
+    FutureProvider.autoDispose.family<RecordBool, (int, int)>((ref, arg) async {
+  final recordBool =
+      await ref.read(serviceProvider).getRecordBool(arg.$1, arg.$2);
+  return recordBool;
+});
+final recordImageProvider = FutureProvider.autoDispose
+    .family<RecordImage, (int, int)>((ref, arg) async {
+  final recordImage =
+      await ref.read(serviceProvider).getRecordImage(arg.$1, arg.$2);
+  return recordImage;
+});
+final recordDateProvider =
+    FutureProvider.autoDispose.family<RecordDate, (int, int)>((ref, arg) async {
+  final recordDate =
+      await ref.read(serviceProvider).getRecordDate(arg.$1, arg.$2);
+  return recordDate;
+});
+final recordCounterFutureProvider = FutureProvider.autoDispose
+    .family<RecordCounter, (int, int)>((ref, arg) async {
+  final recordCounter =
+      await ref.read(serviceProvider).getRecordCounter(arg.$1, arg.$2);
+  return recordCounter;
 });
 
 class Service {
@@ -113,15 +177,17 @@ class Service {
     }
   }
 
-  Future<void> createRecord(
+  Future<Record> createRecord(
       {required String name, required DateTime date}) async {
     final templateProvider = ref.read(templateStateNotifierProvider.notifier);
     final record = Record(
         templateId: templateProvider.template.id ?? 0, name: name, date: date);
     try {
-      return await client.record.createRecord(record);
+      final createdRecord = await client.record.createRecord(record);
+      return createdRecord;
     } on Exception catch (e) {
       debugPrint('$e');
+      throw Exception('Failed to create record');
     }
   }
 
@@ -148,6 +214,18 @@ class Service {
     return listOfRoles;
   }
 
+  Future<List<Field>> getFieldsByTemplateId(int templateId) async {
+    final List<Field> listOfFields =
+        await client.field.getFieldsByTemplate(templateId: templateId);
+    return listOfFields;
+  }
+
+  Future<List<Role>> getRolesByTemplateId(int templateId) async {
+    final List<Role> listOfRoles =
+        await client.role.getRolesByTemplate(templateId: templateId);
+    return listOfRoles;
+  }
+
   Future<List<Template>> getListOfTemplatesByUser() async {
     final userProvider = ref.read(userStateNotifierProvider.notifier);
 
@@ -161,6 +239,15 @@ class Service {
       final List<String> listOfTemplatesName =
           templates.map((e) => e.name).toList();
       return listOfTemplatesName;
+    } else {
+      return List.empty();
+    }
+  }
+
+  List<String> getListOfUsersName(List<AppUser> users) {
+    if (users.isNotEmpty) {
+      final List<String> listOfUsersName = users.map((e) => e.name).toList();
+      return listOfUsersName;
     } else {
       return List.empty();
     }
@@ -192,20 +279,157 @@ class Service {
         await client.fileUpload.getUploadDescription(path);
     if (uploadDescription != null) {
       final uploader = FileUploader(uploadDescription);
-      final length = (await image.readAsBytes()).length;
-      final stream = image.openRead();
-      await uploader.upload(stream, length);
+      //final length = (await image.readAsBytes()).length;
+      final uint8List = await image.readAsBytes();
+      final byteData = uint8List.buffer.asByteData();
+      //final stream = image.openRead();
+      await uploader.uploadByteData(byteData);
+      //await uploader.uploadByteData(byteData);
       final success = await client.fileUpload.verifyUpload(path);
 
       if (!success) {
+        print("Upload verification failed for path: $path");
         return null;
       }
-
-      final Map<String, dynamic> decodedDesciption =
-          jsonDecode(uploadDescription);
-      return "${decodedDesciption['url']}/$path";
+      var url = await client.fileUpload.getUrl(path);
+      return url;
     }
 
     return null;
+  }
+
+  Future<String?> uploadSignature(ByteData byteData, [String? path]) async {
+    path = path ?? "test.jpg";
+    final uploadDescription =
+        await client.fileUpload.getUploadDescription(path);
+    if (uploadDescription != null) {
+      final uploader = FileUploader(uploadDescription);
+      await uploader.uploadByteData(byteData);
+      final success = await client.fileUpload.verifyUpload(path);
+      if (!success) {
+        print("Signateure upload verification failed for path: $path");
+        return null;
+      }
+      var url = await client.fileUpload.getUrl(path);
+      return url;
+    }
+    return null;
+  }
+
+  Future<void> createRecordImage(RecordImage recordImage) async {
+    await client.recordImage.createRecordImage(recordImage);
+  }
+
+  Future<void> updateRecordImage(RecordImage recordImage) async {
+    await client.recordImage.updateRecordImage(recordImage);
+  }
+
+  Future<RecordImage> getRecordImage(int fieldId, int recordId) async {
+    final recordImage =
+        await client.recordImage.getRecordImage(fieldId, recordId);
+    return recordImage;
+  }
+
+  Future<Record> getRecordByName(String name) async {
+    final record = await client.record.getRecordByName(name);
+    if (record != null) {
+      return record;
+    } else {
+      throw Exception("Record not found");
+    }
+  }
+
+  Future<AppUser> getUserByUName(String name) async {
+    final user = await client.userEndPoint.getUserByName(name);
+    return user;
+  }
+
+  Future<List<AppUser>> getListOfUsers() async {
+    final List<AppUser> listOfUsers = await client.userEndPoint.getUsers();
+    return listOfUsers;
+  }
+
+  Future<RecordRole> createRecordRole(RecordRole recordRole) async {
+    final createdRecordRole = await client.recordRole.createRecord(recordRole);
+    return createdRecordRole;
+  }
+
+  Future<RecordBool> createRecordBool(RecordBool recordBool) async {
+    final createdRecordBool =
+        await client.recordBoolItem.createRecord(recordBool);
+    return createdRecordBool;
+  }
+
+  Future<RecordDate> createRecordDate(RecordDate recordDate) async {
+    final createdRecordDate = await client.recordDate.createRecord(recordDate);
+    return createdRecordDate;
+  }
+
+  Future<RecordCounter> getRecordCounter(int fieldId, int recordId) async {
+    final recordCounter =
+        await client.recordCounterItem.getRecordCounter(fieldId, recordId);
+    return recordCounter;
+  }
+
+  Future<RecordCounter> createRecordCounter(RecordCounter recordCounter) async {
+    final createdRecordCounter =
+        await client.recordCounterItem.createRecord(recordCounter);
+    return createdRecordCounter;
+  }
+
+  Future<void> updateRecordDate(RecordDate recordDate) async {
+    await client.recordDate.updateRecordDate(recordDate);
+  }
+
+  Future<RecordText> createRecordTextField(RecordText recordText) async {
+    final createdRecordText =
+        await client.recordTextField.createRecord(recordText);
+    return createdRecordText;
+  }
+
+  Future<List<RecordRole>> getListOfRecordRoles(int userId) async {
+    final List<RecordRole> listOfRecordRoles =
+        await client.recordRole.getRecordRoles(userId);
+    return listOfRecordRoles;
+  }
+
+  Future<Record> getRecord(int recordId) async {
+    final record = await client.record.getRecord(recordId);
+    if (record != null) {
+      return record;
+    } else {
+      throw Exception("Record not found");
+    }
+  }
+
+  Future<RecordBool> getRecordBool(int recordId, int fieldId) async {
+    final record = await client.recordBoolItem.getRecordBool(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<RecordDate> getRecordDate(int recordId, int fieldId) async {
+    final record = await client.recordDate.getRecordDate(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<RecordText> getRecordTextField(int recordId, int fieldId) async {
+    final record =
+        await client.recordTextField.getRecordText(recordId, fieldId);
+
+    return record;
+  }
+
+  Future<void> updateRecordTextField(RecordText recordText) async {
+    await client.recordTextField.updateRecordText(recordText);
+  }
+
+  Future<void> updateRecordBool(RecordBool recordBool) async {
+    await client.recordBoolItem.updateRecordBool(recordBool);
+  }
+
+  Future<void> updateRecordCounter(RecordCounter recordCounter) async {
+    await client.recordCounterItem.updateRecordCounter(recordCounter);
   }
 }

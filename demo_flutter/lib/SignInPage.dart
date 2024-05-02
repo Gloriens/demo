@@ -1,5 +1,5 @@
 import 'package:demo_client/demo_client.dart';
-import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +24,6 @@ class SignInPage extends ConsumerWidget {
               SignInWithEmailButton(
                 caller: client.modules.auth,
                 onSignedIn: () async {
-                  // THERE IS A PROBLEM WITH ASYNC GAP.
                   var newAuthUser = sessionManager.signedInUser;
                   if (newAuthUser != null) {
                     bool isExits = await ref
@@ -53,7 +52,7 @@ class SignInPage extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MainMenu()),
+                            builder: (context) => const SignInPage()),
                       );
                     }
                   }
@@ -61,18 +60,44 @@ class SignInPage extends ConsumerWidget {
               ),
               /*ElevatedButton(
                 onPressed: () async {
-                  //FILE UPLOAD FOR RECORD DO NOT USE IT NOW !!!!!!.
-                  final image = await ImagePicker()
+                  //FILE UPLOAD FOR RECORD PAGE.
+                  final XFile? image = await ImagePicker()
                       .pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     final ext = image.path.split(".").last;
                     final path =
-                        "avatars/${ref.read(serviceProvider).generateRandomString(12)}.$ext";
-                    ref.read(serviceProvider).uploadImage(image, path);
+                        'serverpod/${ref.read(serviceProvider).generateRandomString(12)}.$ext';
+                    final url = await ref
+                        .read(serviceProvider)
+                        .uploadImage(image, path);
+                    print(url);
+                    //var urll = await client.fileUpload.getUrl("avatars/i7DeiIiABNIT.png");
                     RecordImage recordImage = RecordImage(
                       recordId: 0,
                       imageURL: path,
                     );
+                    if (!context.mounted) {
+                      return;
+                    }
+                    if (url != null) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Image Uploaded'),
+                              content:
+                                  Image.network(url, width: 32, height: 32),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Close'),
+                                ),
+                              ],
+                            );
+                          });
+                    }
                   }
                 },
                 child: const Text('Upload Image'),
