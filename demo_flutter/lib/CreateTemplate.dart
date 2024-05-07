@@ -1,5 +1,5 @@
 import 'package:demo_flutter/after_template_screen.dart';
-import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:flutter/material.dart';
 
 class CreateTemplatePage extends StatefulWidget {

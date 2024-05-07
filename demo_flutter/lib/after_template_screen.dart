@@ -1,8 +1,8 @@
 import 'package:demo_client/demo_client.dart';
-import 'package:demo_flutter/HomePage.dart';
+import 'package:demo_flutter/Templates.dart';
 import 'package:demo_flutter/fields/field_cards_list.dart';
 import 'package:demo_flutter/fields/field_creation_screen.dart';
-import 'package:demo_flutter/main_menu.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/roles/roleDisplay/role_cards_list.dart';
 import 'package:demo_flutter/roles/roleDisplay/role_creation_screen.dart';
 import 'package:demo_flutter/services/service.dart';
@@ -25,15 +25,25 @@ class _AfterTemplateScreenState extends ConsumerState<AfterTemplateScreen> {
     final roles = ref.watch(listOfRolesProvider);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF212A3E),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Geri butonu ikonu
+          icon: Icon(Icons.exit_to_app, color: Colors.white,), // Geri tuşunun ikonu
           onPressed: () {
             //Navigator.push(context,
             //MaterialPageRoute(builder: (context) => SecondPage()),
             Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
           },
         ),
+        title: Text(
+          'Template Configuration',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

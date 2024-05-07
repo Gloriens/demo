@@ -2,6 +2,7 @@ import 'package:demo_flutter/LoginScreen.dart';
 import 'package:demo_flutter/after_template_screen.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:demo_flutter/templates/template_cards_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_client/demo_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +23,22 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
     // Ekran düzeltilemeli
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF212A3E),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,), // Geri tuşunun ikonu
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          'Templates',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -41,8 +56,23 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                           ref.refresh(listOfTemplatesProvider);
                         }
                       },
-                      child: const Text("Refresh")),
-                )),
+                    style: ElevatedButton.styleFrom(
+                      side: BorderSide(
+                        color: Color(0xFF9BA4B5),
+                        width: 2,
+                      ),
+                    ),
+                      child: const Text(
+                        "Refresh",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Color(0xFF212A3E),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                  ),
+                )
+            ),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Align(
@@ -76,15 +106,15 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15, top: 15),
-                      child: Text("Name"),
+                    Align(
+                      alignment: Alignment.center,
+                        child: Text("Name")
                     ),
                     TextField(
                       controller: templateName,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 40),
+                    Align(
+                      alignment: Alignment.center,
                       child: ElevatedButton(
                         onPressed: () {
                           // Template ismi aldığımız yer
@@ -98,7 +128,18 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                                   builder: (context) =>
                                       const AfterTemplateScreen()));
                         },
-                        child: const Text("Ok"),
+                        style: ElevatedButton.styleFrom(
+                          side: BorderSide(
+                            color: Color(0xFF9BA4B5),
+                            width: 2,
+                          ),
+                        ),
+                        child: const Text("Ok",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Color(0xFF212A3E),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -107,13 +148,14 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
             },
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Color(0xFF212A3E),),
+        backgroundColor: Color(0xFF9BA4B5),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: const BottomAppBar(
         height: 40.0,
-        color: Colors.blue,
+        color: Color(0xFF212A3E),
         shape: CircularNotchedRectangle(),
       ),
     );
@@ -235,17 +277,30 @@ class _SignUpState extends ConsumerState<SignUp> {
                                   const LoginScreen(title: "Login Screen")));
                     }
                   },
-                  child: const Text("Ok"),
+                  style: ElevatedButton.styleFrom(
+                    side: BorderSide(
+                      color: Color(0xFF9BA4B5),
+                      width: 2,
+                    ),
+                  ),
+                  child: const Text(
+                      "Ok",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Color(0xFF212A3E),
+                      ),
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const BottomAppBar(
-        height: 40.0,
-        color: Colors.blue,
-        shape: CircularNotchedRectangle(),
+      bottomNavigationBar: Container(
+        height: 55,
+        child: BottomAppBar(
+          color: Color(0xFF212A3E),
+        ),
       ),
     );
   }
