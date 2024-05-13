@@ -32,7 +32,7 @@ class _RecordUpdateTextfieldState extends ConsumerState<RecordUpdateTextfield> {
                 .read(recordTextFieldUpdateProvider.notifier)
                 .add(widget.fieldId, value);
           },
-          decoration: InputDecoration(hintText: widget.fieldName),
+          decoration: InputDecoration(labelText: widget.fieldName),
         ),
       );
     }, error: (error, _) {

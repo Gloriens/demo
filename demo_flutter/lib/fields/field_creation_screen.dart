@@ -11,7 +11,13 @@ class FieldCreationScreen extends ConsumerStatefulWidget {
       _FieldCreationScreenState();
 }
 
-Map<String, int> map = {'text': 1, 'bool': 2, 'signaturepad': 3};
+Map<String, int> map = {
+  'text': 1,
+  'bool': 2,
+  'signaturepad': 3,
+  'date': 4,
+  'counter': 5
+};
 String dropdownValue = map.keys.first;
 
 class _FieldCreationScreenState extends ConsumerState<FieldCreationScreen> {

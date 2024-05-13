@@ -1,6 +1,8 @@
 import 'package:demo_client/demo_client.dart';
 import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/records/record_bool_item.dart';
+import 'package:demo_flutter/records/record_counter_item.dart';
+import 'package:demo_flutter/records/record_date_picker.dart';
 import 'package:demo_flutter/records/record_role_dropdown.dart';
 import 'package:demo_flutter/records/record_signaturepad.dart';
 import 'package:demo_flutter/records/record_textfield.dart';
@@ -77,6 +79,20 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
                 recordId: widget.recordId, fieldId: fieldId, contentText: text);
             ref.read(serviceProvider).createRecordTextField(newRecordText);
           });
+          ref.read(recordDatePickerProvider).forEach((fieldId, date) {
+            //this one is for the recordDatePicker.
+            RecordDate newRecordDate = RecordDate(
+                recordId: widget.recordId, fieldId: fieldId, contentDate: date);
+            ref.read(serviceProvider).createRecordDate(newRecordDate);
+          });
+          ref.read(recordCounterProvider).forEach((fieldId, value) {
+            //this one is for the recordCounter.
+            RecordCounter newRecordCounter = RecordCounter(
+                recordId: widget.recordId,
+                fieldId: fieldId,
+                counterValue: value);
+            ref.read(serviceProvider).createRecordCounter(newRecordCounter);
+          });
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const MainMenu()));
         },
@@ -99,14 +115,16 @@ class DynamicWidgetList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildFieldWidgets(fields),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _buildRoleWidgets(roles),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildFieldWidgets(fields),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildRoleWidgets(roles),
+          ),
+        ],
+      ),
     );
   }
 
@@ -130,6 +148,15 @@ class DynamicWidgetList extends StatelessWidget {
             widgets.add(RecordSignaturePad(
               fieldId: field.id ?? 0,
               recordId: recordId,
+            ));
+          } else if (field.type == 'date') {
+            widgets.add(RecordDatePicker(
+              fieldId: field.id ?? 0,
+            ));
+          } else if (field.type == 'counter') {
+            widgets.add(RecordCounterItem(
+              fieldId: field.id ?? 0,
+              fieldName: field.name,
             ));
           }
         }
