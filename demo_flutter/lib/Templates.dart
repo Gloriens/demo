@@ -1,4 +1,5 @@
 import 'package:demo_flutter/LoginScreen.dart';
+import 'package:demo_flutter/MainMenu.dart';
 import 'package:demo_flutter/after_template_screen.dart';
 import 'package:demo_flutter/services/service.dart';
 import 'package:demo_flutter/templates/template_cards_list.dart';
@@ -25,19 +26,20 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
       appBar: AppBar(
         backgroundColor: Color(0xFF212A3E),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white,), // Geri tuşunun ikonu
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ), // Geri tuşunun ikonu
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainMenu()));
           },
         ),
         title: Text(
           'Templates',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
+              fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: Center(
@@ -50,29 +52,28 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
-                      onPressed: () {
-                        if (sessionManager.isSignedIn) {
-                          print("signed in");
-                          ref.refresh(listOfTemplatesProvider);
-                        }
-                      },
+                    onPressed: () {
+                      if (sessionManager.isSignedIn) {
+                        print("signed in");
+                        ref.refresh(listOfTemplatesProvider);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       side: BorderSide(
                         color: Color(0xFF9BA4B5),
                         width: 2,
                       ),
                     ),
-                      child: const Text(
-                        "Refresh",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          color: Color(0xFF212A3E),
-                        ),
-                        textAlign: TextAlign.center,
+                    child: const Text(
+                      "Refresh",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Color(0xFF212A3E),
                       ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                )
-            ),
+                )),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Align(
@@ -106,10 +107,7 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                        child: Text("Name")
-                    ),
+                    Align(alignment: Alignment.center, child: Text("Name")),
                     TextField(
                       controller: templateName,
                     ),
@@ -134,7 +132,8 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
                             width: 2,
                           ),
                         ),
-                        child: const Text("Ok",
+                        child: const Text(
+                          "Ok",
                           style: TextStyle(
                             fontSize: 15.0,
                             color: Color(0xFF212A3E),
@@ -148,7 +147,10 @@ class _MyHomePAgeState extends ConsumerState<MyHomePAge> {
             },
           );
         },
-        child: const Icon(Icons.add, color: Color(0xFF212A3E),),
+        child: const Icon(
+          Icons.add,
+          color: Color(0xFF212A3E),
+        ),
         backgroundColor: Color(0xFF9BA4B5),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -284,11 +286,11 @@ class _SignUpState extends ConsumerState<SignUp> {
                     ),
                   ),
                   child: const Text(
-                      "Ok",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color(0xFF212A3E),
-                      ),
+                    "Ok",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Color(0xFF212A3E),
+                    ),
                   ),
                 ),
               ),

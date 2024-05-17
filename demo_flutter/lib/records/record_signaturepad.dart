@@ -11,24 +11,36 @@ class RecordSignaturePad extends ConsumerStatefulWidget {
       {super.key, required this.recordId, required this.fieldId});
   final int recordId;
   final int fieldId;
+
   @override
   ConsumerState<RecordSignaturePad> createState() => _RecordSignaturePadState();
 }
 
 class _RecordSignaturePadState extends ConsumerState<RecordSignaturePad> {
   final GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Column(
         children: [
-          SizedBox(
-            height: 200,
-            width: 300,
-            child: SfSignaturePad(
-              key: _signaturePadKey,
-              backgroundColor: Colors.grey[200],
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius:
+                  BorderRadius.circular(8.0), // Optional: to round the corners
+            ),
+            child: SizedBox(
+              height: 200,
+              width: 300,
+              child: SfSignaturePad(
+                key: _signaturePadKey,
+                backgroundColor: Colors.grey[200],
+              ),
             ),
           ),
           Row(

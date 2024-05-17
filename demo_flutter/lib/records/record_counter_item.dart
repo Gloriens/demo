@@ -17,15 +17,26 @@ class _RecordCounterState extends ConsumerState<RecordCounterItem> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black, // Border color
+            width: 2.0, // Border width
+          ),
+          borderRadius:
+              BorderRadius.circular(8.0), // Optional: to round the corners
+        ),
+        child: Center(
           child: CustomizableCounter(
-        buttonText: widget.fieldName,
-        onCountChange: (c) {
-          ref
-              .read(recordCounterProvider.notifier)
-              .add(widget.fieldId, c.toInt());
-        },
-      )),
+            buttonText: widget.fieldName,
+            onCountChange: (c) {
+              ref
+                  .read(recordCounterProvider.notifier)
+                  .add(widget.fieldId, c.toInt());
+            },
+          ),
+        ),
+      ),
     );
   }
 }

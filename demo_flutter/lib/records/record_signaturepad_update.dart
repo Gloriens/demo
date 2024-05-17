@@ -11,6 +11,7 @@ class RecordSignaturepadUpdate extends ConsumerStatefulWidget {
       {super.key, required this.recordId, required this.fieldId});
   final int recordId;
   final int fieldId;
+
   @override
   ConsumerState<RecordSignaturepadUpdate> createState() =>
       _RecordSignaturepadUpdateState();
@@ -19,6 +20,7 @@ class RecordSignaturepadUpdate extends ConsumerStatefulWidget {
 class _RecordSignaturepadUpdateState
     extends ConsumerState<RecordSignaturepadUpdate> {
   final GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final imageProv =
@@ -27,12 +29,22 @@ class _RecordSignaturepadUpdateState
       padding: const EdgeInsets.all(4.0),
       child: Column(
         children: [
-          SizedBox(
-            height: 200,
-            width: 300,
-            child: SfSignaturePad(
-              key: _signaturePadKey,
-              backgroundColor: Colors.grey[200],
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius:
+                  BorderRadius.circular(8.0), // Optional: to round the corners
+            ),
+            child: SizedBox(
+              height: 200,
+              width: 300,
+              child: SfSignaturePad(
+                key: _signaturePadKey,
+                backgroundColor: Colors.grey[200],
+              ),
             ),
           ),
           Row(
@@ -84,13 +96,17 @@ class _RecordSignaturepadUpdateState
               ),
             ],
           ),
-          imageProv.when(data: (data) {
-            return Image.network(data.imageURL);
-          }, loading: () {
-            return const CircularProgressIndicator();
-          }, error: (error, _) {
-            return Text("Error: $error");
-          }),
+          imageProv.when(
+            data: (data) {
+              return Image.network(data.imageURL);
+            },
+            loading: () {
+              return const CircularProgressIndicator();
+            },
+            error: (error, _) {
+              return Text("Error: $error");
+            },
+          ),
         ],
       ),
     );

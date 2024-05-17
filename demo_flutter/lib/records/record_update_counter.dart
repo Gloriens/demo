@@ -22,25 +22,40 @@ class _RecordCounterState extends ConsumerState<RecordUpdateCounter> {
   Widget build(BuildContext context) {
     final initialCount = ref
         .watch(recordCounterFutureProvider((widget.recordId, widget.fieldId)));
-    return initialCount.when(data: (data) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-            child: CustomizableCounter(
-          buttonText: widget.fieldName,
-          onCountChange: (c) {
-            ref
-                .read(recordUpdateCounterProvider.notifier)
-                .add(widget.fieldId, c.toInt());
-          },
-          count: data.counterValue.toDouble(),
-        )),
-      );
-    }, error: (error, _) {
-      return Text('Error: $error');
-    }, loading: () {
-      return const CircularProgressIndicator();
-    });
+    return initialCount.when(
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius:
+                  BorderRadius.circular(8.0), // Optional: to round the corners
+            ),
+            child: Center(
+              child: CustomizableCounter(
+                buttonText: widget.fieldName,
+                onCountChange: (c) {
+                  ref
+                      .read(recordUpdateCounterProvider.notifier)
+                      .add(widget.fieldId, c.toInt());
+                },
+                count: data.counterValue.toDouble(),
+              ),
+            ),
+          ),
+        );
+      },
+      error: (error, _) {
+        return Text('Error: $error');
+      },
+      loading: () {
+        return const CircularProgressIndicator();
+      },
+    );
   }
 }
 

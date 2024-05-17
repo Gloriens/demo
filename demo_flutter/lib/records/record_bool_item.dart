@@ -17,26 +17,36 @@ class _RecordBoolItemState extends ConsumerState<RecordBoolItem> {
     final isChecked = ref.watch(recordBoolProvider);
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(widget.fieldName,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black, // Border color
+            width: 2.0, // Border width
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Checkbox(
-                checkColor: Colors.white,
-                value: isChecked[widget.fieldId] ?? false,
-                onChanged: (bool? value) {
-                  ref
-                      .read(recordBoolProvider.notifier)
-                      .add(widget.fieldId, value!);
-                }),
-          ),
-        ],
+          borderRadius:
+              BorderRadius.circular(8.0), // Optional: to round the corners
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.fieldName,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Checkbox(
+                  checkColor: Colors.white,
+                  value: isChecked[widget.fieldId] ?? false,
+                  onChanged: (bool? value) {
+                    ref
+                        .read(recordBoolProvider.notifier)
+                        .add(widget.fieldId, value!);
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

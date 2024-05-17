@@ -12,6 +12,7 @@ class RecordUpdateTextfield extends ConsumerStatefulWidget {
   final int fieldId;
   final int recordId;
   final String fieldName;
+
   @override
   ConsumerState<RecordUpdateTextfield> createState() =>
       _RecordUpdateTextfieldState();
@@ -22,24 +23,42 @@ class _RecordUpdateTextfieldState extends ConsumerState<RecordUpdateTextfield> {
   Widget build(BuildContext context) {
     final txtfield =
         ref.watch(recordTextUpdateProvider((widget.recordId, widget.fieldId)));
-    return txtfield.when(data: (data) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          controller: TextEditingController(text: data.contentText),
-          onChanged: (value) {
-            ref
-                .read(recordTextFieldUpdateProvider.notifier)
-                .add(widget.fieldId, value);
-          },
-          decoration: InputDecoration(labelText: widget.fieldName),
-        ),
-      );
-    }, error: (error, _) {
-      return Text('Error: $error');
-    }, loading: () {
-      return const CircularProgressIndicator();
-    });
+    return txtfield.when(
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black, // Border color
+                width: 2.0, // Border width
+              ),
+              borderRadius:
+                  BorderRadius.circular(8.0), // Optional: to round the corners
+            ),
+            child: TextField(
+              controller: TextEditingController(text: data.contentText),
+              onChanged: (value) {
+                ref
+                    .read(recordTextFieldUpdateProvider.notifier)
+                    .add(widget.fieldId, value);
+              },
+              decoration: InputDecoration(
+                labelText: widget.fieldName,
+                border:
+                    InputBorder.none, // Optional: remove the TextField border
+              ),
+            ),
+          ),
+        );
+      },
+      error: (error, _) {
+        return Text('Error: $error');
+      },
+      loading: () {
+        return const CircularProgressIndicator();
+      },
+    );
   }
 }
 
@@ -55,27 +74,3 @@ class RecordTextFieldUpdateNotifier extends StateNotifier<Map<int, String>> {
     state = {...state, ...newRecordTextField};
   }
 }
-/*FutureBuilder(
-        future: _recordTextFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            TextEditingController controller =
-                TextEditingController(text: snapshot.data!.contentText);
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: controller,
-                onChanged: (value) {
-                  ref
-                      .read(recordTextFieldUpdateProvider.notifier)
-                      .add(widget.fieldId, value);
-                },
-                decoration: InputDecoration(hintText: widget.fieldName),
-              ),
-            );
-          }
-        });*/

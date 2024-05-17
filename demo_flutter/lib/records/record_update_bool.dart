@@ -33,15 +33,24 @@ class _RecordUpdateBoolState extends ConsumerState<RecordUpdateBool> {
     final isChecked = ref.watch(recordBoolUpdateProvider);
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(widget.fieldName,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black, // Border color
+            width: 2.0, // Border width
           ),
-          FutureBuilder(
+          borderRadius:
+              BorderRadius.circular(8.0), // Optional: to round the corners
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.fieldName,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            FutureBuilder(
               future: _recordBoolFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,22 +58,24 @@ class _RecordUpdateBoolState extends ConsumerState<RecordUpdateBool> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  //print(isChecked[widget.fieldId]);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Checkbox(
-                        checkColor: Colors.white,
-                        value: isChecked[widget.fieldId] ??
-                            snapshot.data!.contentBool,
-                        onChanged: (bool? value) {
-                          ref
-                              .read(recordBoolUpdateProvider.notifier)
-                              .add(widget.fieldId, value!);
-                        }),
+                      checkColor: Colors.white,
+                      value: isChecked[widget.fieldId] ??
+                          snapshot.data!.contentBool,
+                      onChanged: (bool? value) {
+                        ref
+                            .read(recordBoolUpdateProvider.notifier)
+                            .add(widget.fieldId, value!);
+                      },
+                    ),
                   );
                 }
-              }),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
