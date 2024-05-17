@@ -24,33 +24,37 @@ class _RecordCreateScreenState extends ConsumerState<RecordCreateScreen> {
     final listOfRoles = ref.watch(listOfRolesProvider);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF212A3E),
+        backgroundColor: const Color(0xFF212A3E),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white,), // Geri tuşunun ikonu
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ), // Geri tuşunun ikonu
           onPressed: () {
             //Navigator.push(context,
             //MaterialPageRoute(builder: (context) => SecondPage()),
-            Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MainMenu()));
           },
         ),
-        title: Text(
+        title: const Text(
           'Create Record',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
       ),
       // This is the part where we dynamically create the widgets based on fields and roles
       //of the related template.
       body: Center(
-        child: DynamicWidgetList(
+        child: SingleChildScrollView(
+          child: DynamicWidgetList(
             fields: listOfFields,
             roles: listOfRoles,
-            recordId: widget.recordId),
+            recordId: widget.recordId,
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

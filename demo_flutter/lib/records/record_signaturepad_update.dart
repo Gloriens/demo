@@ -77,7 +77,7 @@ class _RecordSignaturepadUpdateState
                 child: ElevatedButton(
                   onPressed: () async {
                     ui.Image image = await _signaturePadKey.currentState!
-                        .toImage(pixelRatio: 1);
+                        .toImage(pixelRatio: 0.5);
                     final path =
                         'signature/${ref.read(serviceProvider).generateRandomString(6)}.png';
                     final byteData =
@@ -98,7 +98,17 @@ class _RecordSignaturepadUpdateState
           ),
           imageProv.when(
             data: (data) {
-              return Image.network(data.imageURL);
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black, // Border color
+                    width: 2.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Optional: to round the corners
+                ),
+                child: Image.network(data.imageURL),
+              );
             },
             loading: () {
               return const CircularProgressIndicator();
